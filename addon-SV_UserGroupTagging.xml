@@ -48,10 +48,43 @@
     <phrase title="option_sv_ugt_email_explain" version_id="1" version_string="0.0.1"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="1" version_string="0.0.1"><![CDATA[Tag User Group]]></phrase>
+    <phrase title="sv_ugt_PrivateGroup" version_id="1" version_string="0.0.1"><![CDATA[Private Group]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
-  <templates/>
+  <templates>
+    <template title="sv_members_usergroup" version_id="1" version_string="0.0.1"><![CDATA[<xen:require css="member_list.css" />
+<xen:require css="UserGroupTagging.css" />
+<xen:title>{$userGroup.username}</xen:title>
+<div class="section">
+	<div class="pairsJustified">
+		<dl class="TaggedUserGroupHeader">
+			<xen:if is="{$userGroup.avatar_l}">
+				<dt>
+					<img src="{$userGroup.avatar_l}" />
+				</dt>
+			</xen:if>
+			<xen:if is="{$userGroup.private}">
+				<dd>
+					{xen:phrase sv_ugt_PrivateGroup}
+				</dd>
+			</xen:if>
+		</dl> 
+	</div>
+	<ol class="memberList TaggedUserGroupMemberList">
+		<xen:foreach loop="$users" value="$user">
+			<xen:include template="member_list_item">
+				<xen:set var="$noOverlay">1</xen:set>
+			</xen:include>
+		</xen:foreach>
+	</ol>
+</div>]]></template>
+    <template title="UserGroupTagging.css" version_id="1" version_string="0.0.1"><![CDATA[.xenOverlay .TaggedUserGroupMemberList 
+{ 
+	max-height: 300px; overflow-y: scroll; 
+}
+]]></template>
+  </templates>
   <public_template_modifications>
     <modification template="editor" modification_key="sv_usergrouptag_editor" description="" execution_order="10000" enabled="1" action="str_replace">
       <find><![CDATA[{xen:if $editorOptions.json, 'data-options="{xen:escape {xen:helper json, $editorOptions.json}}"'}]]></find>

@@ -4,8 +4,8 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 {
     public function emailAlertedUsers(array $users, array $taggingUser)
     {
-		if (empty($userIds))
-		{
+        if (empty($userIds))
+        {
             return;
         }
 
@@ -188,6 +188,27 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         }
     }
 
+    public function getTaggableGroup($UserGroupId)
+    {
+        $db = $this->_getDb();
+        $sql = '';
+
+        $visitor = XenForo_Visitor::getInstance();
+        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+
+        if (!$viewAllGroups)
+        {
+            $groupMembership = array_keys($this->_getGroupMembership($visitor->toArray()));
+            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) .  ' ) )';
+        }
+
+        return $db->fetchRow("
+            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
+            FROM xf_user_group AS usergroup
+            WHERE usergroup.sv_tagable = 1 and usergroup.user_group_id = ? ". $sql."
+        ", $UserGroupId);
+    }
+
     public function getTaggableGroups($q = null, $limit = 0)
     {
         $db = $this->_getDb();
@@ -207,12 +228,23 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         }
 
         return $this->fetchAllKeyed("
-            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar as avatar
+            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_tagable = 1 ". $sql."
             ORDER BY LENGTH(usergroup.title) DESC
             " . ($limit ? " limit $limit " : '')  . "
         ", 'user_group_id');
+    }
+
+    public function getTaggedGroupUserIds($UserGroupId)
+    {
+        $db = $this->_getDb();
+        return $db->fetchCol("
+            SELECT distinct user.user_id
+            FROM xf_user AS user
+            join xf_user_group_relation as relation on relation.user_id = user.user_id
+            WHERE relation.user_group_id = ?
+        ", $UserGroupId);
     }
 
     public function expandTaggedGroups(array $tagged, array $taggingUser)

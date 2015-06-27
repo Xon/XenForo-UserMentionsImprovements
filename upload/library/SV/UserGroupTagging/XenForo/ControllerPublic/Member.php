@@ -11,7 +11,39 @@ class SV_UserGroupTagging_XenForo_ControllerPublic_Member extends XFCP_SV_UserGr
             return parent::actionIndex();
         }
 
-        return $this->responseReroute('XenForo_ControllerPublic_Member', 'usergroup-tagged');
+        return $this->responseReroute('XenForo_ControllerPublic_Member', 'ViewUsergroup');
+    }
+
+    public function actionViewUsergroup()
+    {
+        $userGroupId = $this->_input->filterSingle('ug', XenForo_Input::STRING);
+
+        $userTaggingModel = $this->_getUserTaggingModel();
+        $userGroup = $userTaggingModel->getTaggableGroup($userGroupId);
+
+        if (empty($userGroup))
+        {
+            return $this->responseNoPermission();
+        }
+
+        $userIds = $userTaggingModel->getTaggedGroupUserIds($userGroup['user_group_id']);
+
+        if (!empty($userIds))
+        {
+            $userModel = $this->getModelFromCache('XenForo_Model_User');
+            $users = $userModel->getUsersByIds($userIds);
+        }
+        else
+        {
+            $users = array();
+        }
+
+        $viewParams = array(
+            'users' => $users,
+            'userGroup' => $userGroup,
+        );
+
+        return $this->responseView('SV_UserGroupTagging_ViewPublic_Member_UserGroup', 'sv_members_usergroup', $viewParams);
     }
 
     public function actionGroupFind()
