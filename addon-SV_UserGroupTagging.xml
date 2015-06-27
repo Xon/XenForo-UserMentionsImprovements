@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <addon addon_id="SV_UserGroupTagging" title="User Group Tagging" version_string="0.0.1" version_id="1" url="" install_callback_class="SV_UserGroupTagging_Listener" install_callback_method="install" uninstall_callback_class="SV_UserGroupTagging_Listener" uninstall_callback_method="uninstall">
   <admin_navigation/>
-  <admin_permissions/>
+  <admin_permissions>
+    <admin_permission admin_permission_id="sv_ViewAllPrivateGroups" display_order="4000"/>
+  </admin_permissions>
   <admin_style_properties/>
   <admin_templates/>
   <admin_template_modifications/>
@@ -39,6 +41,7 @@
     <interface_groups/>
   </permissions>
   <phrases>
+    <phrase title="admin_permission_sv_ViewAllPrivateGroups" version_id="1" version_string="0.0.1"><![CDATA[View All Private Groups]]></phrase>
     <phrase title="option_group_SV_UserGroupTagging" version_id="1" version_string="0.0.1"><![CDATA[User Group Tagging]]></phrase>
     <phrase title="option_group_SV_UserGroupTagging_description" version_id="1" version_string="0.0.1"><![CDATA[]]></phrase>
     <phrase title="option_sv_ugt_email" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>

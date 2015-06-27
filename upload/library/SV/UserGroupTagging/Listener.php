@@ -7,6 +7,7 @@ class SV_UserGroupTagging_Listener
     public static function install($installedAddon, array $addonData, SimpleXMLElement $xml)
     {
         SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_tagable', 'tinyint(1) NOT NULL default 0');
+        SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_private', 'tinyint(1) NOT NULL default 0');
         SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_avatar', 'text');
         SV_UserGroupTagging_Install::addColumn('xf_user_option', 'sv_emailOnTag', 'tinyint(1) NOT NULL default 0');
 
@@ -18,6 +19,7 @@ class SV_UserGroupTagging_Listener
     {
         SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_tagable');
         SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_avatar');
+        SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_private');
         SV_UserGroupTagging_Install::dropColumn('xf_user_option', 'sv_emailOnTag');
     }
 

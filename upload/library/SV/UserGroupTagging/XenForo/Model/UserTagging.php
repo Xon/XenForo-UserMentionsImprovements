@@ -58,6 +58,18 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         return $matches;
     }
 
+    protected function _getGroupMembership($user)
+    {
+        $groups = explode(',', $user['secondary_group_ids']);
+        $groups[] = $user['user_group_id'];
+        $groupKeys = array();
+        foreach($groups as $group)
+        {
+            $groupKeys[$group] = true;
+        }
+        return $groupKeys;
+    }
+
     protected function _getTagMatchUsers(array $matches)
     {
         $usersByMatch = parent::_getTagMatchUsers($matches);
@@ -86,7 +98,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         }
 
         $userResults = $db->query("
-            SELECT usergroup.user_group_id, usergroup.title,
+            SELECT usergroup.user_group_id, usergroup.title, usergroup.sv_private,
                 " . implode(', ', $matchParts) . "
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_tagable = 1 and (" . implode(' OR ', $whereParts) . ")
@@ -95,8 +107,18 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 
         $require_sort = array();
 
+        $visitor = XenForo_Visitor::getInstance();
+        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+        $groupMembership = $this->_getGroupMembership($visitor->toArray());
+
         while ($group = $userResults->fetch())
         {
+            // private groups are only view able by members and administrators.
+            if (!$viewAllGroups && $group['sv_private'] && empty($groupMembership[$group['user_group_id']]))
+            {
+                continue;
+            }
+
             $userInfo = array(
                 'user_id' => 'ug_' . $group['user_group_id'],
                 'is_group' => 1,
@@ -174,6 +196,16 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         {
             $sql = ' and usergroup.title LIKE ' . XenForo_Db::quoteLike($q, 'r', $db);
         }
+
+        $visitor = XenForo_Visitor::getInstance();
+        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+
+        if (!$viewAllGroups)
+        {
+            $groupMembership = array_keys($this->_getGroupMembership($visitor->toArray()));
+            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) .  ' ) )';
+        }
+
         return $this->fetchAllKeyed("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar as avatar
             FROM xf_user_group AS usergroup
