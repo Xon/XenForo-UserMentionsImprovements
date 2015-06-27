@@ -30,7 +30,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 
     public function emailAlertedUser(array $user, array $taggingUser)
     {
-        if (!XenForo_Permission::hasPermission($user, 'general', 'sv_ReceiveTagAlertEmails'))
+        if (!XenForo_Permission::hasPermission($user['permission'], 'general', 'sv_ReceiveTagAlertEmails'))
         {
             return;
         }
@@ -39,17 +39,14 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
     public function getTaggedUsersInMessage($message, &$newMessage, $replaceStyle = 'bb')
     {
         $filteredMessage = $message;
-        if (!empty(SV_UserGroupTagging_Globals::$CanGroupTag))
+        if ($replaceStyle == 'bb')
         {
-            if ($replaceStyle == 'bb')
-            {
-                $this->_plainReplacements = array();
-                $filteredMessage = preg_replace_callback(
-                    '#\[(usergroup)(=[^\]]*)?](.*)\[/\\1]#siU',
-                    array($this, '_plainReplaceHandler'),
-                    $filteredMessage
-                );
-            }
+            $this->_plainReplacements = array();
+            $filteredMessage = preg_replace_callback(
+                '#\[(usergroup)(=[^\]]*)?](.*)\[/\\1]#siU',
+                array($this, '_plainReplaceHandler'),
+                $filteredMessage
+            );
         }
         $matches = parent::getTaggedUsersInMessage($filteredMessage, $newMessage, $replaceStyle);
         // restore the message if there are no matches
@@ -64,11 +61,6 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
     protected function _getTagMatchUsers(array $matches)
     {
         $usersByMatch = parent::_getTagMatchUsers($matches);
-
-        if (empty(SV_UserGroupTagging_Globals::$CanGroupTag))
-        {
-            return $usersByMatch;
-        }
 
         $db = $this->_getDb();
         $matchKeys = array_keys($matches);
@@ -190,9 +182,41 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         ", 'user_group_id');
     }
 
-    public function expandTaggedGroups(array $tagged)
+    public function expandTaggedGroups(array $tagged, array $taggingUser)
     {
-        $alreadyTagged = array();
+        $permissions = array();
+        if (!empty($taggingUser['permissions']))
+        {
+            $permissions = $taggingUser['permissions'];
+        }
+        else if (!empty($taggingUser['global_permission_cache']))
+        {
+            $permissions = XenForo_Permission::unserializePermissions($taggingUser['global_permission_cache']);
+        }
+        $visitor = XenForo_Visitor::getInstance()->toArray();
+        if (empty($permissions) && $visitor['user_id'] == $taggingUser['user_id'])
+        {
+            $permissions = $visitor['permissions'];
+        }
+        if (empty($permissions))
+        {
+            $permUser = $this->_getDb()->fetchRow('
+                SELECT permission_combination.cache_value AS global_permission_cache
+                FROM xf_user user
+                LEFT JOIN xf_permission_combination AS permission_combination ON
+                            (permission_combination.permission_combination_id = user.permission_combination_id)
+                WHERE user.user_id = ?
+            ', $taggingUser['user_id']);
+
+            if(!empty($permUser['global_permission_cache']))
+            {
+                $permissions = XenForo_Permission::unserializePermissions($permUser['global_permission_cache']);
+            }
+        }
+        
+        $CannotGroupTag = !XenForo_Permission::hasPermission($permissions, 'general', 'sv_TagUserGroup');        
+
+        $alreadyTagged = array();        
         $db = $this->_getDb();
         $users = array();
         foreach($tagged as $candinate)
@@ -206,6 +230,11 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             if (empty($candinate['is_group']))
             {
                 $users[$candinate['user_id']] = $candinate;
+                continue;
+            }
+
+            if ($CannotGroupTag)
+            {
                 continue;
             }
 

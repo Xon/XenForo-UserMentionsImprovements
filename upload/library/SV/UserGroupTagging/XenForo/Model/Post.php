@@ -5,7 +5,7 @@ class SV_UserGroupTagging_XenForo_Model_Post extends XFCP_SV_UserGroupTagging_Xe
     public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
     {
         $userTaggingModel = $this->_getUserTaggingModel();
-        $tagged = $userTaggingModel->expandTaggedGroups($tagged);
+        $tagged = $userTaggingModel->expandTaggedGroups($tagged, $post);
         $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);
         $userTaggingModel->emailAlertedUsers($alertedUsers, $post);
         return $alertedUsers;

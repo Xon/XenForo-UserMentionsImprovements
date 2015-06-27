@@ -5,7 +5,7 @@ class SV_UserGroupTagging_XenForo_Model_Report extends XFCP_SV_UserGroupTagging_
     public function alertTaggedMembers(array $report, array $reportComment, array $tagged, array $alreadyAlerted, array $taggingUser)
     {
         $userTaggingModel = $this->_getUserTaggingModel();
-        $tagged = $userTaggingModel->expandTaggedGroups($tagged);
+        $tagged = $userTaggingModel->expandTaggedGroups($tagged, $taggingUser);
         $alertedUsers = parent::alertTaggedMembers($report, $reportComment, $tagged, $alreadyAlerted, $taggingUser);
         $userTaggingModel->emailAlertedUsers($alertedUsers, $taggingUser);
         return $alertedUsers;

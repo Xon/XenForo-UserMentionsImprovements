@@ -33,6 +33,7 @@
     <permission_groups/>
     <permissions>
       <permission permission_group_id="general" permission_id="sv_ReceiveTagAlertEmails" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11230"/>
+      <permission permission_group_id="general" permission_id="sv_TagUserGroup" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11231"/>
     </permissions>
     <interface_groups/>
   </permissions>
@@ -42,6 +43,7 @@
     <phrase title="option_sv_ugt_email" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="option_sv_ugt_email_explain" version_id="1" version_string="0.0.1"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
+    <phrase title="permission_general_sv_TagUserGroup" version_id="1" version_string="0.0.1"><![CDATA[Tag User Group]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
