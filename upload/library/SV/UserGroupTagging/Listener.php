@@ -6,7 +6,7 @@ class SV_UserGroupTagging_Listener
 
     public static function install($installedAddon, array $addonData, SimpleXMLElement $xml)
     {
-        SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_tagable', 'tinyint(1) NOT NULL default 0');
+        SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_taggable', 'tinyint(1) NOT NULL default 0');
         SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_private', 'tinyint(1) NOT NULL default 0');
         SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_avatar_s', 'text');
         SV_UserGroupTagging_Install::addColumn('xf_user_group', 'sv_avatar_l', 'text');
@@ -18,7 +18,7 @@ class SV_UserGroupTagging_Listener
 
     public static function uninstall()
     {
-        SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_tagable');
+        SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_taggable');
         SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_avatar_s');
         SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_avatar_l');
         SV_UserGroupTagging_Install::dropColumn('xf_user_group', 'sv_private');

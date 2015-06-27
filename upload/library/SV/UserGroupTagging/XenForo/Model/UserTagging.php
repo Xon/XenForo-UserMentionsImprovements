@@ -101,7 +101,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             SELECT usergroup.user_group_id, usergroup.title, usergroup.sv_private,
                 " . implode(', ', $matchParts) . "
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_tagable = 1 and (" . implode(' OR ', $whereParts) . ")
+            WHERE usergroup.sv_taggable = 1 and (" . implode(' OR ', $whereParts) . ")
             ORDER BY LENGTH(usergroup.title) DESC
         ");
 
@@ -205,7 +205,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         return $db->fetchRow("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_tagable = 1 and usergroup.user_group_id = ? ". $sql."
+            WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? ". $sql."
         ", $UserGroupId);
     }
 
@@ -230,7 +230,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         return $this->fetchAllKeyed("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_tagable = 1 ". $sql."
+            WHERE usergroup.sv_taggable = 1 ". $sql."
             ORDER BY LENGTH(usergroup.title) DESC
             " . ($limit ? " limit $limit " : '')  . "
         ", 'user_group_id');
