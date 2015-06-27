@@ -124,13 +124,13 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         // sort in the groups
         foreach ($require_sort AS $key => $x)
         {
-            usort($usersByMatch[$key],  array(__CLASS__, 'sv_length_sort'));
+            usort($usersByMatch[$key],  array($this, 'usergroup_sorting'));
         }
 
         return $usersByMatch;
     }
 
-    protected static function sv_length_sort($a, $b)
+    public function usergroup_sorting($a, $b)
     {
         return utf8_strlen($b['lower']) - utf8_strlen($a['lower']);
     }
