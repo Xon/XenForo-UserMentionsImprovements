@@ -9,11 +9,19 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             return;
         }
 
+        $options = XenForo_Application::getOptions();
+        if (empty($option->sv_ugt_email))
+        {
+            return;
+        }
+
         $userModel = $this->_getUserModel();
         $users = $userModel->getUsersByIds($userIds, array(
-            'join' => XenForo_Model_User::FETCH_USER_OPTION,
+            'join' => XenForo_Model_User::FETCH_USER_OPTION | 
+                      XenForo_Model_User::FETCH_USER_PERMISSIONS,
             'sv_emailOnTag' => true
         ));
+        $users = $this->unserializePermissionsInList($users, 'permission_cache');
         foreach($users as $user)
         {
             $this->emailAlertedUser($user, $taggingUser);
@@ -22,7 +30,10 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 
     public function emailAlertedUser(array $user, array $taggingUser)
     {
-
+        if (!XenForo_Permission::hasPermission($user, 'general', 'sv_ReceiveTagAlertEmails'))
+        {
+            return;
+        }
     }
 
     public function getTaggedUsersInMessage($message, &$newMessage, $replaceStyle = 'bb')
