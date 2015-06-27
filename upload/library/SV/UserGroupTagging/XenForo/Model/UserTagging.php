@@ -17,7 +17,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 
         $userModel = $this->_getUserModel();
         $users = $userModel->getUsersByIds($userIds, array(
-            'join' => XenForo_Model_User::FETCH_USER_OPTION | 
+            'join' => XenForo_Model_User::FETCH_USER_OPTION |
                       XenForo_Model_User::FETCH_USER_PERMISSIONS,
             'sv_emailOnTag' => true
         ));
@@ -192,7 +192,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
 
     public function expandTaggedGroups(array $tagged)
     {
-        $alreadyTagged = array_keys(XenForo_Application::arrayColumn($tagged, 'user_id'));
+        $alreadyTagged = array();
         $db = $this->_getDb();
         $users = array();
         foreach($tagged as $candinate)
@@ -230,7 +230,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
                 }
                 $alreadyTagged[$user['user_id']] = true;
 
-                $users[$candinate['user_id']] = array
+                $users[$user['user_id']] = array
                 (
                     'user_id' => $user['user_id'],
                     'username' => $user['username'],
