@@ -12,6 +12,7 @@
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Report" description="XenForo_Model_Report"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Post" description="XenForo_Model_Post"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ProfilePost" description="XenForo_Model_ProfilePost"/>
+    <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_UserGroup" description="XenForo_DataWriter_UserGroup"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Base" description="XenForo_BbCode_Formatter_Base"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Text" description="XenForo_BbCode_Formatter_Text"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_HtmlEmail" description="XenForo_BbCode_Formatter_HtmlEmail"/>
@@ -48,7 +49,28 @@
   <route_prefixes/>
   <style_properties/>
   <templates/>
-  <public_template_modifications/>
+  <public_template_modifications>
+    <modification template="editor" modification_key="sv_usergrouptag_editor" description="" execution_order="10000" enabled="1" action="str_replace">
+      <find><![CDATA[{xen:if $editorOptions.json, 'data-options="{xen:escape {xen:helper json, $editorOptions.json}}"'}]]></find>
+      <replace><![CDATA[$0 data-ac-url="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="member_view" modification_key="sv_usergrouptag_member_view" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="navigation_visitor_tab" modification_key="sv_usergrouptag_navigation_visitor_tab" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="profile_post" modification_key="sv_usergrouptag_profile_post" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="report_view" modification_key="sv_usergrouptag_report_view" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+  </public_template_modifications>
   <bb_code_media_sites/>
   <bb_codes/>
 </addon>

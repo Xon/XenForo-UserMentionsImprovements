@@ -166,7 +166,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         }
     }
 
-    public function getTaggableGroups($q = null)
+    public function getTaggableGroups($q = null, $limit = 0)
     {
         $db = $this->_getDb();
         $sql = '';
@@ -175,10 +175,11 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             $sql = ' and usergroup.title LIKE ' . XenForo_Db::quoteLike($q, 'r', $db);
         }
         return $this->fetchAllKeyed("
-            SELECT usergroup.user_group_id, usergroup.title
+            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar as avatar
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_tagable = 1 ". $sql."
             ORDER BY LENGTH(usergroup.title) DESC
+            " . ($limit ? " limit $limit " : '')  . "
         ", 'user_group_id');
     }
 
@@ -213,10 +214,10 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
                 $permissions = XenForo_Permission::unserializePermissions($permUser['global_permission_cache']);
             }
         }
-        
-        $CannotGroupTag = !XenForo_Permission::hasPermission($permissions, 'general', 'sv_TagUserGroup');        
 
-        $alreadyTagged = array();        
+        $CannotGroupTag = !XenForo_Permission::hasPermission($permissions, 'general', 'sv_TagUserGroup');
+
+        $alreadyTagged = array();
         $db = $this->_getDb();
         $users = array();
         foreach($tagged as $candinate)
