@@ -4,6 +4,7 @@
 // relying on the consumer being loaded correctly by the dynamic class autoloader
 class SV_UserGroupTagging_Globals
 {
+    public static $UserGroupAdminController = null;
 
     private function __construct() {}
 }

@@ -5,12 +5,50 @@
     <admin_permission admin_permission_id="sv_ViewAllPrivateGroups" display_order="4000"/>
   </admin_permissions>
   <admin_style_properties/>
-  <admin_templates/>
-  <admin_template_modifications/>
+  <admin_templates>
+    <template title="user_group_tagging"><![CDATA[<fieldset>
+	<xen:checkboxunit label="" explain="{xen:phrase user_group_is_taggable_explain}">
+		<xen:option name="sv_taggable" selected="{$userGroup.sv_taggable}">
+			{xen:phrase user_group_is_taggable}
+		</xen:option>
+	</xen:checkboxunit>
+
+	<xen:checkboxunit label="" explain="{xen:phrase user_group_is_private_explain}">
+		<xen:option name="sv_private" selected="{$userGroup.sv_private}">
+			{xen:phrase user_group_is_private}
+		</xen:option>	
+	</xen:checkboxunit>
+
+	<xen:textboxunit label="{xen:phrase user_group_small_avatar}" name="sv_avatar_s" value="{$userGroup.sv_avatar_s}" >
+		<xen:explain>{xen:phrase user_group_small_avatar_explain}</xen:explain>
+	</xen:textboxunit>
+
+	<xen:if is="{$userGroup.sv_avatar_s}">
+		<img src="{$userGroup.sv_avatar_s}" class="" />
+	</xen:if>
+
+	<xen:textboxunit label="{xen:phrase user_group_large_avatar}" name="sv_avatar_l" value="{$userGroup.sv_avatar_l}" >
+		<xen:explain>{xen:phrase user_group_large_avatar_explain}</xen:explain>
+	</xen:textboxunit>
+
+	<xen:if is="{$userGroup.sv_avatar_l}">
+		<img src="{$userGroup.sv_avatar_l}" class="" />
+	</xen:if>
+</fieldset>]]></template>
+  </admin_templates>
+  <admin_template_modifications>
+    <modification template="user_group_edit" modification_key="sv_ugt_user_group_edit" description="" execution_order="15" enabled="1" action="preg_replace">
+      <find><![CDATA[#(\s*)(<fieldset id="piGroups">)#si]]></find>
+      <replace><![CDATA[$1<xen:include template="user_group_tagging" />
+$1$2]]></replace>
+    </modification>
+  </admin_template_modifications>
   <code_events/>
   <code_event_listeners>
     <listener event_id="init_dependencies" execute_order="10" callback_class="SV_UserGroupTagging_Listener" callback_method="init_dependencies" active="1" hint="" description="BodyText hook"/>
     <listener event_id="load_class" execute_order="10" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserTagging" description="XenForo_Model_UserTagging"/>
+    <listener event_id="load_class" execute_order="10" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerAdmin_UserGroup" description="XenForo_ControllerAdmin_UserGroup"/>
+    <listener event_id="load_class" execute_order="10" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserGroup" description="XenForo_Model_UserGroup"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Report" description="XenForo_Model_Report"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Post" description="XenForo_Model_Post"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserGroupTagging_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ProfilePost" description="XenForo_Model_ProfilePost"/>
@@ -49,6 +87,14 @@
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="1" version_string="0.0.1"><![CDATA[Tag User Group]]></phrase>
     <phrase title="sv_ugt_PrivateGroup" version_id="1" version_string="0.0.1"><![CDATA[Private Group]]></phrase>
+    <phrase title="user_group_is_private" version_id="1" version_string="0.0.1"><![CDATA[Is Private]]></phrase>
+    <phrase title="user_group_is_private_explain" version_id="1" version_string="0.0.1"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
+    <phrase title="user_group_is_taggable" version_id="1" version_string="0.0.1"><![CDATA[Is Taggable]]></phrase>
+    <phrase title="user_group_is_taggable_explain" version_id="1" version_string="0.0.1"><![CDATA[This group can be tagged. Warning: not recommended for large groups]]></phrase>
+    <phrase title="user_group_large_avatar" version_id="1" version_string="0.0.1"><![CDATA[Large user group image]]></phrase>
+    <phrase title="user_group_large_avatar_explain" version_id="1" version_string="0.0.1"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
+    <phrase title="user_group_small_avatar" version_id="1" version_string="0.0.1"><![CDATA[Small user group image]]></phrase>
+    <phrase title="user_group_small_avatar_explain" version_id="1" version_string="0.0.1"><![CDATA[Image to use when displaying the user group during tagging.]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
