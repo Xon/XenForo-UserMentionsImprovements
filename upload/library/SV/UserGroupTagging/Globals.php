@@ -5,6 +5,7 @@
 class SV_UserGroupTagging_Globals
 {
     public static $UserGroupAdminController = null;
+    public static $PublicAccountController = null;
 
     private function __construct() {}
 }
