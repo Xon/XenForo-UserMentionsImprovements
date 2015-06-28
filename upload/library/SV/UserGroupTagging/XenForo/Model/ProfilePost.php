@@ -15,7 +15,7 @@ class SV_UserGroupTagging_XenForo_Model_ProfilePost extends XFCP_SV_UserGroupTag
         $userTaggingModel = $this->_getUserTaggingModel();
         $tagged = $userTaggingModel->expandTaggedGroups($tagged, $taggingUser);
         $alertedUsers = parent::alertTaggedMembers($profilePost, $profileUser, $tagged, $alreadyAlerted, $isComment, $taggingUser);
-        $userTaggingModel->emailAlertedUsers($alertedUsers, $taggingUser);
+        $userTaggingModel->emailAlertedUsers('profile_post', $profilePost['profile_post_id'], $profilePost, $alertedUsers, $taggingUser);
         return $alertedUsers;
     }
 

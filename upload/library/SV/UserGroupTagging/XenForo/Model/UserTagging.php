@@ -2,7 +2,7 @@
 
 class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTagging_XenForo_Model_UserTagging
 {
-    public function emailAlertedUsers(array $users, array $taggingUser)
+    public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser)
     {
         if (empty($userIds))
         {
@@ -10,7 +10,16 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         }
 
         $options = XenForo_Application::getOptions();
-        if (empty($option->sv_ugt_email))
+        if (!$options->sv_send_email_on_tagging)
+        {
+            return;
+        }
+
+        // use the alert handler to provide a content link. 
+        // This addon extends the relevent alert handlers to inject the required method
+        $alertModel = $this->getModelFromCache('XenForo_Model_Alert');
+        $alertHandler = $alertModel->getAlertHandler($contentType);
+        if (empty($alertHandler) || !method_exists($alertHandler, 'getContentUrl'))
         {
             return;
         }
@@ -19,20 +28,36 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
         $users = $userModel->getUsersByIds($userIds, array(
             'join' => XenForo_Model_User::FETCH_USER_OPTION |
                       XenForo_Model_User::FETCH_USER_PERMISSIONS,
-            'sv_emailOnTag' => true
+            'sv_email_on_tag' => true
         ));
-        $users = $this->unserializePermissionsInList($users, 'permission_cache');
+        $users = $this->unserializePermissionsInList($users, 'global_permission_cache');
         foreach($users as $user)
         {
-            $this->emailAlertedUser($user, $taggingUser);
+            $this->emailAlertedUser($alertHandler, $contentType, $contentId, $content, $user, $taggingUser);
         }
     }
 
-    public function emailAlertedUser(array $user, array $taggingUser)
+    public function emailAlertedUser(XenForo_AlertHandler_Abstract $alertHandler, $contentType, $contentId, $content, array $user, array $taggingUser)
     {
-        if (!XenForo_Permission::hasPermission($user['permission'], 'general', 'sv_ReceiveTagAlertEmails'))
+        if (!XenForo_Permission::hasPermission($user['permissions'], 'general', 'sv_ReceiveTagAlertEmails'))
         {
             return;
+        }
+
+        $viewLink = $alertHandler->getContentUrl($content, true);
+        if (!empty($viewLink))
+        {
+            $mail = XenForo_Mail::create('sv_user_tagged', array
+            (
+                'sender' => $taggingUser,
+                'receiver' => $user,
+                'contentType' => $contentType,
+                'contentId' => $contentId,
+                'viewLink' => $viewLink,
+            ), $user['language_id']);
+
+            $mail->enableAllLanguagePreCache();
+            $mail->queue($user['email'], $user['username']);
         }
     }
 
@@ -333,5 +358,10 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             }
         }
         return $users;
+    }
+
+    protected function _getUserModel()
+    {
+        return $this->getModelFromCache('XenForo_Model_User');
     }
 }
