@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTagging_XenForo_Model_UserTagging
+class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserTaggingImprovements_XenForo_Model_UserTagging
 {
     public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser)
     {

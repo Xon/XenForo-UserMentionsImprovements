@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_Install
+class SV_UserTaggingImprovements_Install
 {
     public static function modifyColumn($table, $column, $oldDefinition, $definition)
     {

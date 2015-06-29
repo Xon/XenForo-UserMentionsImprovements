@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_Model_Alert extends XFCP_SV_UserGroupTagging_XenForo_Model_Alert
+class SV_UserTaggingImprovements_XenForo_Model_Alert extends XFCP_SV_UserTaggingImprovements_XenForo_Model_Alert
 {
 	public function getAlertHandler($contentType)
 	{

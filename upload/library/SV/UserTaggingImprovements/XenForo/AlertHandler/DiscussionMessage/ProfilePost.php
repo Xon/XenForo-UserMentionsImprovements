@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_AlertHandler_DiscussionMessage_ProfilePost extends XFCP_SV_UserGroupTagging_XenForo_AlertHandler_DiscussionMessage_ProfilePost
+class SV_UserTaggingImprovements_XenForo_AlertHandler_DiscussionMessage_ProfilePost extends XFCP_SV_UserTaggingImprovements_XenForo_AlertHandler_DiscussionMessage_ProfilePost
 {
     public function getContentUrl(array $content, $canonical = false)
     {

@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_Model_Report extends XFCP_SV_UserGroupTagging_XenForo_Model_Report
+class SV_UserTaggingImprovements_XenForo_Model_Report extends XFCP_SV_UserTaggingImprovements_XenForo_Model_Report
 {
     public function alertTaggedMembers(array $report, array $reportComment, array $tagged, array $alreadyAlerted, array $taggingUser)
     {

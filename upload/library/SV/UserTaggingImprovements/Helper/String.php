@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_Helper_String
+class SV_UserTaggingImprovements_Helper_String
 {
     public static $originalBodyText = null;
 

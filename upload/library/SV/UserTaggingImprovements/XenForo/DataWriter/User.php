@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_DataWriter_User extends XFCP_SV_UserGroupTagging_XenForo_DataWriter_User
+class SV_UserTaggingImprovements_XenForo_DataWriter_User extends XFCP_SV_UserTaggingImprovements_XenForo_DataWriter_User
 {
     protected function _getFields()
     {
@@ -11,9 +11,9 @@ class SV_UserGroupTagging_XenForo_DataWriter_User extends XFCP_SV_UserGroupTaggi
 
     protected function _preSave()
     {
-        if (!empty(SV_UserGroupTagging_Globals::$PublicAccountController))
+        if (!empty(SV_UserTaggingImprovements_Globals::$PublicAccountController))
         {
-            $input = SV_UserGroupTagging_Globals::$PublicAccountController->getInput();
+            $input = SV_UserTaggingImprovements_Globals::$PublicAccountController->getInput();
             $this->set('sv_email_on_tag', $input->filterSingle('sv_email_on_tag', XenForo_Input::UINT));
         }
 

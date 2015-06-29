@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_DataWriter_UserGroup extends XFCP_SV_UserGroupTagging_XenForo_DataWriter_UserGroup
+class SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup extends XFCP_SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup
 {
     protected function _getFields()
     {

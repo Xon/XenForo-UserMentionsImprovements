@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_BbCode_Formatter_Text extends XFCP_SV_UserGroupTagging_XenForo_BbCode_Formatter_Text
+class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_Text extends XFCP_SV_UserTaggingImprovements_XenForo_BbCode_Formatter_Text
 {
     public function getTags()
     {

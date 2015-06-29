@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_XenForo_ControllerPublic_Member extends XFCP_SV_UserGroupTagging_XenForo_ControllerPublic_Member
+class SV_UserTaggingImprovements_XenForo_ControllerPublic_Member extends XFCP_SV_UserTaggingImprovements_XenForo_ControllerPublic_Member
 {
     public function actionIndex()
     {
@@ -43,7 +43,7 @@ class SV_UserGroupTagging_XenForo_ControllerPublic_Member extends XFCP_SV_UserGr
             'userGroup' => $userGroup,
         );
 
-        return $this->responseView('SV_UserGroupTagging_ViewPublic_Member_UserGroup', 'sv_members_usergroup', $viewParams);
+        return $this->responseView('SV_UserTaggingImprovements_ViewPublic_Member_UserGroup', 'sv_members_usergroup', $viewParams);
     }
 
     public function actionGroupFind()
@@ -78,7 +78,7 @@ class SV_UserGroupTagging_XenForo_ControllerPublic_Member extends XFCP_SV_UserGr
         (
             'users' => array_merge($groups, $users)
         );
-        return $this->responseView('SV_UserGroupTagging_ViewPublic_Member_Find', 'group_autocomplete', $viewParams);
+        return $this->responseView('SV_UserTaggingImprovements_ViewPublic_Member_Find', 'group_autocomplete', $viewParams);
     }
 
     protected function _getUserTaggingModel()

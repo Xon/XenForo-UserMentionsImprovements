@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserGroupTagging_ViewPublic_Member_Find extends XenForo_ViewPublic_Base
+class SV_UserTaggingImprovements_ViewPublic_Member_Find extends XenForo_ViewPublic_Base
 {
     public function renderJson()
     {
