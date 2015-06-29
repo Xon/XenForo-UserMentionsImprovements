@@ -7,7 +7,7 @@ class SV_UserGroupTagging_ViewPublic_Member_Find extends XenForo_ViewPublic_Base
         $results = array();
         foreach ($this->_params['users'] AS $user)
         {
-            if (empty($user['avatar']))
+            if (empty($user['avatar_s']))
             {
                 $results[$user['username']] = array
                 (
@@ -19,7 +19,7 @@ class SV_UserGroupTagging_ViewPublic_Member_Find extends XenForo_ViewPublic_Base
             {
                 $results[$user['username']] = array
                 (
-                    'avatar' => $user['avatar'],
+                    'avatar' => $user['avatar_s'],
                     'username' => htmlspecialchars($user['username'])
                 );
             }

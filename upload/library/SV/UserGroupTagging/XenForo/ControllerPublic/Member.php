@@ -60,9 +60,17 @@ class SV_UserGroupTagging_XenForo_ControllerPublic_Member extends XFCP_SV_UserGr
         {
             $users = $response->params['users'];
             $userGroups = $this->_getUserTaggingModel()->getTaggableGroups($q, 10);
-
+            $options = XenForo_Application::getOptions();
             foreach ($userGroups as $userGroupId => $userGroup)
             {
+                if (empty($userGroup['avatar_s']))
+                {
+                   $userGroup['avatar_s'] = $options->sv_default_group_avatar_s;
+                }
+                if (empty($userGroup['avatar_l']))
+                {
+                   $userGroup['avatar_l'] = $options->sv_default_group_avatar_l;
+                }
                 $groups[] = $userGroup;
             }
         }

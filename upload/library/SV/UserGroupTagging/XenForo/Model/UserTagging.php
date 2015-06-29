@@ -15,7 +15,7 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             return;
         }
 
-        // use the alert handler to provide a content link. 
+        // use the alert handler to provide a content link.
         // This addon extends the relevent alert handlers to inject the required method
         $alertModel = $this->getModelFromCache('XenForo_Model_Alert');
         $alertHandler = $alertModel->getAlertHandler($contentType);
@@ -227,11 +227,25 @@ class SV_UserGroupTagging_XenForo_Model_UserTagging extends XFCP_SV_UserGroupTag
             $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) .  ' ) )';
         }
 
-        return $db->fetchRow("
+        $userGroup = $db->fetchRow("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? ". $sql."
         ", $UserGroupId);
+
+        if (!empty($userGroup))
+        {
+            if (empty($userGroup['avatar_s']))
+            {
+               $userGroup['avatar_s'] = $options->sv_default_group_avatar_s;
+            }
+            if (empty($userGroup['avatar_l']))
+            {
+               $userGroup['avatar_l'] = $options->sv_default_group_avatar_l;
+            }
+        }
+
+        return $userGroup;
     }
 
     public function getTaggableGroups($q = null, $limit = 0)
