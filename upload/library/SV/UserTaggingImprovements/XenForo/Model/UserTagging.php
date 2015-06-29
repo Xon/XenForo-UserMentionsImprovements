@@ -73,6 +73,15 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 $filteredMessage
             );
         }
+        else if ($replaceStyle == 'text')
+        {
+            $this->_plainReplacements = array();
+            $filteredMessage = preg_replace_callback(
+                '#(?<=^|\s|[\](,]|--|@)@\[ug_(\d+):(\'|"|&quot;|)(.*)\\2\]#iU',
+                array($this, '_plainReplaceHandler'),
+                $filteredMessage
+            );
+        }
         $matches = parent::getTaggedUsersInMessage($filteredMessage, $newMessage, $replaceStyle);
         // restore the message if there are no matches
         if (empty($matches))
@@ -176,41 +185,13 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
     protected function _replaceTagUserMatch(array $user, $replaceStyle)
     {
-        if (empty($user['is_group']))
+        if (!empty($user['is_group']) && $replaceStyle == 'bb')
         {
-            return parent::_replaceTagUserMatch($user, $replaceStyle);
-        }
-        $group_id = intval(str_replace('ug_', '', $user['user_id']));
-
-        $prefix = XenForo_Application::getOptions()->userTagKeepAt ? '@' : '';
-
-        if ($replaceStyle == 'bb')
-        {
+            $group_id = intval(str_replace('ug_', '', $user['user_id']));
+            $prefix = XenForo_Application::getOptions()->userTagKeepAt ? '@' : '';
             return '[USERGROUP=' . $group_id . ']' . $prefix . $user['username'] . '[/USERGROUP]';
         }
-        else if ($replaceStyle == 'text')
-        {
-            if (strpos($user['username'], ']') !== false)
-            {
-                if (strpos($user['username'], "'") !== false)
-                {
-                    $username = '"' . $prefix . $user['username'] . '"';
-                }
-                else
-                {
-                    $username = "'" . $prefix . $user['username'] . "'";
-                }
-            }
-            else
-            {
-                $username = $prefix . $user['username'];
-            }
-            return '@[' . $username . ']';
-        }
-        else
-        {
-            return $prefix . $user['username'];
-        }
+        return parent::_replaceTagUserMatch($user, $replaceStyle);
     }
 
     public function getTaggableGroup($UserGroupId)
