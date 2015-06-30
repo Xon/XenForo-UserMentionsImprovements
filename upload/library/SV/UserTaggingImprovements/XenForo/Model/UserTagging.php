@@ -216,6 +216,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         if (!empty($userGroup))
         {
+            $options = XenForo_Application::getOptions();
             if (empty($userGroup['avatar_s']))
             {
                $userGroup['avatar_s'] = $options->sv_default_group_avatar_s;
