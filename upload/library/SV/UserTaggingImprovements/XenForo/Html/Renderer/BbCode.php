@@ -1,6 +1,6 @@
 <?php
 
-class SV_UserTaggingImprovements_XenForo_Html_Renderer_BbCodet extends XFCP_SV_UserTaggingImprovements_XenForo_Html_Renderer_BbCode
+class SV_UserTaggingImprovements_XenForo_Html_Renderer_BbCode extends XFCP_SV_UserTaggingImprovements_XenForo_Html_Renderer_BbCode
 {
     public function handleTagA($text, XenForo_Html_Tag $tag)
     {
