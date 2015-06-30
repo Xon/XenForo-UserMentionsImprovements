@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="0.0.1" version_id="1" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.0" version_id="10000" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions>
     <admin_permission admin_permission_id="sv_ViewAllPrivateGroups" display_order="4000"/>
@@ -143,25 +143,25 @@ $1$2]]></replace>
     <interface_groups/>
   </permissions>
   <phrases>
-    <phrase title="admin_permission_sv_ViewAllPrivateGroups" version_id="1" version_string="0.0.1"><![CDATA[View All Private Groups]]></phrase>
-    <phrase title="option_group_SV_UserTaggingImprovements" version_id="1" version_string="0.0.1"><![CDATA[User Tagging Improvements]]></phrase>
-    <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="1" version_string="0.0.1"><![CDATA[User group tagging, emails on tags]]></phrase>
-    <phrase title="option_sv_default_group_avatar_l" version_id="1" version_string="0.0.1"><![CDATA[Default User Group Avatar (l)]]></phrase>
-    <phrase title="option_sv_default_group_avatar_l_explain" version_id="1" version_string="0.0.1"><![CDATA[The default user group avatar to use if no avatar when viewing the membership of a group]]></phrase>
-    <phrase title="option_sv_default_group_avatar_s" version_id="1" version_string="0.0.1"><![CDATA[Default User Group Avatar (s)]]></phrase>
-    <phrase title="option_sv_default_group_avatar_s_explain" version_id="1" version_string="0.0.1"><![CDATA[The default user group avatar to use if no avatar is set]]></phrase>
-    <phrase title="option_sv_send_email_on_tagging" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
-    <phrase title="option_sv_send_email_on_tagging_explain" version_id="1" version_string="0.0.1"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
-    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1" version_string="0.0.1"><![CDATA[Receive Tag Alert Emails]]></phrase>
-    <phrase title="permission_general_sv_TagUserGroup" version_id="1" version_string="0.0.1"><![CDATA[Tag User Group]]></phrase>
-    <phrase title="sv_PrivateUserGroup" version_id="1" version_string="0.0.1"><![CDATA[Private Group]]></phrase>
-    <phrase title="sv_receive_email_when_tagged" version_id="1" version_string="0.0.1"><![CDATA[Receive email when tagged]]></phrase>
-    <phrase title="sv_receive_email_when_tagged_explain" version_id="1" version_string="0.0.1"><![CDATA[Email notifications when tagged from threads, replies, profile posts, etc.]]></phrase>
-    <phrase title="sv_tagged_email_html" version_id="1" version_string="0.0.1"><![CDATA[{receiver_username}, {sender} tagged you at {board}.]]></phrase>
-    <phrase title="sv_tagged_email_html_footer_1" version_id="1" version_string="0.0.1"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody tags you.]]></phrase>
-    <phrase title="sv_tagged_email_html_footer_2" version_id="1" version_string="0.0.1"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
-    <phrase title="sv_tagged_email_subject" version_id="1" version_string="0.0.1"><![CDATA[You have been tagged by {username} at {board_title}]]></phrase>
-    <phrase title="sv_tagged_email_text" version_id="1" version_string="0.0.1"><![CDATA[{receiver_username}, {username} tagged you at {board_title}.
+    <phrase title="admin_permission_sv_ViewAllPrivateGroups" version_id="10000" version_string="1.0.0"><![CDATA[View All Private Groups]]></phrase>
+    <phrase title="option_group_SV_UserTaggingImprovements" version_id="10000" version_string="1.0.0"><![CDATA[User Tagging Improvements]]></phrase>
+    <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="10000" version_string="1.0.0"><![CDATA[User group tagging, emails on tags]]></phrase>
+    <phrase title="option_sv_default_group_avatar_l" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (l)]]></phrase>
+    <phrase title="option_sv_default_group_avatar_l_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar when viewing the membership of a group]]></phrase>
+    <phrase title="option_sv_default_group_avatar_s" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (s)]]></phrase>
+    <phrase title="option_sv_default_group_avatar_s_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar is set]]></phrase>
+    <phrase title="option_sv_send_email_on_tagging" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
+    <phrase title="option_sv_send_email_on_tagging_explain" version_id="10000" version_string="1.0.0"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
+    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
+    <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
+    <phrase title="sv_PrivateUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Private Group]]></phrase>
+    <phrase title="sv_receive_email_when_tagged" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when tagged]]></phrase>
+    <phrase title="sv_receive_email_when_tagged_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when tagged from threads, replies, profile posts, etc.]]></phrase>
+    <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} tagged you at {board}.]]></phrase>
+    <phrase title="sv_tagged_email_html_footer_1" version_id="10000" version_string="1.0.0"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody tags you.]]></phrase>
+    <phrase title="sv_tagged_email_html_footer_2" version_id="10000" version_string="1.0.0"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
+    <phrase title="sv_tagged_email_subject" version_id="10000" version_string="1.0.0"><![CDATA[You have been tagged by {username} at {board_title}]]></phrase>
+    <phrase title="sv_tagged_email_text" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {username} tagged you at {board_title}.
 
 To view the tagged content, click here:
 {view_link}
@@ -174,20 +174,20 @@ To stop receiving email, please edit your account preferences:
 {prefs_link}
 
 {board_link}]]></phrase>
-    <phrase title="sv_view_all_your_alerts" version_id="1" version_string="0.0.1"><![CDATA[View all your alerts.]]></phrase>
-    <phrase title="user_group_is_private" version_id="1" version_string="0.0.1"><![CDATA[Is Private]]></phrase>
-    <phrase title="user_group_is_private_explain" version_id="1" version_string="0.0.1"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
-    <phrase title="user_group_is_taggable" version_id="1" version_string="0.0.1"><![CDATA[Is Taggable]]></phrase>
-    <phrase title="user_group_is_taggable_explain" version_id="1" version_string="0.0.1"><![CDATA[This group can be tagged. Warning: not recommended for large groups]]></phrase>
-    <phrase title="user_group_large_avatar" version_id="1" version_string="0.0.1"><![CDATA[Large user group image]]></phrase>
-    <phrase title="user_group_large_avatar_explain" version_id="1" version_string="0.0.1"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
-    <phrase title="user_group_small_avatar" version_id="1" version_string="0.0.1"><![CDATA[Small user group image]]></phrase>
-    <phrase title="user_group_small_avatar_explain" version_id="1" version_string="0.0.1"><![CDATA[Image to use when displaying the user group during tagging.]]></phrase>
+    <phrase title="sv_view_all_your_alerts" version_id="10000" version_string="1.0.0"><![CDATA[View all your alerts.]]></phrase>
+    <phrase title="user_group_is_private" version_id="10000" version_string="1.0.0"><![CDATA[Is Private]]></phrase>
+    <phrase title="user_group_is_private_explain" version_id="10000" version_string="1.0.0"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
+    <phrase title="user_group_is_taggable" version_id="10000" version_string="1.0.0"><![CDATA[Is Taggable]]></phrase>
+    <phrase title="user_group_is_taggable_explain" version_id="10000" version_string="1.0.0"><![CDATA[This group can be tagged. Warning: not recommended for large groups]]></phrase>
+    <phrase title="user_group_large_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Large user group image]]></phrase>
+    <phrase title="user_group_large_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
+    <phrase title="user_group_small_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Small user group image]]></phrase>
+    <phrase title="user_group_small_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group during tagging.]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
   <templates>
-    <template title="sv_members_usergroup" version_id="1" version_string="0.0.1"><![CDATA[<xen:require css="member_list.css" />
+    <template title="sv_members_usergroup" version_id="10000" version_string="1.0.0"><![CDATA[<xen:require css="member_list.css" />
 <xen:require css="UserGroupTagging.css" />
 <xen:title>{$userGroup.username}</xen:title>
 <div class="section">
@@ -213,12 +213,12 @@ To stop receiving email, please edit your account preferences:
 		</xen:foreach>
 	</ol>
 </div>]]></template>
-    <template title="sv_ugi_account_contact_details_messaging" version_id="1" version_string="0.0.1"><![CDATA[<li>
+    <template title="sv_ugi_account_contact_details_messaging" version_id="10000" version_string="1.0.0"><![CDATA[<li>
 	<label for="ctrl_sv_email_on_tag"><input type="checkbox" name="sv_email_on_tag" value="1" id="ctrl_sv_email_on_tag" {xen:checked '{$visitor.sv_email_on_tag}'} />
 		{xen:phrase sv_receive_email_when_tagged}</label>
 	<p class="hint">{xen:phrase sv_receive_email_when_tagged_explain}</p>
 </li>]]></template>
-    <template title="UserGroupTagging.css" version_id="1" version_string="0.0.1"><![CDATA[.xenOverlay .TaggedUserGroupMemberList 
+    <template title="UserGroupTagging.css" version_id="10000" version_string="1.0.0"><![CDATA[.xenOverlay .TaggedUserGroupMemberList 
 { 
 	max-height: 300px; overflow-y: scroll; 
 }
