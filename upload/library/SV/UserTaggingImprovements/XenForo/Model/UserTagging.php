@@ -28,7 +28,6 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $users = $userModel->getUsersByIds($userIds, array(
             'join' => XenForo_Model_User::FETCH_USER_OPTION |
                       XenForo_Model_User::FETCH_USER_PERMISSIONS,
-            'sv_email_on_tag' => true
         ));
         $users = $this->unserializePermissionsInList($users, 'global_permission_cache');
         foreach($users as $user)
@@ -39,7 +38,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
     public function emailAlertedUser(XenForo_AlertHandler_Abstract $alertHandler, $contentType, $contentId, $content, array $user, array $taggingUser)
     {
-        if (!XenForo_Permission::hasPermission($user['permissions'], 'general', 'sv_ReceiveTagAlertEmails'))
+        if (empty($user['sv_email_on_tag']) || !XenForo_Permission::hasPermission($user['permissions'], 'general', 'sv_ReceiveTagAlertEmails'))
         {
             return;
         }
