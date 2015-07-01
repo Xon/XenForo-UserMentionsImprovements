@@ -7,7 +7,7 @@
             data.config.pasteCleanUpCallback = function(e, ed, html)
             {
                 html = oldFunc(e, ed, html);
-                html = html.replace(/(.|^)<a\s[^>]*data-usergroup="(\d+, [^"]+)"[^>]*>([\w\W]+?)<\/a>/gi,
+                html = html.replace(/(.|^)<a\s[^>]*data-usergroup="(\d+, [^"]+)"[^>]*>([\w\W]+?)<\/a>/gmi,
                     function(match, prefix, user, username) {
                         var userInfo = user.split(', ');
                         if (!parseInt(userInfo[0], 10))
