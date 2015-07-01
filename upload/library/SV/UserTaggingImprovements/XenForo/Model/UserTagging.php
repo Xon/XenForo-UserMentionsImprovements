@@ -142,7 +142,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $require_sort = array();
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
         $groupMembership = $this->_getGroupMembership($visitor->toArray());
 
         while ($group = $userResults->fetch())
@@ -200,7 +200,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $sql = '';
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
 
         if (!$viewAllGroups)
         {
@@ -240,7 +240,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasAdminPermission('sv_ViewAllPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
 
         if (!$viewAllGroups)
         {

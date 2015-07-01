@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.0" version_id="10000" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.1" version_id="10001" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
   <admin_navigation/>
-  <admin_permissions>
-    <admin_permission admin_permission_id="sv_ViewAllPrivateGroups" display_order="4000"/>
-  </admin_permissions>
+  <admin_permissions/>
   <admin_style_properties/>
   <admin_templates>
     <template title="user_group_tagging"><![CDATA[<fieldset>
@@ -139,11 +137,11 @@ $1$2]]></replace>
     <permissions>
       <permission permission_group_id="general" permission_id="sv_ReceiveTagAlertEmails" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11230"/>
       <permission permission_group_id="general" permission_id="sv_TagUserGroup" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11231"/>
+      <permission permission_group_id="general" permission_id="sv_ViewPrivateGroups" permission_type="flag" default_value="unset" interface_group_id="generalModeratorPermissions" display_order="9"/>
     </permissions>
     <interface_groups/>
   </permissions>
   <phrases>
-    <phrase title="admin_permission_sv_ViewAllPrivateGroups" version_id="10000" version_string="1.0.0"><![CDATA[View All Private Groups]]></phrase>
     <phrase title="option_group_SV_UserTaggingImprovements" version_id="10000" version_string="1.0.0"><![CDATA[User Tagging Improvements]]></phrase>
     <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="10000" version_string="1.0.0"><![CDATA[User group tagging, emails on tags]]></phrase>
     <phrase title="option_sv_default_group_avatar_l" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (l)]]></phrase>
@@ -154,6 +152,7 @@ $1$2]]></replace>
     <phrase title="option_sv_send_email_on_tagging_explain" version_id="10000" version_string="1.0.0"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
+    <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>
     <phrase title="sv_PrivateUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Private Group]]></phrase>
     <phrase title="sv_receive_email_when_tagged" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when tagged]]></phrase>
     <phrase title="sv_receive_email_when_tagged_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when tagged from threads, replies, profile posts, etc.]]></phrase>
