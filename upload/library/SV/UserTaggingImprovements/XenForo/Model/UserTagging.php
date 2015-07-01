@@ -29,35 +29,44 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             'join' => XenForo_Model_User::FETCH_USER_OPTION |
                       XenForo_Model_User::FETCH_USER_PERMISSIONS,
         ));
-        $users = $this->unserializePermissionsInList($users, 'global_permission_cache');
         foreach($users as $user)
         {
-            $this->emailAlertedUser($alertHandler, $contentType, $contentId, $content, $user, $taggingUser);
+            if (empty($user['sv_email_on_tag']))
+            {
+                continue;
+            }
+
+            $permissions = (!empty($user['global_permission_cache'])
+                            ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
+                            : array());
+            if (!XenForo_Permission::hasPermission($permissions, 'general', 'sv_ReceiveTagAlertEmails'))
+            {
+                continue;
+            }
+
+            $viewLink = $alertHandler->getContentUrl($content, true);
+            if (empty($viewLink))
+            {
+                continue;
+            }
+
+            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser);
         }
     }
 
-    public function emailAlertedUser(XenForo_AlertHandler_Abstract $alertHandler, $contentType, $contentId, $content, array $user, array $taggingUser)
+    protected function emailAlertedUser($viewLink, $contentType, $contentId, $content, array $user, array $taggingUser)
     {
-        if (empty($user['sv_email_on_tag']) || !XenForo_Permission::hasPermission($user['permissions'], 'general', 'sv_ReceiveTagAlertEmails'))
-        {
-            return;
-        }
+        $mail = XenForo_Mail::create('sv_user_tagged', array
+        (
+            'sender' => $taggingUser,
+            'receiver' => $user,
+            'contentType' => $contentType,
+            'contentId' => $contentId,
+            'viewLink' => $viewLink,
+        ), $user['language_id']);
 
-        $viewLink = $alertHandler->getContentUrl($content, true);
-        if (!empty($viewLink))
-        {
-            $mail = XenForo_Mail::create('sv_user_tagged', array
-            (
-                'sender' => $taggingUser,
-                'receiver' => $user,
-                'contentType' => $contentType,
-                'contentId' => $contentId,
-                'viewLink' => $viewLink,
-            ), $user['language_id']);
-
-            $mail->enableAllLanguagePreCache();
-            $mail->queue($user['email'], $user['username']);
-        }
+        $mail->enableAllLanguagePreCache();
+        $mail->queue($user['email'], $user['username']);
     }
 
     public function getTaggedUsersInMessage($message, &$newMessage, $replaceStyle = 'bb')
