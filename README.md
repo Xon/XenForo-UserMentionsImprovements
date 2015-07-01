@@ -7,7 +7,7 @@ Improvements to XenForo's tagging system.
  - membership can be viewed on the front-end.
  - user group may be private, at which point only members can tag that group.
  - permission to tag taggable groups.
- - Admin privilage to view all taggable groups.
+ - Admin privilege to view all taggable groups.
 - User group tagging supports the following:
  - User profile posts/comments.
  - Posts/Threads.
