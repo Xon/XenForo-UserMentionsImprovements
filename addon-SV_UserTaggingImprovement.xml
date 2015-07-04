@@ -78,18 +78,31 @@ $1$2]]></replace>
       <body_text><![CDATA[{xen:phrase sv_tagged_email_text, 
 	"receiver_username={$receiver.username}",
 	"username={$sender.username}",
-	"view_link={$url}",
+	"view_link={$viewLink}",
 	"prefs_link={xen:link 'canonical:account/contact-details'}",
 	"board_link={xen:link 'canonical:index'}",
 	"board_title={$xenOptions.boardTitle}"
 }]]></body_text>
       <body_html><![CDATA[<p style="margin-top: 0">{xen:phrase sv_tagged_email_html,
-	'receiver={$receiver.username}',
+	'receiver_username={$receiver.username}',
 	'sender=<a href="{xen:link canonical:members, $sender}" style="color: #176093; text-decoration: none">{$sender.username}</a>',
 	'board=<a href="{xen:link canonical:index}" style="color: #176093; text-decoration: none">{$xenOptions.boardTitle}</a>'}</p>
 
 <table cellpadding="10" cellspacing="0" border="0" width="100%" style="margin: 20px 0; background-color: #f0f7fc; border-top: 1px solid #d7edfc">
 <tr>
+	<td>
+		<a href="{$viewLink}" style="
+			display: block;
+			float: {xen:if $emailIsRtl, right, left};
+			padding: 5px 10px;
+			background-color: #65a5d1;
+			border: none;
+			border-radius: 3px;
+			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: white;
+			text-decoration: none">{$viewLink}</a>
+	</td>
 	<td align="{xen:if $emailIsRtl, left, right}">
 		<a href="{xen:link canonical:alerts}" style="
 			display: block;
