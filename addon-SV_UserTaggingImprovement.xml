@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.3" version_id="10003" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.4" version_id="10004" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -237,9 +237,13 @@ To stop receiving email, please edit your account preferences:
 ]]></template>
   </templates>
   <public_template_modifications>
-    <modification template="editor_js_setup" modification_key="SV_UserTagging_editor_js_setup" description="Copy &amp; paste support  for user group tags" execution_order="1000" enabled="1" action="preg_replace">
-      <find><![CDATA[#<xen:require js="js/xenforo/bb_code_edit.js" />#]]></find>
-      <replace><![CDATA[<xen:require js="js/SV/UserTagging/group_tagging.js" />
+    <modification template="editor_js_setup" modification_key="SV_UserTagging_editor_js_setup" description="Copy &amp; paste support  for user group tags" execution_order="1000" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:require js="js/xenforo/bb_code_edit.js" />]]></find>
+      <replace><![CDATA[<xen:if is="{$debugMode}">
+	<xen:require js="js/SV/UserTagging/group_tagging.full.js" />
+<xen:else />
+	<xen:require js="js/SV/UserTagging/group_tagging.js" />
+</xen:if>
 $0]]></replace>
     </modification>
     <modification template="account_contact_details" modification_key="sv_ugi_account_contact_details" description="" execution_order="10000" enabled="1" action="preg_replace">
