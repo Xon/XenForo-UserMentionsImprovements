@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.4" version_id="10004" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Tagging Improvements" version_string="1.0.5" version_id="10005" url="" install_callback_class="SV_UserTaggingImprovements_Listener" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Listener" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -277,6 +277,22 @@ $2$3]]></replace>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
     <modification template="report_view" modification_key="sv_usergrouptag_report_view" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>    
+    <modification template="conversation_message_report" modification_key="sv_usergrouptag_conversation_message_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="member_report" modification_key="sv_usergrouptag_member_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="post_report" modification_key="sv_usergrouptag_post_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="profile_post_report" modification_key="sv_usergrouptag_profile_post_report" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
