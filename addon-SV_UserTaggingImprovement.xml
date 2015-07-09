@@ -246,6 +246,15 @@ To stop receiving email, please edit your account preferences:
 </xen:if>
 $0]]></replace>
     </modification>
+    <modification template="tiny_quattro_js_setup" modification_key="SV_UserTagging_tiny_quattro_js_setup" description="Copy &amp; paste support  for user group tags (TinyQuattro)" execution_order="10000" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:require js="js/sedo/tinyquattro/integration/loader.min.js{$mceVersion}" />]]></find>
+      <replace><![CDATA[<xen:if is="{$debugMode}">
+	<xen:require js="js/SV/UserTagging/group_tagging_tinyquattro.full.js{$mceVersion}" />
+<xen:else />
+	<xen:require js="js/SV/UserTagging/group_tagging_tinyquattro.js{$mceVersion}" />
+</xen:if>
+$0]]></replace>
+    </modification>
     <modification template="account_contact_details" modification_key="sv_ugi_account_contact_details" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#(<xen:hook name="account_contact_details_messaging".*?)(\s*)(</xen:hook>)#si]]></find>
       <replace><![CDATA[$1$2<xen:include template="sv_ugi_account_contact_details_messaging"/>
