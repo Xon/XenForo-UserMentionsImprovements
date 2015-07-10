@@ -7,10 +7,10 @@ class SV_UserTaggingImprovements_XenForo_Model_ProfilePost extends XFCP_SV_UserT
         $isComment = false, array $taggingUser = null
     )
     {
-		if (!$taggingUser)
-		{
-			$taggingUser = $profilePost;
-		}
+        if (!$taggingUser)
+        {
+            $taggingUser = $profilePost;
+        }
 
         $userTaggingModel = $this->_getUserTaggingModel();
         $tagged = $userTaggingModel->expandTaggedGroups($tagged, $taggingUser);

@@ -19,7 +19,7 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP
     public function _renderTagUserGroup(array $tag, array $rendererStates)
     {
         $content = $this->renderSubTree($tag['children'], $rendererStates);
-        if ($content === '') 
+        if ($content === '')
         {
             return '';
         }
