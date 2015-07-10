@@ -14,7 +14,11 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_User extends XFCP_SV_UserTag
         if (!empty(SV_UserTaggingImprovements_Globals::$PublicAccountController))
         {
             $input = SV_UserTaggingImprovements_Globals::$PublicAccountController->getInput();
-            $this->set('sv_email_on_tag', $input->filterSingle('sv_email_on_tag', XenForo_Input::UINT));
+            $sv_email_on_tag = $input->filterSingle('sv_email_on_tag', XenForo_Input::UINT);
+            if (SV_UserTaggingImprovements_Globals::$CanEnableEmailOnTag || !$sv_email_on_tag)
+            {
+                $this->set('sv_email_on_tag', $sv_email_on_tag);
+            }
         }
 
         parent::_preSave();

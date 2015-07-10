@@ -167,6 +167,7 @@ $1$2]]></replace>
     <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
     <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>
     <phrase title="sv_PrivateUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Private Group]]></phrase>
+    <phrase title="sv_receive_email_is_disabled" version_id="10005" version_string="1.0.5"><![CDATA[You do not have permission to use this feature, but your choice is remembered.]]></phrase>
     <phrase title="sv_receive_email_when_tagged" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when tagged]]></phrase>
     <phrase title="sv_receive_email_when_tagged_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when tagged from threads, replies, profile posts, etc.]]></phrase>
     <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} tagged you at {board}.]]></phrase>
@@ -225,11 +226,18 @@ To stop receiving email, please edit your account preferences:
 		</xen:foreach>
 	</ol>
 </div>]]></template>
-    <template title="sv_ugi_account_contact_details_messaging" version_id="10000" version_string="1.0.0"><![CDATA[<li>
+    <template title="sv_ugi_account_contact_details_messaging" version_id="10005" version_string="1.0.5"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">    
+<li>
 	<label for="ctrl_sv_email_on_tag"><input type="checkbox" name="sv_email_on_tag" value="1" id="ctrl_sv_email_on_tag" {xen:checked '{$visitor.sv_email_on_tag}'} />
 		{xen:phrase sv_receive_email_when_tagged}</label>
-	<p class="hint">{xen:phrase sv_receive_email_when_tagged_explain}</p>
-</li>]]></template>
+	<p class="hint">
+        {xen:phrase sv_receive_email_when_tagged_explain}
+        <xen:if is="!{$CanEnableEmailOnTag}">
+            {xen:phrase sv_receive_email_is_disabled}
+        </xen:if>
+    </p>
+</li>
+</xen:if>]]></template>
     <template title="UserGroupTagging.css" version_id="10000" version_string="1.0.0"><![CDATA[.xenOverlay .TaggedUserGroupMemberList 
 { 
 	max-height: 300px; overflow-y: scroll; 
@@ -260,9 +268,17 @@ $0]]></replace>
       <replace><![CDATA[$1$2<xen:include template="sv_ugi_account_contact_details_messaging"/>
 $2$3]]></replace>
     </modification>
+    <modification template="conversation_message_report" modification_key="sv_usergrouptag_conversation_message_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
     <modification template="editor" modification_key="sv_usergrouptag_editor" description="" execution_order="10000" enabled="1" action="str_replace">
       <find><![CDATA[{xen:if $editorOptions.json, 'data-options="{xen:escape {xen:helper json, $editorOptions.json}}"'}]]></find>
       <replace><![CDATA[$0 data-ac-url="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="member_report" modification_key="sv_usergrouptag_member_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
     <modification template="member_view" modification_key="sv_usergrouptag_member_view" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
@@ -272,27 +288,19 @@ $2$3]]></replace>
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
-    <modification template="profile_post" modification_key="sv_usergrouptag_profile_post" description="" execution_order="10000" enabled="1" action="preg_replace">
-      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
-      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
-    </modification>
-    <modification template="report_view" modification_key="sv_usergrouptag_report_view" description="" execution_order="10000" enabled="1" action="preg_replace">
-      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
-      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
-    </modification>    
-    <modification template="conversation_message_report" modification_key="sv_usergrouptag_conversation_message_report" description="" execution_order="10000" enabled="1" action="preg_replace">
-      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
-      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
-    </modification>
-    <modification template="member_report" modification_key="sv_usergrouptag_member_report" description="" execution_order="10000" enabled="1" action="preg_replace">
-      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
-      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
-    </modification>
     <modification template="post_report" modification_key="sv_usergrouptag_post_report" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
+    <modification template="profile_post" modification_key="sv_usergrouptag_profile_post" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
     <modification template="profile_post_report" modification_key="sv_usergrouptag_profile_post_report" description="" execution_order="10000" enabled="1" action="preg_replace">
+      <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
+      <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="report_view" modification_key="sv_usergrouptag_report_view" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
     </modification>
