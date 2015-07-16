@@ -12,10 +12,15 @@ Improvements to XenForo's tagging system.
  - User profile posts/comments.
  - Posts/Threads.
  - Reports (if Report Improvements are installed).
+ - Other types supporting XenForo's user tagging will automatically support tagging user groups, but the front-end UI for auto-completing user groups will not work.
 - Opt-in emails on tagging:
  - global option to enable/disable.
  - configurable default for users on account creation.
  - permission to receive tagged emails.
+- Editor integration. Copying & pasting a user group tag link is transformed into @usergroup
+ - Redactor support
+ - TinyMCE Quattro and its wysiwyg bbcodes support.
+
 
 Group Icons licensed under CC Attribution-Noncommercial-No Derivate 4.0
 Sourced; http://www.iconarchive.com/show/sleek-xp-basic-icons-by-hopstarter/User-Group-icon.html
