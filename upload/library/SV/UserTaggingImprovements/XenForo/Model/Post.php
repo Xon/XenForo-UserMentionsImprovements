@@ -4,15 +4,16 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
 {
     public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
     {
-        if ($post['user_id'] == XenForo_Visitor::getUserId())
+        $visitor = XenForo_Visitor::getInstance();
+        if ($post['user_id'] == $visitor['user_id'])
         {
-            $permissions = XenForo_Visitor::getNodePermissions($post['user_id']);
+            $permissions = $visitor->getNodePermissions($forum['node_id']);
         }
         else if ($post['user_id'] == 0)
         {
             $permissionCacheModel = XenForo_Model::create('XenForo_Model_PermissionCache');
             $userModel = $this->_getUserModel();
-            $permissions = $permissionCacheModel->getContentPermissionsForItem(XenForo_Model_User::$guestPermissionCombinationId, 'node', $forum['forum_id']);
+            $permissions = $permissionCacheModel->getContentPermissionsForItem(XenForo_Model_User::$guestPermissionCombinationId, 'node', $forum['node_id']);
         }
         else
         {
@@ -25,7 +26,8 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
                             ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
                             : array());
         }
-        if (!XenForo_Permission::hasPermission($permissions, 'forum', 'sv_DisableTagging'))
+
+        if (XenForo_Permission::hasContentPermission($permissions, 'sv_DisableTagging'))
         {
             return array();
         }
