@@ -4,6 +4,32 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
 {
     public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
     {
+        if ($post['user_id'] == XenForo_Visitor::getUserId())
+        {
+            $permissions = XenForo_Visitor::getNodePermissions($post['user_id']);
+        }
+        else if ($post['user_id'] == 0)
+        {
+            $permissionCacheModel = XenForo_Model::create('XenForo_Model_PermissionCache');
+            $userModel = $this->_getUserModel();
+            $permissions = $permissionCacheModel->getContentPermissionsForItem(XenForo_Model_User::$guestPermissionCombinationId, 'node', $forum['forum_id']);
+        }
+        else
+        {
+            $userModel = $this->_getUserModel();
+            $user = $userModel->getUserById($post['user_id'], array(
+                'join' => XenForo_Model_User::FETCH_USER_PERMISSIONS,
+            ));
+
+            $permissions = (!empty($user['global_permission_cache'])
+                            ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
+                            : array());
+        }
+        if (!XenForo_Permission::hasPermission($permissions, 'forum', 'sv_DisableTagging'))
+        {
+            return array();
+        }
+
         $userTaggingModel = $this->_getUserTaggingModel();
         $tagged = $userTaggingModel->expandTaggedGroups($tagged, $post);
         $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);

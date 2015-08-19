@@ -2,7 +2,7 @@
 
 class SV_UserTaggingImprovements_Listener
 {
-    const AddonNameSpace = 'SV_UserTaggingImprovements';
+    const AddonNameSpace = 'SV_UserTaggingImprovements_';
 
     public static function install($installedAddon, array $addonData, SimpleXMLElement $xml)
     {
@@ -37,7 +37,7 @@ class SV_UserTaggingImprovements_Listener
 
     public static function load_class($class, array &$extend)
     {
-        $extend[] = self::AddonNameSpace.'_'.$class;
+        $extend[] = self::AddonNameSpace.$class;
     }
 
     public static function init_dependencies(XenForo_Dependencies_Abstract $dependencies, array $data)
