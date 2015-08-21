@@ -20,6 +20,7 @@ Improvements to XenForo's tagging system.
 - Editor integration. Copying & pasting a user group tag link is transformed into @usergroup
  - Redactor support
  - TinyMCE Quattro and its wysiwyg bbcodes support.
+- user tagging can be disabled per forum per user group
 
 
 Group Icons licensed under CC Attribution-Noncommercial-No Derivate 4.0
