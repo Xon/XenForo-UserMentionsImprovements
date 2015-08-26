@@ -170,7 +170,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
             foreach ($matchKeys AS $key)
             {
-                if ($group["match_$key"])
+                if (!empty($group["match_$key"]))
                 {
                     $usersByMatch[$key][$group['user_group_id']] = $userInfo;
                     $require_sort[$key] = true;
