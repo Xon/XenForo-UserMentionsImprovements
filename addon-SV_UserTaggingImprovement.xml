@@ -101,7 +101,7 @@ $1$2]]></replace>
 			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
 			font-size: 11px;
 			color: white;
-			text-decoration: none">{$viewLink}</a>
+			text-decoration: none">{xen:phrase sv_view_content_that_mentioned_you}></a>
 	</td>
 	<td align="{xen:if $emailIsRtl, left, right}">
 		<a href="{xen:link canonical:alerts}" style="
@@ -170,26 +170,27 @@ $1$2]]></replace>
     <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>
     <phrase title="sv_PrivateUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Private Group]]></phrase>
     <phrase title="sv_receive_email_is_disabled" version_id="10005" version_string="1.0.5"><![CDATA[You do not have permission to use this feature, but your choice is remembered.]]></phrase>
-    <phrase title="sv_receive_email_when_tagged" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when tagged]]></phrase>
-    <phrase title="sv_receive_email_when_tagged_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when tagged from threads, replies, profile posts, etc.]]></phrase>
-    <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} tagged you at {board}.]]></phrase>
-    <phrase title="sv_tagged_email_html_footer_1" version_id="10000" version_string="1.0.0"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody tags you.]]></phrase>
+    <phrase title="sv_receive_email_when_mentioned" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when mentioned]]></phrase>
+    <phrase title="sv_receive_email_when_mentioned_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when mentioned from threads, replies, profile posts, etc.]]></phrase>
+    <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} mentioned you at {board}.]]></phrase>
+    <phrase title="sv_tagged_email_html_footer_1" version_id="10000" version_string="1.0.0"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody mentions you.]]></phrase>
     <phrase title="sv_tagged_email_html_footer_2" version_id="10000" version_string="1.0.0"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
-    <phrase title="sv_tagged_email_subject" version_id="10000" version_string="1.0.0"><![CDATA[You have been tagged by {username} at {board_title}]]></phrase>
-    <phrase title="sv_tagged_email_text" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {username} tagged you at {board_title}.
+    <phrase title="sv_tagged_email_subject" version_id="10000" version_string="1.0.0"><![CDATA[You have been mentioned by {username} at {board_title}]]></phrase>
+    <phrase title="sv_tagged_email_text" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {username} mentioned you at {board_title}.
 
-To view the tagged content, click here:
+To view the contentyou where mentioned in, click here:
 {view_link}
 
 ----------------------------------------------------------------------
 
-This message was sent to you from {board_title} because your preferences are set to receive email when somebody tags you.
+This message was sent to you from {board_title} because your preferences are set to receive email when somebody mentions you.
 
 To stop receiving email, please edit your account preferences:
 {prefs_link}
 
 {board_link}]]></phrase>
     <phrase title="sv_view_all_your_alerts" version_id="10000" version_string="1.0.0"><![CDATA[View all your alerts.]]></phrase>
+    <phrase title="sv_view_content_that_mentioned_you" version_id="10000" version_string="1.0.0"><![CDATA[View content that mentioned you.]]></phrase>
     <phrase title="user_group_is_private" version_id="10000" version_string="1.0.0"><![CDATA[Is Private]]></phrase>
     <phrase title="user_group_is_private_explain" version_id="10000" version_string="1.0.0"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
     <phrase title="user_group_is_taggable" version_id="10000" version_string="1.0.0"><![CDATA[Is Taggable]]></phrase>
@@ -197,7 +198,7 @@ To stop receiving email, please edit your account preferences:
     <phrase title="user_group_large_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Large user group image]]></phrase>
     <phrase title="user_group_large_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
     <phrase title="user_group_small_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Small user group image]]></phrase>
-    <phrase title="user_group_small_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group during tagging.]]></phrase>
+    <phrase title="user_group_small_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group during tagging.]]></phrase>    
   </phrases>
   <route_prefixes/>
   <style_properties/>
@@ -231,9 +232,9 @@ To stop receiving email, please edit your account preferences:
     <template title="sv_ugi_account_contact_details_messaging" version_id="10005" version_string="1.0.5"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">    
 <li>
 	<label for="ctrl_sv_email_on_tag"><input type="checkbox" name="sv_email_on_tag" value="1" id="ctrl_sv_email_on_tag" {xen:checked '{$visitor.sv_email_on_tag}'} />
-		{xen:phrase sv_receive_email_when_tagged}</label>
+		{xen:phrase sv_receive_email_when_mentioned}</label>
 	<p class="hint">
-        {xen:phrase sv_receive_email_when_tagged_explain}
+        {xen:phrase sv_receive_email_when_mentioned_explain}
         <xen:if is="!{$CanEnableEmailOnTag}">
             {xen:phrase sv_receive_email_is_disabled}
         </xen:if>
