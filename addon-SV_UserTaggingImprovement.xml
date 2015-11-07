@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.0.7a" version_id="1000701" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.0.8" version_id="1000800" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
