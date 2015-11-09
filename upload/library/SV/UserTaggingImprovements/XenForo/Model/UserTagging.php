@@ -192,7 +192,11 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
     public function usergroup_sorting($a, $b)
     {
-        return utf8_strlen($b['lower']) - utf8_strlen($a['lower']);
+        if (!empty($b['is_group']) && empty($a['is_group'] ))
+            return 1;
+        else if (empty($b['is_group']) && !empty($a['is_group']))
+            return -1;
+        return (utf8_strlen($b['lower']) - utf8_strlen($a['lower']));
     }
 
     protected function _replaceTagUserMatch(array $user, $replaceStyle)
