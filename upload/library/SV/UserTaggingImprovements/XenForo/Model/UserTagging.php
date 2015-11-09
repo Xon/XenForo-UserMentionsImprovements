@@ -172,15 +172,19 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             {
                 if (!empty($group["match_$key"]))
                 {
-                    $usersByMatch[$key][$group['user_group_id']] = $userInfo;
-                    $require_sort[$key] = true;
+                    if (!isset($require_sort[$key]))
+                    {
+                        $require_sort[$key] = !empty($usersByMatch[$key]);
+                    }
+                    $usersByMatch[$key][$userInfo['user_id']] = $userInfo;
                 }
             }
         }
         // sort in the groups
         foreach ($require_sort AS $key => $x)
         {
-            usort($usersByMatch[$key],  array($this, 'usergroup_sorting'));
+            if ($require_sort[$key])
+            uasort($usersByMatch[$key], array($this, 'usergroup_sorting'));
         }
 
         return $usersByMatch;
