@@ -101,7 +101,7 @@ $1$2]]></replace>
 			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
 			font-size: 11px;
 			color: white;
-			text-decoration: none">{xen:phrase sv_view_content_that_mentioned_you}></a>
+			text-decoration: none">{xen:phrase sv_view_content_that_mentioned_you}</a>
 	</td>
 	<td align="{xen:if $emailIsRtl, left, right}">
 		<a href="{xen:link canonical:alerts}" style="
