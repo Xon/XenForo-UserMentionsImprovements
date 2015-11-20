@@ -21,6 +21,26 @@ class SV_UserTaggingImprovements_Installer
         $db = XenForo_Application::getDb();
 
         $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_group_id = 'general' and permission_id = 'sv_DisableTagging'
+        ");
+        $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_group_id = 'forum' and permission_id = 'sv_DisableTagging'
+        ");
+        $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_group_id = 'general' and permission_id = 'sv_ReceiveTagAlertEmails'
+        ");
+        $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_group_id = 'general' and permission_id = 'sv_TagUserGroup'
+        ");
+        $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_group_id = 'general' and permission_id = 'sv_ViewPrivateGroups'
+        ");
+        $db->query("
             DELETE FROM xf_permission_entry
             WHERE permission_group_id = 'forum' and permission_id = 'sv_DisableTagging'
         ");
