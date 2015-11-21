@@ -148,7 +148,7 @@ $1$2]]></replace>
   <permissions>
     <permission_groups/>
     <permissions>
-      <permission permission_group_id="forum" permission_id="sv_DisableTagging" permission_type="flag" default_value="unset" interface_group_id="forumPermissions" display_order="99998"/>
+      <permission permission_group_id="forum" permission_id="sv_EnableTagging" permission_type="flag" default_value="unset" interface_group_id="forumPermissions" display_order="99998"/>
       <permission permission_group_id="general" permission_id="sv_ReceiveTagAlertEmails" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11230"/>
       <permission permission_group_id="general" permission_id="sv_TagUserGroup" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11231"/>
       <permission permission_group_id="general" permission_id="sv_ViewPrivateGroups" permission_type="flag" default_value="unset" interface_group_id="generalModeratorPermissions" display_order="9"/>
@@ -164,7 +164,7 @@ $1$2]]></replace>
     <phrase title="option_sv_default_group_avatar_s_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar is set]]></phrase>
     <phrase title="option_sv_send_email_on_tagging" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="option_sv_send_email_on_tagging_explain" version_id="10000" version_string="1.0.0"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
-    <phrase title="permission_forum_sv_DisableTagging" version_id="10006" version_string="1.0.6"><![CDATA[Disable User Mentions]]></phrase>
+    <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
     <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>

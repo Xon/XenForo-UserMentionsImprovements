@@ -27,7 +27,7 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
                             : array());
         }
 
-        if (XenForo_Permission::hasContentPermission($permissions, 'sv_DisableTagging'))
+        if (!XenForo_Permission::hasContentPermission($permissions, 'sv_EnableTagging'))
         {
             return array();
         }
