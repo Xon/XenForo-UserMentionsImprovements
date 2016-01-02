@@ -9,22 +9,20 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
         {
             $permissions = $visitor->getNodePermissions($forum['node_id']);
         }
-        else if ($post['user_id'] == 0)
+        else
         {
             $permissionCacheModel = XenForo_Model::create('XenForo_Model_PermissionCache');
             $userModel = $this->_getUserModel();
-            $permissions = $permissionCacheModel->getContentPermissionsForItem(XenForo_Model_User::$guestPermissionCombinationId, 'node', $forum['node_id']);
-        }
-        else
-        {
-            $userModel = $this->_getUserModel();
-            $user = $userModel->getUserById($post['user_id'], array(
-                'join' => XenForo_Model_User::FETCH_USER_PERMISSIONS,
-            ));
-
-            $permissions = (!empty($user['global_permission_cache'])
-                            ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
-                            : array());
+            if ($post['user_id'] == 0)
+            {
+                $PermissionCombinationId = XenForo_Model_User::$guestPermissionCombinationId;
+            }
+            else
+            {
+                $user = $userModel->getUserById($post['user_id']);
+                $PermissionCombinationId = $user ['permission_combination_id'];
+            }
+            $permissions = $permissionCacheModel->getContentPermissionsForItem($PermissionCombinationId, 'node', $forum['node_id']);
         }
 
         if (!XenForo_Permission::hasContentPermission($permissions, 'sv_EnableTagging'))
