@@ -165,7 +165,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 'user_id' => 'ug_' . $group['user_group_id'],
                 'is_group' => 1,
                 'username' => $group['title'],
-                'lower' => strtolower($group['title'])
+                'lower' => utf8_strtolower($group['title'])
             );
 
             foreach ($matchKeys AS $key)
@@ -365,7 +365,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 (
                     'user_id' => $user['user_id'],
                     'username' => $user['username'],
-                    'lower' => strtolower($user['username'])
+                    'lower' => utf8_strtolower($user['username'])
                 );
             }
         }
