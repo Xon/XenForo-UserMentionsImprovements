@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.0.12" version_id="1001200" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.0.11a" version_id="1001101" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -156,8 +156,8 @@ $1$2]]></replace>
     <interface_groups/>
   </permissions>
   <phrases>
-    <phrase title="option_group_SV_UserTaggingImprovements" version_id="1001200" version_string="1.0.12"><![CDATA[User Mentions Improvements]]></phrase>
-    <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="1001200" version_string="1.0.12"><![CDATA[User group mentions, emails on mentions]]></phrase>
+    <phrase title="option_group_SV_UserTaggingImprovements" version_id="1001101" version_string="1.0.11a"><![CDATA[User Mentions Improvements]]></phrase>
+    <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="1001101" version_string="1.0.11a"><![CDATA[User group mentions, emails on mentions]]></phrase>
     <phrase title="option_sv_default_group_avatar_l" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (l)]]></phrase>
     <phrase title="option_sv_default_group_avatar_l_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar when viewing the membership of a group]]></phrase>
     <phrase title="option_sv_default_group_avatar_s" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (s)]]></phrase>
@@ -198,7 +198,7 @@ To stop receiving email, please edit your account preferences:
     <phrase title="user_group_large_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Large user group image]]></phrase>
     <phrase title="user_group_large_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
     <phrase title="user_group_small_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Small user group image]]></phrase>
-    <phrase title="user_group_small_avatar_explain" version_id="1001200" version_string="1.0.12"><![CDATA[Image to use when displaying the user group during mentions.]]></phrase>    
+    <phrase title="user_group_small_avatar_explain" version_id="1001101" version_string="1.0.11a"><![CDATA[Image to use when displaying the user group during mentions.]]></phrase>    
   </phrases>
   <route_prefixes/>
   <style_properties/>
