@@ -14,7 +14,7 @@
 	<xen:checkboxunit label="" explain="{xen:phrase user_group_is_private_explain}">
 		<xen:option name="sv_private" selected="{$userGroup.sv_private}">
 			{xen:phrase user_group_is_private}
-		</xen:option>	
+		</xen:option>
 	</xen:checkboxunit>
 
 	<xen:textboxunit label="{xen:phrase user_group_small_avatar}" name="sv_avatar_s" value="{$userGroup.sv_avatar_s}" >
@@ -71,11 +71,11 @@ $1$2]]></replace>
   <cron/>
   <email_templates>
     <template title="sv_user_tagged">
-      <subject><![CDATA[{xen:phrase sv_tagged_email_subject, 
+      <subject><![CDATA[{xen:phrase sv_tagged_email_subject,
 	"username={$sender.username}",
 	"board_title={$xenOptions.boardTitle}"
 }]]></subject>
-      <body_text><![CDATA[{xen:phrase sv_tagged_email_text, 
+      <body_text><![CDATA[{xen:phrase sv_tagged_email_text,
 	"receiver_username={$receiver.username}",
 	"username={$sender.username}",
 	"view_link={$viewLink}",
@@ -198,7 +198,7 @@ To stop receiving email, please edit your account preferences:
     <phrase title="user_group_large_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Large user group image]]></phrase>
     <phrase title="user_group_large_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
     <phrase title="user_group_small_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Small user group image]]></phrase>
-    <phrase title="user_group_small_avatar_explain" version_id="1001101" version_string="1.0.11a"><![CDATA[Image to use when displaying the user group during mentions.]]></phrase>    
+    <phrase title="user_group_small_avatar_explain" version_id="1001101" version_string="1.0.11a"><![CDATA[Image to use when displaying the user group during mentions.]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
@@ -219,7 +219,7 @@ To stop receiving email, please edit your account preferences:
 					{xen:phrase sv_PrivateUserGroup}
 				</dd>
 			</xen:if>
-		</dl> 
+		</dl>
 	</div>
 	<ol class="memberList TaggedUserGroupMemberList">
 		<xen:foreach loop="$users" value="$user">
@@ -229,7 +229,7 @@ To stop receiving email, please edit your account preferences:
 		</xen:foreach>
 	</ol>
 </div>]]></template>
-    <template title="sv_ugi_account_contact_details_messaging" version_id="10005" version_string="1.0.5"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">    
+    <template title="sv_ugi_account_contact_details_messaging" version_id="10005" version_string="1.0.5"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">
 <li>
 	<label for="ctrl_sv_email_on_tag"><input type="checkbox" name="sv_email_on_tag" value="1" id="ctrl_sv_email_on_tag" {xen:checked '{$visitor.sv_email_on_tag}'} />
 		{xen:phrase sv_receive_email_when_mentioned}</label>
@@ -241,9 +241,9 @@ To stop receiving email, please edit your account preferences:
     </p>
 </li>
 </xen:if>]]></template>
-    <template title="UserGroupTagging.css" version_id="10000" version_string="1.0.0"><![CDATA[.xenOverlay .TaggedUserGroupMemberList 
-{ 
-	max-height: 300px; overflow-y: scroll; 
+    <template title="UserGroupTagging.css" version_id="10000" version_string="1.0.0"><![CDATA[.xenOverlay .TaggedUserGroupMemberList
+{
+	max-height: 300px; overflow-y: scroll;
 }
 ]]></template>
   </templates>
