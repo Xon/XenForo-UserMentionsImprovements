@@ -38,7 +38,7 @@ class SV_UserTaggingImprovements_Installer
                 from xf_permission_entry_content
                 where permission_group_id = 'general' and permission_id in ('maxTaggedUsers') and permission_value_int <> 0
             ");
-            XenForo_Model::create('XenForo_Model_Permission')->rebuildPermissionCache();
+            XenForo_Application::defer('Permission', array(), 'Permission', true);
         }
     }
 
@@ -93,6 +93,6 @@ class SV_UserTaggingImprovements_Installer
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_private');
         SV_Utils_Install::dropColumn('xf_user_option', 'sv_email_on_tag');
 
-        XenForo_Model::create('XenForo_Model_Permission')->rebuildPermissionCache();
+        XenForo_Application::defer('Permission', array(), 'Permission', true);
     }
 }
