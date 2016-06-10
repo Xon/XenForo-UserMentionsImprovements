@@ -11,6 +11,7 @@ class SV_UserTaggingImprovements_Installer
         SV_Utils_Install::addColumn('xf_user_group', 'sv_private', 'tinyint(3) NOT NULL default 0');
         SV_Utils_Install::addColumn('xf_user_group', 'sv_avatar_s', 'text');
         SV_Utils_Install::addColumn('xf_user_group', 'sv_avatar_l', 'text');
+        SV_Utils_Install::addColumn('xf_user_group', 'last_edit_date', 'int(11) NOT NULL default 0');
         SV_Utils_Install::addColumn('xf_user_option', 'sv_email_on_tag', 'tinyint(3) NOT NULL default 0');
 
         //"update xf_user_option
@@ -40,6 +41,15 @@ class SV_UserTaggingImprovements_Installer
             ");
             XenForo_Application::defer('Permission', array(), 'Permission', true);
         }
+
+        if ($version < 10100000)
+        {
+            $db->query("
+                UPDATE xf_user_group
+                set last_edit_date = ?
+                WHERE last_edit_date = 0
+            ", array(XenForo_Application::$time));
+        }
     }
 
     public static function uninstall()
@@ -47,46 +57,28 @@ class SV_UserTaggingImprovements_Installer
         $db = XenForo_Application::getDb();
 
         $db->query("
-            DELETE FROM xf_permission_entry_content
-            WHERE permission_group_id = 'general' and permission_id = 'sv_EnableTagging'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry_content
-            WHERE permission_group_id = 'forum' and permission_id = 'sv_DisableTagging'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry_content
-            WHERE permission_group_id = 'general' and permission_id = 'sv_ReceiveTagAlertEmails'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry_content
-            WHERE permission_group_id = 'general' and permission_id = 'sv_TagUserGroup'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry_content
-            WHERE permission_group_id = 'general' and permission_id = 'sv_ViewPrivateGroups'
-        ");
-        $db->query("
             DELETE FROM xf_permission_entry
-            WHERE permission_group_id = 'forum' and permission_id = 'sv_EnableTagging'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry
-            WHERE permission_group_id = 'forum' and permission_id = 'sv_DisableTagging'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry
-            WHERE permission_group_id = 'general' and permission_id = 'sv_ReceiveTagAlertEmails'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry
-            WHERE permission_group_id = 'general' and permission_id = 'sv_TagUserGroup'
-        ");
-        $db->query("
-            DELETE FROM xf_permission_entry
-            WHERE permission_group_id = 'general' and permission_id = 'sv_ViewPrivateGroups'
+            WHERE permission_id in (
+                'sv_EnableTagging',
+                 'sv_DisableTagging',
+                 'sv_ReceiveTagAlertEmails',
+                 'sv_TagUserGroup',
+                 'sv_ViewPrivateGroups'
+            )
         ");
 
+        $db->query("
+            DELETE FROM xf_permission_entry_content
+            WHERE permission_id in (
+                'sv_EnableTagging',
+                 'sv_DisableTagging',
+                 'sv_ReceiveTagAlertEmails',
+                 'sv_TagUserGroup',
+                 'sv_ViewPrivateGroups'
+            )
+        ");
+
+        SV_Utils_Install::dropColumn('xf_user_group', 'last_edit_date');
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_taggable');
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_avatar_s');
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_avatar_l');

@@ -225,7 +225,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         $userGroup = $db->fetchRow("
-            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
+            SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private, usergroup.last_edit_date
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? ". $sql."
         ", $UserGroupId);
@@ -240,6 +240,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             if (empty($userGroup['avatar_l']))
             {
                $userGroup['avatar_l'] = $options->sv_default_group_avatar_l;
+            }
+            if (isset($userGroup['last_edit_date']))
+            {
+                // cache buster strings
+                $userGroup['avatar_s'] .= "?q=". $userGroup['last_edit_date'];
+                $userGroup['avatar_l'] .= "?q=". $userGroup['last_edit_date'];
             }
         }
 

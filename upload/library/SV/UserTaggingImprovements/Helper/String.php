@@ -52,6 +52,7 @@ class SV_UserTaggingImprovements_Helper_String
         return $linkParts[0] . htmlspecialchars($userGroupTitle) . $linkParts[1];
     }
 
+    static $groupAvatar = null;
     public static function getUserGroupLinkParts($userGroupId, $userGroupTitle)
     {
         $userGroupId = intval($userGroupId);
@@ -60,6 +61,12 @@ class SV_UserTaggingImprovements_Helper_String
             return array('', '');
         }
         $link = XenForo_Link::buildPublicLink('full:members', array(), array('ug' => $userGroupId));
-        return array('<a href="' . htmlspecialchars($link) . '" class="username ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '"><span class="style'.$userGroupId.'">','</span></a>');
+        if (self::$groupAvatar === null)
+        {
+            self::$groupAvatar = XenForo_Application::getOptions()->sv_displayGroupAvatar
+                                 ? '<span class="groupImg"></span>'
+                                 : '';
+        }
+        return array('<a href="' . htmlspecialchars($link) . '" class="username ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '"><span class="style'.$userGroupId.'">'.self::$groupAvatar,'</span></a>');
     }
 }
