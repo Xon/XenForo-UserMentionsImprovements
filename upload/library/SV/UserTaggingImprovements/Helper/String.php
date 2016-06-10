@@ -60,6 +60,6 @@ class SV_UserTaggingImprovements_Helper_String
             return array('', '');
         }
         $link = XenForo_Link::buildPublicLink('full:members', array(), array('ug' => $userGroupId));
-        return array('<a href="' . htmlspecialchars($link) . '" class="username ug ug'. $userGroupId .'" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '">','</a>');
+        return array('<a href="' . htmlspecialchars($link) . '" class="username ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '"><span class="style'.$userGroupId.'">','</span></a>');
     }
 }
