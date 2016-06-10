@@ -48,8 +48,18 @@ class SV_UserTaggingImprovements_Helper_String
         $userGroupId = intval($matches[1]);
         $userGroupTitle = htmlspecialchars($matches[3], null, 'utf-8', false);
 
-        $link = XenForo_Link::buildPublicLink('full:members', array(), array('ug' => $userGroupId));
+        $linkParts = SV_UserTaggingImprovements_Helper_String::getUserGroupLinkParts($userGroupId, $userGroupTitle);
+        return $linkParts[0] . htmlspecialchars($userGroupTitle) . $linkParts[1];
+    }
 
-        return '<a href="' . htmlspecialchars($link) . '" class="username usergroup" data-usergroup="' . $userGroupId . ', ' . $userGroupTitle . '">' . $userGroupTitle . '</a>';
+    public static function getUserGroupLinkParts($userGroupId, $userGroupTitle)
+    {
+        $userGroupId = intval($userGroupId);
+        if ($userGroupId <= 0)
+        {
+            return array('', '');
+        }
+        $link = XenForo_Link::buildPublicLink('full:members', array(), array('ug' => $userGroupId));
+        return array('<a href="' . htmlspecialchars($link) . '" class="username ug ug'. $userGroupId .'" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle, ENT_QUOTES) . '">','</a>');
     }
 }

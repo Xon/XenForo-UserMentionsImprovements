@@ -30,9 +30,8 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP
             return $content;
         }
 
-        $link = XenForo_Link::buildPublicLink('full:members', '', array('ug' => $userGroupId));
-        $usergroupname = $this->stringifyTree($tag['children']);
-
-        return $this->_wrapInHtml('<a href="' . htmlspecialchars($link) . '" class="username ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($usergroupname) . '">', '</a>', $content);
+        $userGroupTitle = $this->stringifyTree($tag['children']);
+        $linkParts = SV_UserTaggingImprovements_Helper_String::getUserGroupLinkParts($userGroupId, $userGroupTitle);
+        return $this->_wrapInHtml($linkParts[0], $linkParts[1], $content);
     }
 }
