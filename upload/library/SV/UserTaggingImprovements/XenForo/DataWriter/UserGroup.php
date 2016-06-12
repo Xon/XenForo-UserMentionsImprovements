@@ -32,13 +32,13 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup extends XFCP_SV_Us
 	protected function _postSaveAfterTransaction()
 	{
         parent::_postSaveAfterTransaction();
-        if (($this->isChanged('last_edit_date'))
+        if (($this->isChanged('last_edit_date')))
         {
             $this->_cacheInvalidation();
         }
     }
 
-    protected function _cacheInvalidation();
+    protected function _cacheInvalidation()
     {
         $this->getModelFromCache('XenForo_Model_Style')->updateAllStylesLastModifiedDate();
     }
