@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.1.0" version_id="1010000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.1.0" version_id="1010001" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -151,6 +151,12 @@ $1$2]]></replace>
       <sub_options></sub_options>
       <relation group_id="SV_UserTaggingImprovements" display_order="100"/>
     </option>
+    <option option_id="sv_styleGroupUsername" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="SV_UserTaggingImprovements" display_order="240"/>
+    </option>
   </optiongroups>
   <permissions>
     <permission_groups/>
@@ -173,6 +179,8 @@ $1$2]]></replace>
     <phrase title="option_sv_displayGroupAvatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[]]></phrase>
     <phrase title="option_sv_send_email_on_tagging" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="option_sv_send_email_on_tagging_explain" version_id="10000" version_string="1.0.0"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
+    <phrase title="option_sv_styleGroupUsername" version_id="1010000" version_string="1.1.0"><![CDATA[Username styling for tagged group]]></phrase>
+    <phrase title="option_sv_styleGroupUsername_explain" version_id="1010000" version_string="1.1.0"><![CDATA[Allows mentioned group names to have the same username styling applied]]></phrase>
     <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
