@@ -31,7 +31,6 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
         }
 
         $userTaggingModel = $this->_getUserTaggingModel();
-        $tagged = $userTaggingModel->expandTaggedGroups($tagged, $post);
         $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);
         $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $alertedUsers, $post);
         return $alertedUsers;

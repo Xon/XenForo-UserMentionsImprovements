@@ -97,6 +97,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             $newMessage = $message;
         }
 
+        // expand matches early to support tapatalk
+        $matches = $this->expandTaggedGroups($matches);
+
         return $matches;
     }
 
@@ -290,8 +293,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         ", $UserGroupId);
     }
 
-    public function expandTaggedGroups(array $tagged, array $taggingUser)
+    public function expandTaggedGroups(array $tagged, array $taggingUser = null)
     {
+        if ($taggingUser == null)
+        {
+            $taggingUser = XenForo_Visitor::getInstance()->toArray();
+        }
         $permissions = array();
         if (!empty($taggingUser['permissions']))
         {
