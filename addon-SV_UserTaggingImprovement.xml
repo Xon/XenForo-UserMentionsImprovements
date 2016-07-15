@@ -49,6 +49,7 @@ $1$2]]></replace>
   <code_events/>
   <code_event_listeners>
     <listener event_id="init_dependencies" execute_order="10" callback_class="SV_UserTaggingImprovements_Listener" callback_method="init_dependencies" active="1" hint="" description="BodyText hook"/>
+    <listener event_id="load_class" execute_order="10" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_Alert" description="XenForo_DataWriter_Alert"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Base" description="XenForo_BbCode_Formatter_Base"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_HtmlEmail" description="XenForo_BbCode_Formatter_HtmlEmail"/>
     <listener event_id="load_class" execute_order="1000" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Text" description="XenForo_BbCode_Formatter_Text"/>
@@ -210,6 +211,7 @@ To stop receiving email, please edit your account preferences:
 {board_link}]]></phrase>
     <phrase title="sv_view_all_your_alerts" version_id="10000" version_string="1.0.0"><![CDATA[View all your alerts.]]></phrase>
     <phrase title="sv_view_content_that_mentioned_you" version_id="10000" version_string="1.0.0"><![CDATA[View content that mentioned you.]]></phrase>
+    <phrase title="tagged_as_y_group" version_id="1020000" version_string="1.2.0"><![CDATA[As part of {group}]]></phrase>
     <phrase title="user_group_is_private" version_id="10000" version_string="1.0.0"><![CDATA[Is Private]]></phrase>
     <phrase title="user_group_is_private_explain" version_id="10000" version_string="1.0.0"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
     <phrase title="user_group_is_taggable" version_id="10000" version_string="1.0.0"><![CDATA[Is Taggable]]></phrase>
@@ -345,6 +347,34 @@ $2$3]]></replace>
     <modification template="report_view" modification_key="sv_usergrouptag_report_view" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#class="[^"]*UserTagger[^"]*"#]]></find>
       <replace><![CDATA[$0 data-acurl="{xen:link members/group-find}"]]></replace>
+    </modification>
+    <modification template="alert_post_tag" modification_key="sv_usermentionimpov_alert_post_tag" description="Add group tagging bits" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#$#]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$extra.taggedGroupId}">
+{xen:phrase tagged_as_y_group, 'group=<a href="{xen:link members, '', 'ug={$extra.taggedGroupId}'}" class="PopupItemLink">{$extra.taggedGroup}</a>'}
+</xen:if>]]></replace>
+    </modification>
+    <modification template="alert_profile_post_comment_tag" modification_key="sv_usermentionimpov_alert_profile_post_comment_tag" description="" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#$#]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$extra.taggedGroupId}">
+{xen:phrase tagged_as_y_group, 'group=<a href="{xen:link members, '', 'ug={$extra.taggedGroupId}'}" class="PopupItemLink">{$extra.taggedGroup}</a>'}
+</xen:if>]]></replace>
+    </modification>
+    <modification template="alert_profile_post_tag" modification_key="sv_usermentionimpov_alert_profile_post_tag" description="Add group tagging bits" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#$#]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$extra.taggedGroupId}">
+{xen:phrase tagged_as_y_group, 'group=<a href="{xen:link members, '', 'ug={$extra.taggedGroupId}'}" class="PopupItemLink">{$extra.taggedGroup}</a>'}
+</xen:if>]]></replace>
+    </modification>
+    <modification template="alert_report_comment_tag" modification_key="sv_usermentionimpov_alert_report_comment_tag" description="Add group tagging bits" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#$#]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$extra.taggedGroupId}">
+{xen:phrase tagged_as_y_group, 'group=<a href="{xen:link members, '', 'ug={$extra.taggedGroupId}'}" class="PopupItemLink">{$extra.taggedGroup}</a>'}
+</xen:if>]]></replace>
     </modification>
   </public_template_modifications>
   <bb_code_media_sites/>

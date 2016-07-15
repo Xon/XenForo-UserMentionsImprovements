@@ -378,7 +378,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 (
                     'user_id' => $user['user_id'],
                     'username' => $user['username'],
-                    'lower' => utf8_strtolower($user['username'])
+                    'lower' => utf8_strtolower($user['username']),
+                    'taggedGroupId' => $group_id,
+                    'taggedGroup' => $candinate['username'],
                 );
             }
         }
