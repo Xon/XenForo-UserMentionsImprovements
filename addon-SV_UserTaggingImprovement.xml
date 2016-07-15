@@ -211,7 +211,7 @@ To stop receiving email, please edit your account preferences:
 {board_link}]]></phrase>
     <phrase title="sv_view_all_your_alerts" version_id="10000" version_string="1.0.0"><![CDATA[View all your alerts.]]></phrase>
     <phrase title="sv_view_content_that_mentioned_you" version_id="10000" version_string="1.0.0"><![CDATA[View content that mentioned you.]]></phrase>
-    <phrase title="tagged_as_y_group" version_id="1020000" version_string="1.2.0"><![CDATA[You were tagged because you are a member of the {group} usergroup]]></phrase>
+    <phrase title="tagged_as_y_group" version_id="1020000" version_string="1.2.0"><![CDATA[You were tagged because you are a member of the {group} usergroup.]]></phrase>
     <phrase title="user_group_is_private" version_id="10000" version_string="1.0.0"><![CDATA[Is Private]]></phrase>
     <phrase title="user_group_is_private_explain" version_id="10000" version_string="1.0.0"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
     <phrase title="user_group_is_taggable" version_id="10000" version_string="1.0.0"><![CDATA[Is Taggable]]></phrase>
