@@ -16,7 +16,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         // use the alert handler to provide a content link.
-        // This addon extends the relevent alert handlers to inject the required method
+        // This add-on extends the relevant alert handlers to inject the required method
         $alertModel = $this->getModelFromCache('XenForo_Model_Alert');
         $alertHandler = $alertModel->getAlertHandler($contentType);
         if (empty($alertHandler) || !method_exists($alertHandler, 'getContentUrl'))
