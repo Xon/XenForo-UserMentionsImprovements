@@ -24,6 +24,14 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             return;
         }
 
+        // don't alert accounts which are too old, or bounced
+        $lastActivity = 0;
+        $activeLimitOption = $options->watchAlertActiveOnly;
+        if (!empty($activeLimitOption['enabled']) && !empty($activeLimitOption['days']))
+        {
+            $lastActivity = XenForo_Application::$time - 86400 * $activeLimitOption['days'];
+        }
+
         $userModel = $this->_getUserModel();
         $users = $userModel->getUsersByIds($userIds, array(
             'join' => XenForo_Model_User::FETCH_USER_OPTION |
@@ -32,6 +40,14 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         foreach($users as $user)
         {
             if (empty($user['sv_email_on_tag']))
+            {
+                continue;
+            }
+            if ($user['is_banned'] || $user['user_state'] != 'valid')
+            {
+                continue;
+            }
+            if ($lastActivity && isset($user['last_activity']) && $user['last_activity'] < $lastActivity)
             {
                 continue;
             }
