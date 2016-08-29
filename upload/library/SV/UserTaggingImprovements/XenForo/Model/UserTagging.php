@@ -85,9 +85,13 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $mail->queue($user['email'], $user['username']);
     }
 
+    protected $_plainReplacementsUserGroupMentions = null;
+
     public function getTaggedUsersInMessage($message, &$newMessage, $replaceStyle = 'bb')
     {
         $filteredMessage = $message;
+        $this->_plainReplacementsUserGroupMentions = null;
+        $this->_plainReplacements = null;
         if ($replaceStyle == 'bb')
         {
             $this->_plainReplacements = array();
@@ -106,6 +110,13 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 $filteredMessage
             );
         }
+        // _plainReplacements gets set to null in getTaggedUsersInMessage
+        if (!empty($this->_plainReplacements))
+        {
+            $this->_plainReplacementsUserGroupMentions = $this->_plainReplacements;
+            $this->_plainReplacements = null;
+        }
+
         $matches = parent::getTaggedUsersInMessage($filteredMessage, $newMessage, $replaceStyle);
         // restore the message if there are no matches
         if (empty($matches))
@@ -117,6 +128,22 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $matches = $this->expandTaggedGroups($matches);
 
         return $matches;
+    }
+
+    protected function _getPossibleTagMatches($message)
+    {
+        if (!empty($this->_plainReplacementsUserGroupMentions))
+        {
+            if (empty($this->_plainReplacements))
+            {
+                $this->_plainReplacements = $this->_plainReplacementsUserGroupMentions;
+            }
+            else
+            {
+                $this->_plainReplacements = array_merge($this->_plainReplacements, $this->_plainReplacementsUserGroupMentions);
+            }
+        }
+        return parent::_getPossibleTagMatches($message);
     }
 
     protected function _getGroupMembership($user)
