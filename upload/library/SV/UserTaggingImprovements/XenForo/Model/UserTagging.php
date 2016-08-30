@@ -381,9 +381,16 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         {
             if (!empty($alreadyTagged[$candinate['user_id']]))
             {
+                // prefer user tags over group tags
+                if ($alreadyTagged[$candinate['user_id']] == 2 && empty($candinate['is_group']))
+                {
+                    $alreadyTagged[$candinate['user_id']] = 1;
+                    unset($users[$candinate['user_id']]['taggedGroupId']);
+                    unset($users[$candinate['user_id']]['taggedGroup']);
+                }
                 continue;
             }
-            $alreadyTagged[$candinate['user_id']] = true;
+            $alreadyTagged[$candinate['user_id']] = 1;
 
             if (empty($candinate['is_group']))
             {
@@ -415,7 +422,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 {
                     continue;
                 }
-                $alreadyTagged[$user['user_id']] = true;
+                $alreadyTagged[$user['user_id']] = 2;
 
                 $users[$user['user_id']] = array
                 (
