@@ -97,7 +97,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             $this->_plainReplacements = array();
             $filteredMessage = preg_replace_callback(
                 '#\[(usergroup)(=[^\]]*)?](.*)\[/\\1]#siU',
-                array($this, '_plainReplaceHandler'),
+                array($this, '_plainReplaceHandlerGroup'),
                 $filteredMessage
             );
         }
@@ -106,7 +106,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             $this->_plainReplacements = array();
             $filteredMessage = preg_replace_callback(
                 '#(?<=^|\s|[\](,]|--|@)@\[ug_(\d+):(\'|"|&quot;|)(.*)\\2\]#iU',
-                array($this, '_plainReplaceHandler'),
+                array($this, '_plainReplaceHandlerGroup'),
                 $filteredMessage
             );
         }
@@ -128,6 +128,20 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $matches = $this->expandTaggedGroups($matches);
 
         return $matches;
+    }
+
+    protected function _plainReplaceHandlerGroup(array $match)
+    {
+        if (!is_array($this->_plainReplacements))
+        {
+            $this->_plainReplacements = array();
+        }
+
+        $placeholder = "\x1Ag\x1A" . count($this->_plainReplacements) . "\x1Ag\x1A";
+
+        $this->_plainReplacements[$placeholder] = $match[0];
+
+        return $placeholder;
     }
 
     protected function _getPossibleTagMatches($message)
