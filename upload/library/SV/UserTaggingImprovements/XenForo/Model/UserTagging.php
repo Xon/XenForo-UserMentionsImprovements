@@ -304,8 +304,14 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             if (isset($userGroup['last_edit_date']))
             {
                 // cache buster strings
-                $userGroup['avatar_s'] .= "?q=". $userGroup['last_edit_date'];
-                $userGroup['avatar_l'] .= "?q=". $userGroup['last_edit_date'];
+                if ($userGroup['avatar_s'])
+                {
+                    $userGroup['avatar_s'] .= "?q=". $userGroup['last_edit_date'];
+                }
+                if ($userGroup['avatar_l'])
+                {
+                    $userGroup['avatar_l'] .= "?q=". $userGroup['last_edit_date'];
+                }
             }
         }
 
