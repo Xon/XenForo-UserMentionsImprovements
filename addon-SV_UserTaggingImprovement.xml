@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.2.6" version_id="1020600" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.3.0" version_id="1030000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -35,10 +35,16 @@
 </fieldset>]]></template>
   </admin_templates>
   <admin_template_modifications>
-    <modification template="option_template_registrationDefaults" modification_key="sv_ugi_option_template_registrationDefaults" description="" execution_order="10" enabled="1" action="str_replace">
-      <find><![CDATA[</xen:checkbox>]]></find>
+    <modification template="option_template_registrationDefaults" modification_key="sv_ugi_option_template_registrationDefaults" description="" execution_order="4416" enabled="1" action="str_replace">
+      <find><![CDATA[</xen:checkbox>
+<br />]]></find>
       <replace><![CDATA[<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][sv_email_on_tag]" selected="{$value.sv_email_on_tag}">{xen:phrase sv_receive_email_when_mentioned}</xen:option>
 $0]]></replace>
+    </modification>
+    <modification template="user_edit" modification_key="sv_ugi_user_edit" description="" execution_order="4416" enabled="1" action="preg_replace">
+      <find><![CDATA[#[\t ]*<xen:option name="email_on_conversation".*?</xen:option>#]]></find>
+      <replace><![CDATA[$0
+<xen:option name="sv_email_on_tag" selected="{$user.sv_email_on_tag}" readonly="!{$xenOptions.sv_send_email_on_tagging}">{xen:phrase sv_receive_email_when_mentioned}</xen:option>]]></replace>
     </modification>
     <modification template="user_group_edit" modification_key="sv_ugi_user_group_edit" description="" execution_order="15" enabled="1" action="preg_replace">
       <find><![CDATA[#(\s*)(<fieldset id="piGroups">)#si]]></find>
@@ -55,18 +61,19 @@ $1$2]]></replace>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_Post" description="XenForo_AlertHandler_DiscussionMessage_Post"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_ProfilePost" description="XenForo_AlertHandler_DiscussionMessage_ProfilePost"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="SV_ReportImprovements_AlertHandler_Report" description="SV_ReportImprovements_AlertHandler_Report"/>
+    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Html_Renderer_BbCode" description="XenForo_Html_Renderer_BbCode"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerPublic_Account" description="XenForo_ControllerPublic_Account"/>
-    <listener event_id="load_class_datawriter" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_User" description="XenForo_DataWriter_User"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerAdmin_UserGroup" description="XenForo_ControllerAdmin_UserGroup"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerPublic_Member" description="XenForo_ControllerPublic_Member"/>
-    <listener event_id="load_class_model" execute_order="2147483641" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Alert" description="XenForo_Model_Alert"/>
+    <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerAdmin_User" description="XenForo_ControllerAdmin_User"/>
+    <listener event_id="load_class_datawriter" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_User" description="XenForo_DataWriter_User"/>
+    <listener event_id="load_class_datawriter" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_UserGroup" description="XenForo_DataWriter_UserGroup"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Post" description="XenForo_Model_Post"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ProfilePost" description="XenForo_Model_ProfilePost"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserGroup" description="XenForo_Model_UserGroup"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserTagging" description="XenForo_Model_UserTagging"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Report" description="XenForo_Model_Report"/>
-    <listener event_id="load_class_datawriter" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_DataWriter_UserGroup" description="XenForo_DataWriter_UserGroup"/>
-    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Html_Renderer_BbCode" description="XenForo_Html_Renderer_BbCode"/>
+    <listener event_id="load_class_model" execute_order="2147483641" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Alert" description="XenForo_Model_Alert"/>
     <listener event_id="template_hook" execute_order="10" callback_class="SV_UserTaggingImprovements_Template" callback_method="template_hook" active="1" hint="sv_usergroup_list" description="sv_usergroup_list template hook"/>
   </code_event_listeners>
   <cron/>
