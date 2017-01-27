@@ -11,13 +11,11 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_User extends XFCP_SV_UserTag
 
     protected function _preSave()
     {
-        if (!empty(SV_UserTaggingImprovements_Globals::$PublicAccountController))
+        if (SV_UserTaggingImprovements_Globals::$emailOnTag !== null)
         {
-            $input = SV_UserTaggingImprovements_Globals::$PublicAccountController->getInput();
-            $sv_email_on_tag = $input->filterSingle('sv_email_on_tag', XenForo_Input::UINT);
-            if (SV_UserTaggingImprovements_Globals::$CanEnableEmailOnTag || !$sv_email_on_tag)
+            if (SV_UserTaggingImprovements_Globals::$CanEnableEmailOnTag || !SV_UserTaggingImprovements_Globals::$emailOnTag)
             {
-                $this->set('sv_email_on_tag', $sv_email_on_tag);
+                $this->set('sv_email_on_tag', SV_UserTaggingImprovements_Globals::$emailOnTag);
             }
         }
 

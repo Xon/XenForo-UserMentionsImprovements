@@ -4,7 +4,7 @@ class SV_UserTaggingImprovements_XenForo_ControllerPublic_Account extends XFCP_S
 {
     public function actionContactDetailsSave()
     {
-        SV_UserTaggingImprovements_Globals::$PublicAccountController = $this;
+        SV_UserTaggingImprovements_Globals::$emailOnTag = $this->_input->filterSingle('sv_email_on_tag', XenForo_Input::UINT);
         SV_UserTaggingImprovements_Globals::$CanEnableEmailOnTag = XenForo_Visitor::getInstance()->hasPermission('general', 'sv_ReceiveTagAlertEmails');
 
         return parent::actionContactDetailsSave();
