@@ -13,7 +13,7 @@ Improvements to XenForo's tagging system.
  - Posts/Threads.
  - Reports (if Report Improvements are installed).
  - Other types supporting XenForo's user tagging will automatically support tagging user groups, but the front-end UI for auto-completing user groups will not work.
-- Opt-in emails on tagging:
+- Opt-in emails on tagging/quoting:
  - global option to enable/disable.
  - configurable default for users on account creation.
  - permission to receive tagged emails.
