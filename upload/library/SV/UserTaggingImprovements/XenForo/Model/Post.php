@@ -4,6 +4,8 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
 {
     public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
     {
+        SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+
         $visitor = XenForo_Visitor::getInstance();
         if ($post['user_id'] == $visitor['user_id'])
         {
@@ -34,7 +36,7 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
         SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = $tagged;
         $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);
         SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = null;
-        $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $alertedUsers, $post);
+        $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $alertedUsers, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
         return $alertedUsers;
     }
 

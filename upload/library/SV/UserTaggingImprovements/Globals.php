@@ -9,5 +9,7 @@ class SV_UserTaggingImprovements_Globals
     public static $CanEnableEmailOnTag = false;
     public static $AlertedUsersExtraInfo = null;
 
+    public static $emailedUsers = array();
+
     private function __construct() {}
 }

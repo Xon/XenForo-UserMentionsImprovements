@@ -7,6 +7,8 @@ class SV_UserTaggingImprovements_XenForo_Model_ProfilePost extends XFCP_SV_UserT
         $isComment = false, array $taggingUser = null
     )
     {
+        SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+
         if (!$taggingUser)
         {
             $taggingUser = $profilePost;
@@ -16,7 +18,7 @@ class SV_UserTaggingImprovements_XenForo_Model_ProfilePost extends XFCP_SV_UserT
         SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = $tagged;
         $alertedUsers = parent::alertTaggedMembers($profilePost, $profileUser, $tagged, $alreadyAlerted, $isComment, $taggingUser);
         SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = null;
-        $userTaggingModel->emailAlertedUsers('profile_post', $profilePost['profile_post_id'], $profilePost, $alertedUsers, $taggingUser);
+        $userTaggingModel->emailAlertedUsers('profile_post', $profilePost['profile_post_id'], $profilePost, $alertedUsers, $taggingUser, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
         return $alertedUsers;
     }
 

@@ -2,7 +2,9 @@
 
 class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserTaggingImprovements_XenForo_Model_UserTagging
 {
-    public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser)
+    const UserTaggedEmailTemplate = 'sv_user_tagged';
+
+    public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser, $template = 'sv_user_tagged')
     {
         if (empty($userIds))
         {
@@ -39,6 +41,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         ));
         foreach($users as $user)
         {
+			if (isset(SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']]))
+			{
+				continue;
+			}
+			SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']] = true;
+
             if (empty($user['sv_email_on_tag']))
             {
                 continue;
@@ -66,13 +74,13 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 continue;
             }
 
-            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser);
+            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser, $template);
         }
     }
 
-    protected function emailAlertedUser($viewLink, $contentType, $contentId, $content, array $user, array $taggingUser)
+    protected function emailAlertedUser($viewLink, $contentType, $contentId, $content, array $user, array $taggingUser, $template)
     {
-        $mail = XenForo_Mail::create('sv_user_tagged', array
+        $mail = XenForo_Mail::create($template, array
         (
             'sender' => $taggingUser,
             'receiver' => $user,
