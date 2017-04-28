@@ -73,8 +73,8 @@ $1$2]]></replace>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserGroup" description="XenForo_Model_UserGroup"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserTagging" description="XenForo_Model_UserTagging"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Report" description="XenForo_Model_Report"/>
-    <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ThreadWatch" description="XenForo_Model_ThreadWatch"/>
-    <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ForumWatch" description="XenForo_Model_ForumWatch"/>
+    <listener event_id="load_class_model" execute_order="2147483643" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ThreadWatch" description="XenForo_Model_ThreadWatch"/>
+    <listener event_id="load_class_model" execute_order="2147483643" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ForumWatch" description="XenForo_Model_ForumWatch"/>
     <listener event_id="load_class_model" execute_order="2147483641" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Alert" description="XenForo_Model_Alert"/>
     <listener event_id="template_hook" execute_order="10" callback_class="SV_UserTaggingImprovements_Template" callback_method="template_hook" active="1" hint="sv_usergroup_list" description="sv_usergroup_list template hook"/>
   </code_event_listeners>
