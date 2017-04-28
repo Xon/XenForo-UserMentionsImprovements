@@ -11,10 +11,30 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
 
         $quotedUserIds = parent::alertQuotedMembers($post, $thread, $forum);
 
-        if ($quotedUserIds && $this->canPostCanTag($post, $thread, $forum))
+        $threadId = intval($post['thread_id']);
+        if ($threadId && $quotedUserIds && $this->canPostCanTag($post, $thread, $forum))
         {
-            $userTaggingModel = $this->_getUserTaggingModel();
-            $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $quotedUserIds, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedEmailTemplate);
+            $db = $this->_getDb();
+            $ids = array();
+            foreach($quotedUserIds as $id)
+            {
+                if ($id = intval($id))
+                {
+                    $ids[] = "select $id as id";
+                }
+            }
+            $idsToAlert = $db->fetchCol("
+                select a.id
+                from ( ".join(' union ', $ids)." ) a
+                left join xf_thread_user_post on (xf_thread_user_post.thread_id = {$threadId} and xf_thread_user_post.user_id = a.id)
+                where xf_thread_user_post.user_id is null
+            ");
+
+            if ($idsToAlert)
+            {
+                $userTaggingModel = $this->_getUserTaggingModel();
+                $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $idsToAlert, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedEmailTemplate);
+            }
         }
 
         return $quotedUserIds;
