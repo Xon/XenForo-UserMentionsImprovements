@@ -3,6 +3,7 @@
 class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserTaggingImprovements_XenForo_Model_UserTagging
 {
     const UserTaggedEmailTemplate = 'sv_user_tagged';
+    const UserQuotedEmailTemplate = 'sv_user_quoted';
 
     public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser, $template = 'sv_user_tagged')
     {

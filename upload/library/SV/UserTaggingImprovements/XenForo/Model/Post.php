@@ -2,9 +2,52 @@
 
 class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingImprovements_XenForo_Model_Post
 {
-    public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
+    protected $resetEmailed = true;
+
+    public function alertQuotedMembers(array $post, array $thread, array $forum)
     {
         SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+        $this->resetEmailed = false;
+
+        $quotedUserIds = parent::alertQuotedMembers($post, $thread, $forum);
+
+        if ($quotedUserIds && $this->canPostCanTag($post, $thread, $forum))
+        {
+            $userTaggingModel = $this->_getUserTaggingModel();
+            $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $quotedUserIds, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedEmailTemplate);
+        }
+
+        return $quotedUserIds;
+    }
+
+    public function alertTaggedMembers(array $post, array $thread, array $forum, array $tagged, array $alreadyAlerted)
+    {
+        if ($this->resetEmailed)
+        {
+            SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+        }
+        $this->resetEmailed = true;
+
+        if (!$this->canPostCanTag($post, $thread, $forum))
+        {
+            return array();
+        }
+
+        $userTaggingModel = $this->_getUserTaggingModel();
+        SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = $tagged;
+        $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);
+        SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = null;
+        $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $alertedUsers, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
+        return $alertedUsers;
+    }
+
+    protected $viewerPermCache = array();
+    protected function canPostCanTag(array $post, array $thread, array $forum)
+    {
+        if (isset($viewerPermCache[$post['user_id']]))
+        {
+            return $viewerPermCache[$post['user_id']];
+        }
 
         $visitor = XenForo_Visitor::getInstance();
         if ($post['user_id'] == $visitor['user_id'])
@@ -27,17 +70,9 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
             $permissions = $permissionCacheModel->getContentPermissionsForItem($PermissionCombinationId, 'node', $forum['node_id']);
         }
 
-        if (!XenForo_Permission::hasContentPermission($permissions, 'sv_EnableTagging'))
-        {
-            return array();
-        }
+        $viewerPermCache[$post['user_id']] = XenForo_Permission::hasContentPermission($permissions, 'sv_EnableTagging');
 
-        $userTaggingModel = $this->_getUserTaggingModel();
-        SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = $tagged;
-        $alertedUsers = parent::alertTaggedMembers($post, $thread, $forum, $tagged, $alreadyAlerted);
-        SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = null;
-        $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $alertedUsers, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
-        return $alertedUsers;
+        return $viewerPermCache[$post['user_id']];
     }
 
     protected function _getUserTaggingModel()
