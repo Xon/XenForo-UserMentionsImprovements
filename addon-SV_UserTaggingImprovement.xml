@@ -206,6 +206,18 @@ $1$2]]></replace>
       <sub_options></sub_options>
       <relation group_id="SV_UserTaggingImprovements" display_order="230"/>
     </option>
+    <option option_id="sv_limit_quote_emails" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="SV_UserTaggingImprovements" display_order="120"/>
+    </option>
+    <option option_id="sv_send_email_on_quote" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="SV_UserTaggingImprovements" display_order="110"/>
+    </option>
     <option option_id="sv_send_email_on_tagging" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>0</default_value>
       <edit_format_params></edit_format_params>
@@ -238,8 +250,12 @@ $1$2]]></replace>
     <phrase title="option_sv_default_group_avatar_s_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar is set]]></phrase>
     <phrase title="option_sv_displayGroupAvatar" version_id="10000" version_string="1.0.0"><![CDATA[Display user group mini-avatars]]></phrase>
     <phrase title="option_sv_displayGroupAvatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[]]></phrase>
-    <phrase title="option_sv_send_email_on_tagging" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
-    <phrase title="option_sv_send_email_on_tagging_explain" version_id="10000" version_string="1.0.0"><![CDATA[Allows users to receive tag alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
+    <phrase title="option_sv_limit_quote_emails" version_id="1040000" version_string="1.4.0"><![CDATA[Send quote emails only on unreplied threads]]></phrase>
+    <phrase title="option_sv_limit_quote_emails_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Only send quote alert emails if the user has not posted in that thread before.]]></phrase>
+    <phrase title="option_sv_send_email_on_quote" version_id="1040000" version_string="1.4.0"><![CDATA[Receive Quoted Alert Emails]]></phrase>
+    <phrase title="option_sv_send_email_on_quote_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive alert emails, when quoted. Requires users to opt-in to User Mention Emails under /account/contact-details as user]]></phrase>
+    <phrase title="option_sv_send_email_on_tagging" version_id="1040000" version_string="1.4.0"><![CDATA[Receive User Mention Alert Emails]]></phrase>
+    <phrase title="option_sv_send_email_on_tagging_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive user mention alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
     <phrase title="option_sv_styleGroupUsername" version_id="1010000" version_string="1.1.0"><![CDATA[Username styling for tagged group]]></phrase>
     <phrase title="option_sv_styleGroupUsername_explain" version_id="1010000" version_string="1.1.0"><![CDATA[Allows mentioned group names to have the same username styling applied]]></phrase>
     <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
