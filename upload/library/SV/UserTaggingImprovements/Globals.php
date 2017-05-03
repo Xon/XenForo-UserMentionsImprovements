@@ -6,6 +6,7 @@ class SV_UserTaggingImprovements_Globals
 {
     public static $UserGroupAdminController = null;
     public static $emailOnTag = null;
+    public static $emailOnQuote = null;
     public static $CanEnableEmailOnTag = false;
     public static $AlertedUsersExtraInfo = null;
 
