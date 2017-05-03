@@ -13,9 +13,10 @@ class SV_UserTaggingImprovements_Installer
         SV_Utils_Install::addColumn('xf_user_group', 'sv_avatar_l', 'text');
         SV_Utils_Install::addColumn('xf_user_group', 'last_edit_date', 'int(11) NOT NULL default 0');
         SV_Utils_Install::addColumn('xf_user_option', 'sv_email_on_tag', 'tinyint(3) NOT NULL default 0');
+        SV_Utils_Install::addColumn('xf_user_option', 'sv_email_on_quote', 'tinyint(3) NOT NULL default 0');
 
         //"update xf_user_option
-        //set  sv_email_on_tag = bdtagme_email ;"
+        //set  sv_email_on_tag = bdtagme_email, sv_email_on_quote = sv_email_on_tag;"
         if ($version <= 1000900)
         {
             $db->query("
@@ -49,6 +50,14 @@ class SV_UserTaggingImprovements_Installer
                 set last_edit_date = ?
                 WHERE last_edit_date = 0
             ", array(XenForo_Application::$time));
+        }
+
+        if ($version < 1040100)
+        {
+            $db->query("
+                update xf_user_option
+                set sv_email_on_quote = sv_email_on_tag
+            ");
         }
     }
 
@@ -84,6 +93,7 @@ class SV_UserTaggingImprovements_Installer
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_avatar_l');
         SV_Utils_Install::dropColumn('xf_user_group', 'sv_private');
         SV_Utils_Install::dropColumn('xf_user_option', 'sv_email_on_tag');
+        SV_Utils_Install::dropColumn('xf_user_option', 'sv_email_on_quote');
 
         XenForo_Application::defer('Permission', array(), 'Permission', true);
     }

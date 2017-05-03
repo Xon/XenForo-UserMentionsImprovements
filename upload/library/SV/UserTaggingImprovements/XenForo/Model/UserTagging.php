@@ -5,7 +5,10 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
     const UserTaggedEmailTemplate = 'sv_user_tagged';
     const UserQuotedEmailTemplate = 'sv_user_quoted';
 
-    public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser, $template = 'sv_user_tagged')
+    const UserTaggedCheckField = 'sv_email_on_tag';
+    const UserQuotedCheckField = 'sv_email_on_quote';
+
+    public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser, $template = 'sv_user_tagged', $userCheckField = 'sv_email_on_tag')
     {
         if (empty($userIds))
         {
@@ -48,7 +51,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 			}
 			SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']] = true;
 
-            if (empty($user['sv_email_on_tag']))
+            if (empty($user[$userCheckField]))
             {
                 continue;
             }

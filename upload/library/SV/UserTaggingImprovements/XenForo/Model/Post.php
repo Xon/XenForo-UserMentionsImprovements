@@ -41,7 +41,15 @@ class SV_UserTaggingImprovements_XenForo_Model_Post extends XFCP_SV_UserTaggingI
             if ($idsToAlert)
             {
                 $userTaggingModel = $this->_getUserTaggingModel();
-                $userTaggingModel->emailAlertedUsers('post', $post['post_id'], $post, $idsToAlert, $post, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedEmailTemplate);
+                $userTaggingModel->emailAlertedUsers(
+                    'post', 
+                    $post['post_id'], 
+                    $post, 
+                    $idsToAlert, 
+                    $post, 
+                    SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedEmailTemplate, 
+                    SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserQuotedCheckField
+                );
             }
         }
 

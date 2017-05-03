@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.4.0" version_id="1040000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.4.1" version_id="1040100" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -39,12 +39,14 @@
       <find><![CDATA[</xen:checkbox>
 <br />]]></find>
       <replace><![CDATA[<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][sv_email_on_tag]" selected="{$value.sv_email_on_tag}">{xen:phrase sv_receive_email_when_mentioned}</xen:option>
+<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][sv_email_on_quote]" selected="{$value.sv_email_on_quote}">{xen:phrase sv_receive_email_when_quoted}</xen:option>
 $0]]></replace>
     </modification>
     <modification template="user_edit" modification_key="sv_ugi_user_edit" description="" execution_order="4416" enabled="1" action="preg_replace">
       <find><![CDATA[#[\t ]*<xen:option name="email_on_conversation".*?</xen:option>#]]></find>
       <replace><![CDATA[$0
-<xen:option name="sv_email_on_tag" selected="{$user.sv_email_on_tag}" readonly="!{$xenOptions.sv_send_email_on_tagging}">{xen:phrase sv_receive_email_when_mentioned}</xen:option>]]></replace>
+<xen:option name="sv_email_on_tag" selected="{$user.sv_email_on_tag}" readonly="!{$xenOptions.sv_send_email_on_tagging}">{xen:phrase sv_receive_email_when_mentioned}</xen:option>
+<xen:option name="sv_email_on_quote" selected="{$user.sv_email_on_quote}" readonly="!{$xenOptions.sv_email_on_quote}">{xen:phrase sv_receive_email_when_quoted}</xen:option>]]></replace>
     </modification>
     <modification template="user_group_edit" modification_key="sv_ugi_user_group_edit" description="" execution_order="15" enabled="1" action="preg_replace">
       <find><![CDATA[#(\s*)(<fieldset id="piGroups">)#si]]></find>
@@ -259,7 +261,7 @@ $1$2]]></replace>
     <phrase title="option_sv_styleGroupUsername" version_id="1010000" version_string="1.1.0"><![CDATA[Username styling for tagged group]]></phrase>
     <phrase title="option_sv_styleGroupUsername_explain" version_id="1010000" version_string="1.1.0"><![CDATA[Allows mentioned group names to have the same username styling applied]]></phrase>
     <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
-    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="10000" version_string="1.0.0"><![CDATA[Receive Tag Alert Emails]]></phrase>
+    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1040100" version_string="1.4.1"><![CDATA[Receive User Mention or Quote Alert Emails]]></phrase>
     <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
     <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>
     <phrase title="style_property_SV_GroupMiniAvatar_description_master" version_id="1010000" version_string="1.1.0"><![CDATA[Handles the style of the mini avatar with tags.]]></phrase>
@@ -285,6 +287,8 @@ To stop receiving email, please edit your account preferences:
     <phrase title="sv_receive_email_is_disabled" version_id="10005" version_string="1.0.5"><![CDATA[You do not have permission to use this feature, but your choice is remembered.]]></phrase>
     <phrase title="sv_receive_email_when_mentioned" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when mentioned]]></phrase>
     <phrase title="sv_receive_email_when_mentioned_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when mentioned from threads, replies, profile posts, etc.]]></phrase>
+    <phrase title="sv_receive_email_when_quoted" version_id="1040100" version_string="1.4.4"><![CDATA[Receive email when quoted]]></phrase>
+    <phrase title="sv_receive_email_when_quoted_explain" version_id="1040100" version_string="1.4.1"><![CDATA[Email notifications when quoted from threads, replies]]></phrase>
     <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} mentioned you at {board}.]]></phrase>
     <phrase title="sv_tagged_email_html_footer_1" version_id="10000" version_string="1.0.0"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody mentions you.]]></phrase>
     <phrase title="sv_tagged_email_html_footer_2" version_id="10000" version_string="1.0.0"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
@@ -345,13 +349,25 @@ To stop receiving email, please edit your account preferences:
 		</xen:foreach>
 	</ol>
 </div>]]></template>
-    <template title="sv_ugi_account_contact_details_messaging" version_id="10005" version_string="1.0.5"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">
+    <template title="sv_ugi_account_contact_details_messaging" version_id="1040100" version_string="1.4.1"><![CDATA[<xen:if is="{$CanEnableEmailOnTag} or {$visitor.sv_email_on_tag}">
 <li>
 	<label for="ctrl_sv_email_on_tag"><input type="checkbox" name="sv_email_on_tag" value="1" id="ctrl_sv_email_on_tag" {xen:checked '{$visitor.sv_email_on_tag}'} />
 		{xen:phrase sv_receive_email_when_mentioned}</label>
 	<p class="hint">
         {xen:phrase sv_receive_email_when_mentioned_explain}
         <xen:if is="!{$CanEnableEmailOnTag}">
+            {xen:phrase sv_receive_email_is_disabled}
+        </xen:if>
+    </p>
+</li>
+</xen:if>
+<xen:if is="{$CanEnableEmailOnQuote} or {$visitor.sv_email_on_quote}">
+<li>
+	<label for="ctrl_sv_email_on_quote"><input type="checkbox" name="sv_email_on_quote" value="1" id="ctrl_sv_email_on_quote" {xen:checked '{$visitor.sv_email_on_quote}'} />
+		{xen:phrase sv_receive_email_when_quoted}</label>
+	<p class="hint">
+        {xen:phrase sv_receive_email_when_quoted_explain}
+        <xen:if is="!{$CanEnableEmailOnQuote}">
             {xen:phrase sv_receive_email_is_disabled}
         </xen:if>
     </p>
