@@ -288,7 +288,7 @@ To stop receiving email, please edit your account preferences:
     <phrase title="sv_receive_email_when_mentioned" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when mentioned]]></phrase>
     <phrase title="sv_receive_email_when_mentioned_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when mentioned from threads, replies, profile posts, etc.]]></phrase>
     <phrase title="sv_receive_email_when_quoted" version_id="1040100" version_string="1.4.4"><![CDATA[Receive email when quoted]]></phrase>
-    <phrase title="sv_receive_email_when_quoted_explain" version_id="1040100" version_string="1.4.1"><![CDATA[Email notifications when quoted from threads, replies]]></phrase>
+    <phrase title="sv_receive_email_when_quoted_explain" version_id="1040100" version_string="1.4.1"><![CDATA[Email notifications when quoted from a threads]]></phrase>
     <phrase title="sv_tagged_email_html" version_id="10000" version_string="1.0.0"><![CDATA[{receiver_username}, {sender} mentioned you at {board}.]]></phrase>
     <phrase title="sv_tagged_email_html_footer_1" version_id="10000" version_string="1.0.0"><![CDATA[This message was sent to you from {board} because your preferences are set to receive email when somebody mentions you.]]></phrase>
     <phrase title="sv_tagged_email_html_footer_2" version_id="10000" version_string="1.0.0"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
