@@ -1,4 +1,4 @@
-XenForo-UserTaggingImprovements
+# XenForo-UserTaggingImprovements
 
 Improvements to XenForo's tagging system.
 
