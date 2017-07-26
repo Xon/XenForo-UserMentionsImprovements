@@ -11,7 +11,6 @@ class SV_UserTaggingImprovements_XenForo_Model_ForumWatch extends XFCP_SV_UserTa
 
             foreach($emailedUsers as $userId)
             {
-                XenForo_Model_ThreadWatch::$_preventDoubleNotify[$thread['thread_id']][$userId] = true;
                 XenForo_Model_ForumWatch::$_preventDoubleNotify[$thread['thread_id']][$userId] = true;
             }
             $noEmail = array_merge($noEmail, $emailedUsers);
