@@ -9,10 +9,13 @@ class SV_UserTaggingImprovements_XenForo_Model_ThreadWatch extends XFCP_SV_UserT
         {
             $emailedUsers = array_keys(SV_UserTaggingImprovements_Globals::$emailedUsers);
             SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+
             foreach($emailedUsers as $userId)
             {
                 XenForo_Model_ThreadWatch::$_preventDoubleNotify[$thread['thread_id']][$userId] = true;
+                XenForo_Model_ForumWatch::$_preventDoubleNotify[$thread['thread_id']][$userId] = true;
             }
+            $noAlerts = array_merge($noAlerts, $emailedUsers);
         }
 
         $ret = parent::sendNotificationToWatchUsersOnReply($reply, $thread , $noAlerts);
