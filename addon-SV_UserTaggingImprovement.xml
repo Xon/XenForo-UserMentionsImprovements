@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.4.2" version_id="1040200" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.4.3" version_id="1040300" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -258,7 +258,7 @@ $1$2]]></replace>
     <phrase title="option_sv_send_email_on_quote_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive alert emails, when quoted. Requires users to opt-in to User Mention Emails under /account/contact-details as user]]></phrase>
     <phrase title="option_sv_send_email_on_tagging" version_id="1040000" version_string="1.4.0"><![CDATA[Receive User Mention Alert Emails]]></phrase>
     <phrase title="option_sv_send_email_on_tagging_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive user mention alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
-    <phrase title="option_sv_styleGroupUsername" version_id="1010000" version_string="1.1.0"><![CDATA[Username styling for tagged group]]></phrase>
+    <phrase title="option_sv_styleGroupUsername" version_id="1040300" version_string="1.4.3"><![CDATA[Username styling for a mentioned group]]></phrase>
     <phrase title="option_sv_styleGroupUsername_explain" version_id="1010000" version_string="1.1.0"><![CDATA[Allows mentioned group names to have the same username styling applied]]></phrase>
     <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
     <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1040100" version_string="1.4.1"><![CDATA[Receive User Mention or Quote Alert Emails]]></phrase>
@@ -308,11 +308,11 @@ To stop receiving email, please edit your account preferences:
 {board_link}]]></phrase>
     <phrase title="sv_view_all_your_alerts" version_id="10000" version_string="1.0.0"><![CDATA[View all your alerts.]]></phrase>
     <phrase title="sv_view_content_that_mentioned_you" version_id="10000" version_string="1.0.0"><![CDATA[View content that mentioned you.]]></phrase>
-    <phrase title="tagged_as_y_group" version_id="1020000" version_string="1.2.0"><![CDATA[You were tagged because you are a member of the {group} usergroup.]]></phrase>
+    <phrase title="tagged_as_y_group" version_id="1040300" version_string="1.4.3"><![CDATA[As you are a member of the {group} usergroup.]]></phrase>
     <phrase title="user_group_is_private" version_id="10000" version_string="1.0.0"><![CDATA[Is Private]]></phrase>
-    <phrase title="user_group_is_private_explain" version_id="10000" version_string="1.0.0"><![CDATA[Only members of the group or administrators with the correct permission can view & tag this group]]></phrase>
-    <phrase title="user_group_is_taggable" version_id="10000" version_string="1.0.0"><![CDATA[Is Taggable]]></phrase>
-    <phrase title="user_group_is_taggable_explain" version_id="10000" version_string="1.0.0"><![CDATA[This group can be tagged. Warning: not recommended for large groups]]></phrase>
+    <phrase title="user_group_is_private_explain" version_id="1040300" version_string="1.4.3"><![CDATA[Only members of the group or administrators with the correct permission can view & mention this group]]></phrase>
+    <phrase title="user_group_is_taggable" version_id="1040300" version_string="1.4.3"><![CDATA[Is mentionable]]></phrase>
+    <phrase title="user_group_is_taggable_explain" version_id="1040300" version_string="1.4.3"><![CDATA[This group can be mentioned. Warning: not recommended for large groups]]></phrase>
     <phrase title="user_group_large_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Large user group image]]></phrase>
     <phrase title="user_group_large_avatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[Image to use when displaying the user group membership list]]></phrase>
     <phrase title="user_group_small_avatar" version_id="10000" version_string="1.0.0"><![CDATA[Small user group image]]></phrase>
