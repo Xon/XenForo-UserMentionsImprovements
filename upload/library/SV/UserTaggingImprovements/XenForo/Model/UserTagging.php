@@ -45,6 +45,29 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $snippetLength = intval($options->sv_mention_snippet_length);
         $canGetSnippet = (!$snippetLength) && method_exists($alertHandler, 'getContentMessage');
 
+        /** @noinspection PhpUndefinedMethodInspection */
+        $viewLink = $alertHandler->getContentUrl($content, true);
+        if (empty($viewLink))
+        {
+            return;
+        }
+        $snippet = null;
+        if ($canGetSnippet)
+        {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $snippet = $alertHandler->getContentMessage($content);
+
+            if ($snippet)
+            {
+                $snippet = trim($snippet);
+                if ($snippetLength)
+                {
+                    // note: this doesn't actually strip the BB code - it will fix the BB code in the snippet though
+                    $parser = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('XenForo_BbCode_Formatter_BbCode_AutoLink', false));
+                    $snippet = $parser->render(XenForo_Helper_String::wholeWordTrim($snippet, $snippetLength));
+                }
+            }
+        }
 
         // don't alert accounts which are too old, or bounced
         $lastActivity = 0;
@@ -87,30 +110,6 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             if (!XenForo_Permission::hasPermission($permissions, 'general', 'sv_ReceiveTagAlertEmails'))
             {
                 continue;
-            }
-
-            /** @noinspection PhpUndefinedMethodInspection */
-            $viewLink = $alertHandler->getContentUrl($content, true);
-            if (empty($viewLink))
-            {
-                continue;
-            }
-            $snippet = null;
-            if ($canGetSnippet)
-            {
-                /** @noinspection PhpUndefinedMethodInspection */
-                $snippet = $alertHandler->getContentMessage($content);
-
-                if ($snippet)
-                {
-                    $snippet = trim($snippet);
-                    if ($snippetLength)
-                    {
-                        // note: this doesn't actually strip the BB code - it will fix the BB code in the snippet though
-                        $parser = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('XenForo_BbCode_Formatter_BbCode_AutoLink', false));
-                        $snippet = $parser->render(XenForo_Helper_String::wholeWordTrim($snippet, $snippetLength));
-                    }
-                }
             }
 
             $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $snippet, $user, $taggingUser, $template);
