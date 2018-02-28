@@ -51,7 +51,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         {
             return;
         }
-        $snippet = null;
+
+        $snippetHtml = null;
+        $snippetText = null;
         if ($canGetSnippet)
         {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -62,9 +64,20 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 $snippet = trim($snippet);
                 if ($snippetLength)
                 {
-                    // note: this doesn't actually strip the BB code - it will fix the BB code in the snippet though
-                    $parser = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('XenForo_BbCode_Formatter_BbCode_AutoLink', false));
-                    $snippet = $parser->render(XenForo_Helper_String::wholeWordTrim($snippet, $snippetLength));
+                    if ($snippetLength > 0)
+                    {
+                        $snippet = XenForo_Helper_String::wholeWordTrim($snippet, $snippetLength);
+                    }
+                    if ($snippet)
+                    {
+                        $template .= '_message';
+
+                        $bbCodeParserText = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('Text'));
+                        $content['sv_snippet_text'] = $bbCodeParserText->render($snippet);
+
+                        $bbCodeParserHtml = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('HtmlEmail'));
+                        $content['sv_snippet_html'] = $bbCodeParserText->render($bbCodeParserHtml);
+                    }
                 }
             }
         }
@@ -112,7 +125,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 continue;
             }
 
-            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $snippet, $user, $taggingUser, $template);
+            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser, $template);
         }
     }
 
@@ -121,13 +134,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
      * @param string      $contentType
      * @param int         $contentId
      * @param array       $content
-     * @param string|null $snippet
      * @param array       $user
      * @param array       $taggingUser
      * @param string      $template
      */
     protected function emailAlertedUser(/** @noinspection PhpUnusedParameterInspection */
-        $viewLink, $contentType, $contentId, $content, $snippet, array $user, array $taggingUser, $template)
+        $viewLink, $contentType, $contentId, $content, array $user, array $taggingUser, $template)
     {
         $mail = XenForo_Mail::create($template, [
             'sender'      => $taggingUser,
@@ -136,7 +148,6 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             'contentId'   => $contentId,
             'viewLink'    => $viewLink,
             'content'     => $content,
-            'snippet'     => $snippet,
         ], $user['language_id']);
 
         $mail->enableAllLanguagePreCache();

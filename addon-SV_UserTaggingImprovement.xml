@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.4.3" version_id="1040300" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.5.0" version_id="1050000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -57,13 +57,13 @@ $1$2]]></replace>
   <code_events/>
   <code_event_listeners>
     <listener event_id="init_dependencies" execute_order="10" callback_class="SV_UserTaggingImprovements_Listener" callback_method="init_dependencies" active="1" hint="" description="BodyText hook"/>
+    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_ProfilePostComment" description="XenForo_AlertHandler_ProfilePostComment"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Base" description="XenForo_BbCode_Formatter_Base"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_HtmlEmail" description="XenForo_BbCode_Formatter_HtmlEmail"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Text" description="XenForo_BbCode_Formatter_Text"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_Post" description="XenForo_AlertHandler_DiscussionMessage_Post"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_ProfilePost" description="XenForo_AlertHandler_DiscussionMessage_ProfilePost"/>
-    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_ProfilePostComment" description="XenForo_AlertHandler_DiscussionMessage_ProfilePostComment"/>
-    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="SV_ReportImprovements_AlertHandler_ReportComment" description="SV_ReportImprovements_AlertHandler_ReportComment"/>
+    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="SV_ReportImprovements_AlertHandler_Report" description="SV_ReportImprovements_AlertHandler_Report"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Html_Renderer_BbCode" description="XenForo_Html_Renderer_BbCode"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerPublic_Account" description="XenForo_ControllerPublic_Account"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerAdmin_UserGroup" description="XenForo_ControllerAdmin_UserGroup"/>
@@ -100,6 +100,97 @@ $1$2]]></replace>
 	'receiver_username={$receiver.username}',
 	'sender=<a href="{xen:link canonical:members, $sender}" style="color: #176093; text-decoration: none">{$sender.username}</a>',
 	'board=<a href="{xen:link canonical:index}" style="color: #176093; text-decoration: none">{$xenOptions.boardTitle}</a>'}</p>
+
+<table cellpadding="10" cellspacing="0" border="0" width="100%" style="margin: 20px 0; background-color: #f0f7fc; border-top: 1px solid #d7edfc">
+<tr>
+	<td>
+		<a href="{$viewLink}" style="
+			display: block;
+			float: {xen:if $emailIsRtl, right, left};
+			padding: 5px 10px;
+			background-color: #65a5d1;
+			border: none;
+			border-radius: 3px;
+			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: white;
+			text-decoration: none">{xen:phrase sv_view_content_that_mentioned_you}</a>
+	</td>
+	<td align="{xen:if $emailIsRtl, left, right}">
+		<a href="{xen:link canonical:alerts}" style="
+			display: block;
+			padding: 5px 0;
+			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: #176093;
+			text-decoration: none">{xen:phrase sv_view_all_your_alerts}</a>
+	</td>
+</tr>
+</table>
+
+<p style="font-size: 11px; color: #969696">{xen:phrase sv_quoted_email_html_footer_1,
+	'board=<a href="{xen:link canonical:index}" style="color: #969696; text-decoration: underline">{$xenOptions.boardTitle}</a>'}</p>
+
+<p style="font-size: 11px; color: #969696">{xen:phrase sv_quoted_email_html_footer_2,
+	'prefs_link={xen:link canonical:account/contact-details}',
+	'link_style=color: #969696; text-decoration: underline'}</p>]]></body_html>
+    </template>
+    <template title="sv_user_quoted_message">
+      <subject><![CDATA[{xen:phrase sv_quoted_email_subject,
+	"username={$sender.username}",
+	"board_title={$xenOptions.boardTitle}"
+}]]></subject>
+      <body_text><![CDATA[{xen:phrase sv_quoted_email_text_message,
+	"snippet={$content.sv_snippet_text}",
+	"receiver_username={$receiver.username}",
+	"username={$sender.username}",
+	"view_link={$viewLink}",
+	"prefs_link={xen:link 'canonical:account/contact-details'}",
+	"board_link={xen:link 'canonical:index'}",
+	"board_title={$xenOptions.boardTitle}"
+}]]></body_text>
+      <body_html><![CDATA[<p style="margin-top: 0">{xen:phrase sv_quoted_email_html,
+	'receiver_username={$receiver.username}',
+	'sender=<a href="{xen:link canonical:members, $sender}" style="color: #176093; text-decoration: none">{$sender.username}</a>',
+	'board=<a href="{xen:link canonical:index}" style="color: #176093; text-decoration: none">{$xenOptions.boardTitle}</a>'}</p>
+
+<hr style="height: 1px; margin: 10px 0; border: 0; color: #D7EDFC; background-color: #D7EDFC" />
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 10px 0 20px">
+<tr valign="top">
+	<td style="font-size: 13px; line-height: 1.231; padding-{xen:if $emailIsRtl, left, right}: 20px">
+		<div style="
+			background-color: #D7EDFC;
+			border: 1px solid #D7EDFC;
+			border-radius: 5px">
+			<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td style="
+					background-color: #F0F7FC;
+					padding: 5px;
+					border-radius: 4px">
+					<a href="{xen:link canonical:members, $sender}" title="{$sender.username}"
+						><img src="{xen:helper avatar, $sender, s, '', 1}" alt="{$sender.username}" title="{$sender.username}" style="
+							width: 48px;
+							height: 48px;
+							background-color: #FCFCFF;
+							border: 1px solid #A5CAE4;
+							padding: 2px;
+							border-radius: 4px"
+						/></a>
+					</td>
+				</tr>
+			</table>
+			<span style="
+				padding: 3px 5px;
+				display: block"><!--{$sender.username}-->&nbsp;</span>
+		</div>
+	</td>
+	<td width="100%" style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.4">
+		{xen:raw $content.sv_snippet_html}
+	</td>	
+</tr>
+</table>
 
 <table cellpadding="10" cellspacing="0" border="0" width="100%" style="margin: 20px 0; background-color: #f0f7fc; border-top: 1px solid #d7edfc">
 <tr>
@@ -187,6 +278,97 @@ $1$2]]></replace>
 	'prefs_link={xen:link canonical:account/contact-details}',
 	'link_style=color: #969696; text-decoration: underline'}</p>]]></body_html>
     </template>
+    <template title="sv_user_tagged_message">
+      <subject><![CDATA[{xen:phrase sv_tagged_email_subject,
+	"username={$sender.username}",
+	"board_title={$xenOptions.boardTitle}"
+}]]></subject>
+      <body_text><![CDATA[{xen:phrase sv_tagged_email_text_message,
+	"snippet={$content.sv_snippet_text}",
+	"receiver_username={$receiver.username}",
+	"username={$sender.username}",
+	"view_link={$viewLink}",
+	"prefs_link={xen:link 'canonical:account/contact-details'}",
+	"board_link={xen:link 'canonical:index'}",
+	"board_title={$xenOptions.boardTitle}"
+}]]></body_text>
+      <body_html><![CDATA[<p style="margin-top: 0">{xen:phrase sv_tagged_email_html,
+	'receiver_username={$receiver.username}',
+	'sender=<a href="{xen:link canonical:members, $sender}" style="color: #176093; text-decoration: none">{$sender.username}</a>',
+	'board=<a href="{xen:link canonical:index}" style="color: #176093; text-decoration: none">{$xenOptions.boardTitle}</a>'}</p>
+
+<hr style="height: 1px; margin: 10px 0; border: 0; color: #D7EDFC; background-color: #D7EDFC" />
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 10px 0 20px">
+<tr valign="top">
+	<td style="font-size: 13px; line-height: 1.231; padding-{xen:if $emailIsRtl, left, right}: 20px">
+		<div style="
+			background-color: #D7EDFC;
+			border: 1px solid #D7EDFC;
+			border-radius: 5px">
+			<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td style="
+					background-color: #F0F7FC;
+					padding: 5px;
+					border-radius: 4px">
+					<a href="{xen:link canonical:members, $sender}" title="{$sender.username}"
+						><img src="{xen:helper avatar, $sender, s, '', 1}" alt="{$sender.username}" title="{$sender.username}" style="
+							width: 48px;
+							height: 48px;
+							background-color: #FCFCFF;
+							border: 1px solid #A5CAE4;
+							padding: 2px;
+							border-radius: 4px"
+						/></a>
+					</td>
+				</tr>
+			</table>
+			<span style="
+				padding: 3px 5px;
+				display: block"><!--{$sender.username}-->&nbsp;</span>
+		</div>
+	</td>
+	<td width="100%" style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.4">
+		{xen:raw $content.sv_snippet_html}
+	</td>	
+</tr>
+</table>
+
+<table cellpadding="10" cellspacing="0" border="0" width="100%" style="margin: 20px 0; background-color: #f0f7fc; border-top: 1px solid #d7edfc">
+<tr>
+	<td>
+		<a href="{$viewLink}" style="
+			display: block;
+			float: {xen:if $emailIsRtl, right, left};
+			padding: 5px 10px;
+			background-color: #65a5d1;
+			border: none;
+			border-radius: 3px;
+			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: white;
+			text-decoration: none">{xen:phrase sv_view_content_that_mentioned_you}</a>
+	</td>
+	<td align="{xen:if $emailIsRtl, left, right}">
+		<a href="{xen:link canonical:alerts}" style="
+			display: block;
+			padding: 5px 0;
+			font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: #176093;
+			text-decoration: none">{xen:phrase sv_view_all_your_alerts}</a>
+	</td>
+</tr>
+</table>
+
+<p style="font-size: 11px; color: #969696">{xen:phrase sv_tagged_email_html_footer_1,
+	'board=<a href="{xen:link canonical:index}" style="color: #969696; text-decoration: underline">{$xenOptions.boardTitle}</a>'}</p>
+
+<p style="font-size: 11px; color: #969696">{xen:phrase sv_tagged_email_html_footer_2,
+	'prefs_link={xen:link canonical:account/contact-details}',
+	'link_style=color: #969696; text-decoration: underline'}</p>]]></body_html>
+    </template>
   </email_templates>
   <email_template_modifications/>
   <optiongroups>
@@ -214,6 +396,12 @@ $1$2]]></replace>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="SV_UserTaggingImprovements" display_order="120"/>
+    </option>
+    <option option_id="sv_mention_snippet_length" edit_format="spinbox" data_type="integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params>min=-1</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="SV_UserTaggingImprovements" display_order="130"/>
     </option>
     <option option_id="sv_send_email_on_quote" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value></default_value>
@@ -255,6 +443,11 @@ $1$2]]></replace>
     <phrase title="option_sv_displayGroupAvatar_explain" version_id="10000" version_string="1.0.0"><![CDATA[]]></phrase>
     <phrase title="option_sv_limit_quote_emails" version_id="1040000" version_string="1.4.0"><![CDATA[Send quote emails only on unreplied threads]]></phrase>
     <phrase title="option_sv_limit_quote_emails_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Only send quote alert emails if the user has not posted in that thread before.]]></phrase>
+    <phrase title="option_sv_mention_snippet_length" version_id="1050000" version_string="1.5.0"><![CDATA[Mention/Quote Snippet length]]></phrase>
+    <phrase title="option_sv_mention_snippet_length_explain" version_id="1050000" version_string="1.5.0"><![CDATA[On Mention/Quote emails, include a snippet this long<br/>
+<br/>
+0 to disable<br/>
+-1 for all text]]></phrase>
     <phrase title="option_sv_send_email_on_quote" version_id="1040000" version_string="1.4.0"><![CDATA[Receive Quoted Alert Emails]]></phrase>
     <phrase title="option_sv_send_email_on_quote_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive alert emails, when quoted. Requires users to opt-in to User Mention Emails under /account/contact-details as user]]></phrase>
     <phrase title="option_sv_send_email_on_tagging" version_id="1040000" version_string="1.4.0"><![CDATA[Receive User Mention Alert Emails]]></phrase>
@@ -285,6 +478,24 @@ To stop receiving email, please edit your account preferences:
 {prefs_link}
 
 {board_link}]]></phrase>
+    <phrase title="sv_quoted_email_text_message" version_id="1050000" version_string="1.5.0"><![CDATA[{receiver_username}, {username} quoted you at {board_title}.
+
+This is the message they posted:
+----------------------------------------------------------------------
+{message}
+----------------------------------------------------------------------
+
+To view the content you where quoted in, click here:
+{view_link}
+
+----------------------------------------------------------------------
+
+This message was sent to you from {board_title} because your preferences are set to receive email when somebody quotes or mentions you.
+
+To stop receiving email, please edit your account preferences:
+{prefs_link}
+
+{board_link}]]></phrase>
     <phrase title="sv_receive_email_is_disabled" version_id="10005" version_string="1.0.5"><![CDATA[You do not have permission to use this feature, but your choice is remembered.]]></phrase>
     <phrase title="sv_receive_email_when_mentioned" version_id="10000" version_string="1.0.0"><![CDATA[Receive email when mentioned]]></phrase>
     <phrase title="sv_receive_email_when_mentioned_explain" version_id="10000" version_string="1.0.0"><![CDATA[Email notifications when mentioned from threads, replies, profile posts, etc.]]></phrase>
@@ -295,6 +506,24 @@ To stop receiving email, please edit your account preferences:
     <phrase title="sv_tagged_email_html_footer_2" version_id="10000" version_string="1.0.0"><![CDATA[To stop receiving email, please <a href="{prefs_link}" style="{link_style}">edit your contact preferences</a>.]]></phrase>
     <phrase title="sv_tagged_email_subject" version_id="10000" version_string="1.0.0"><![CDATA[You have been mentioned by {username} at {board_title}]]></phrase>
     <phrase title="sv_tagged_email_text" version_id="1040000" version_string="1.4.0"><![CDATA[{receiver_username}, {username} mentioned you at {board_title}.
+
+To view the content you where mentioned in, click here:
+{view_link}
+
+----------------------------------------------------------------------
+
+This message was sent to you from {board_title} because your preferences are set to receive email when somebody mentions you.
+
+To stop receiving email, please edit your account preferences:
+{prefs_link}
+
+{board_link}]]></phrase>
+    <phrase title="sv_tagged_email_text_message" version_id="1050000" version_string="1.5.0"><![CDATA[{receiver_username}, {username} mentioned you at {board_title}.
+
+This is the message they posted:
+----------------------------------------------------------------------
+{message}
+----------------------------------------------------------------------
 
 To view the content you where mentioned in, click here:
 {view_link}
