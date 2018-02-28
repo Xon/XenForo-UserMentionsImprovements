@@ -25,6 +25,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         $options = XenForo_Application::getOptions();
+        /** @noinspection PhpUndefinedFieldInspection */
         if (!$options->sv_send_email_on_tagging)
         {
             return;
@@ -42,6 +43,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         // don't alert accounts which are too old, or bounced
         $lastActivity = 0;
+        /** @noinspection PhpUndefinedFieldInspection */
         $activeLimitOption = $options->watchAlertActiveOnly;
         if (!empty($activeLimitOption['enabled']) && !empty($activeLimitOption['days']))
         {
@@ -49,17 +51,17 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         $userModel = $this->_getUserModel();
-        $users = $userModel->getUsersByIds($userIds, array(
+        $users = $userModel->getUsersByIds($userIds, [
             'join' => XenForo_Model_User::FETCH_USER_OPTION |
                       XenForo_Model_User::FETCH_USER_PERMISSIONS,
-        ));
-        foreach($users as $user)
+        ]);
+        foreach ($users as $user)
         {
-			if (isset(SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']]))
-			{
-				continue;
-			}
-			SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']] = true;
+            if (isset(SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']]))
+            {
+                continue;
+            }
+            SV_UserTaggingImprovements_Globals::$emailedUsers[$user['user_id']] = true;
 
             if (empty($user[$userCheckField]))
             {
@@ -75,33 +77,44 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             }
 
             $permissions = (!empty($user['global_permission_cache'])
-                            ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
-                            : array());
+                ? XenForo_Permission::unserializePermissions($user['global_permission_cache'])
+                : []);
             if (!XenForo_Permission::hasPermission($permissions, 'general', 'sv_ReceiveTagAlertEmails'))
             {
                 continue;
             }
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $viewLink = $alertHandler->getContentUrl($content, true);
             if (empty($viewLink))
             {
                 continue;
             }
 
+
             $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser, $template);
         }
     }
 
-    protected function emailAlertedUser($viewLink, $contentType, $contentId, $content, array $user, array $taggingUser, $template)
+    /**
+     * @param string $viewLink
+     * @param string $contentType
+     * @param int    $contentId
+     * @param array  $content
+     * @param array  $user
+     * @param array  $taggingUser
+     * @param string $template
+     */
+    protected function emailAlertedUser(/** @noinspection PhpUnusedParameterInspection */
+        $viewLink, $contentType, $contentId, $content, array $user, array $taggingUser, $template)
     {
-        $mail = XenForo_Mail::create($template, array
-        (
-            'sender' => $taggingUser,
-            'receiver' => $user,
+        $mail = XenForo_Mail::create($template, [
+            'sender'      => $taggingUser,
+            'receiver'    => $user,
             'contentType' => $contentType,
-            'contentId' => $contentId,
-            'viewLink' => $viewLink,
-        ), $user['language_id']);
+            'contentId'   => $contentId,
+            'viewLink'    => $viewLink,
+        ], $user['language_id']);
 
         $mail->enableAllLanguagePreCache();
         $mail->queue($user['email'], $user['username']);
@@ -116,19 +129,19 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $this->_plainReplacements = null;
         if ($replaceStyle == 'bb')
         {
-            $this->_plainReplacements = array();
+            $this->_plainReplacements = [];
             $filteredMessage = preg_replace_callback(
                 '#\[(usergroup)(=[^\]]*)?](.*)\[/\\1]#siU',
-                array($this, '_plainReplaceHandlerGroup'),
+                [$this, '_plainReplaceHandlerGroup'],
                 $filteredMessage
             );
         }
         else if ($replaceStyle == 'text')
         {
-            $this->_plainReplacements = array();
+            $this->_plainReplacements = [];
             $filteredMessage = preg_replace_callback(
                 '#(?<=^|\s|[\](,]|--|@)@\[ug_(\d+):(\'|"|&quot;|)(.*)\\2\]#iU',
-                array($this, '_plainReplaceHandlerGroup'),
+                [$this, '_plainReplaceHandlerGroup'],
                 $filteredMessage
             );
         }
@@ -156,7 +169,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
     {
         if (!is_array($this->_plainReplacements))
         {
-            $this->_plainReplacements = array();
+            $this->_plainReplacements = [];
         }
 
         $placeholder = "\x1Ag\x1A" . count($this->_plainReplacements) . "\x1Ag\x1A";
@@ -179,6 +192,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 $this->_plainReplacements = array_merge($this->_plainReplacements, $this->_plainReplacementsUserGroupMentions);
             }
         }
+
         return parent::_getPossibleTagMatches($message);
     }
 
@@ -186,11 +200,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
     {
         $groups = explode(',', $user['secondary_group_ids']);
         $groups[] = $user['user_group_id'];
-        $groupKeys = array();
-        foreach($groups as $group)
+        $groupKeys = [];
+        foreach ($groups as $group)
         {
             $groupKeys[$group] = true;
         }
+
         return $groupKeys;
     }
 
@@ -200,8 +215,8 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         $db = $this->_getDb();
         $matchKeys = array_keys($matches);
-        $whereParts = array();
-        $matchParts = array();
+        $whereParts = [];
+        $matchParts = [];
 
         foreach ($matches AS $key => $match)
         {
@@ -229,10 +244,10 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             ORDER BY LENGTH(usergroup.title) DESC
         ");
 
-        $require_sort = array();
+        $require_sort = [];
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
         $groupMembership = $this->_getGroupMembership($visitor->toArray());
 
         while ($group = $userResults->fetch())
@@ -243,12 +258,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 continue;
             }
 
-            $userInfo = array(
-                'user_id' => 'ug_' . $group['user_group_id'],
+            $userInfo = [
+                'user_id'  => 'ug_' . $group['user_group_id'],
                 'is_group' => 1,
                 'username' => $group['title'],
-                'lower' => utf8_strtolower($group['title'])
-            );
+                'lower'    => utf8_strtolower($group['title'])
+            ];
 
             foreach ($matchKeys AS $key)
             {
@@ -266,7 +281,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         foreach ($require_sort AS $key => $x)
         {
             if ($require_sort[$key])
-            uasort($usersByMatch[$key], array($this, 'usergroup_sorting'));
+            {
+                uasort($usersByMatch[$key], [$this, 'usergroup_sorting']);
+            }
         }
 
         return $usersByMatch;
@@ -274,10 +291,15 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
     public function usergroup_sorting($a, $b)
     {
-        if (!empty($b['is_group']) && empty($a['is_group'] ))
+        if (!empty($b['is_group']) && empty($a['is_group']))
+        {
             return 1;
+        }
         else if (empty($b['is_group']) && !empty($a['is_group']))
+        {
             return -1;
+        }
+
         return (utf8_strlen($b['lower']) - utf8_strlen($a['lower']));
     }
 
@@ -286,9 +308,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         if (!empty($user['is_group']) && $replaceStyle == 'bb')
         {
             $group_id = intval(str_replace('ug_', '', $user['user_id']));
+            /** @noinspection PhpUndefinedFieldInspection */
             $prefix = XenForo_Application::getOptions()->userTagKeepAt ? '@' : '';
+
             return '[USERGROUP=' . $group_id . ']' . $prefix . $user['username'] . '[/USERGROUP]';
         }
+
         return parent::_replaceTagUserMatch($user, $replaceStyle);
     }
 
@@ -298,18 +323,19 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $sql = '';
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
 
         if (!$viewAllGroups)
         {
             $groupMembership = array_keys($this->_getGroupMembership($visitor->toArray()));
-            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) .  ' ) )';
+            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) . ' ) )';
         }
 
+        /** @noinspection SpellCheckingInspection */
         $userGroup = $db->fetchRow("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private, usergroup.last_edit_date
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? ". $sql."
+            WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? {$sql}
         ", $UserGroupId);
 
         if (!empty($userGroup))
@@ -317,22 +343,24 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             $options = XenForo_Application::getOptions();
             if (empty($userGroup['avatar_s']))
             {
-               $userGroup['avatar_s'] = $options->sv_default_group_avatar_s;
+                /** @noinspection PhpUndefinedFieldInspection */
+                $userGroup['avatar_s'] = $options->sv_default_group_avatar_s;
             }
             if (empty($userGroup['avatar_l']))
             {
-               $userGroup['avatar_l'] = $options->sv_default_group_avatar_l;
+                /** @noinspection PhpUndefinedFieldInspection */
+                $userGroup['avatar_l'] = $options->sv_default_group_avatar_l;
             }
             if (isset($userGroup['last_edit_date']))
             {
                 // cache buster strings
                 if ($userGroup['avatar_s'])
                 {
-                    $userGroup['avatar_s'] .= "?q=". $userGroup['last_edit_date'];
+                    $userGroup['avatar_s'] .= "?q=" . $userGroup['last_edit_date'];
                 }
                 if ($userGroup['avatar_l'])
                 {
-                    $userGroup['avatar_l'] .= "?q=". $userGroup['last_edit_date'];
+                    $userGroup['avatar_l'] .= "?q=" . $userGroup['last_edit_date'];
                 }
             }
         }
@@ -350,30 +378,31 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         }
 
         $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasPermission('general','sv_ViewPrivateGroups');
+        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
 
         if (!$viewAllGroups)
         {
             $groupMembership = array_keys($this->_getGroupMembership($visitor->toArray()));
-            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) .  ' ) )';
+            $sql .= ' and ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) . ' ) )';
         }
 
         return $this->fetchAllKeyed("
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_taggable = 1 ". $sql."
+            WHERE usergroup.sv_taggable = 1 {$sql}
             ORDER BY LENGTH(usergroup.title) DESC
-            " . ($limit ? " limit $limit " : '')  . "
+            " . ($limit ? " limit $limit " : '') . "
         ", 'user_group_id');
     }
 
     public function getTaggedGroupUserIds($UserGroupId)
     {
         $db = $this->_getDb();
+
         return $db->fetchCol("
-            SELECT distinct user.user_id
+            SELECT DISTINCT user.user_id
             FROM xf_user AS user
-            join xf_user_group_relation as relation on relation.user_id = user.user_id
+            JOIN xf_user_group_relation AS relation ON relation.user_id = user.user_id
             WHERE relation.user_group_id = ?
         ", $UserGroupId);
     }
@@ -384,7 +413,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         {
             $taggingUser = XenForo_Visitor::getInstance()->toArray();
         }
-        $permissions = array();
+        $permissions = [];
         if (!empty($taggingUser['permissions']))
         {
             $permissions = $taggingUser['permissions'];
@@ -408,7 +437,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 WHERE user.user_id = ?
             ', $taggingUser['user_id']);
 
-            if(!empty($permUser['global_permission_cache']))
+            if (!empty($permUser['global_permission_cache']))
             {
                 $permissions = XenForo_Permission::unserializePermissions($permUser['global_permission_cache']);
             }
@@ -416,10 +445,10 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         $CannotGroupTag = !XenForo_Permission::hasPermission($permissions, 'general', 'sv_TagUserGroup');
 
-        $alreadyTagged = array();
+        $alreadyTagged = [];
         $db = $this->_getDb();
-        $users = array();
-        foreach($tagged as $candinate)
+        $users = [];
+        foreach ($tagged as $candinate)
         {
             if (!empty($alreadyTagged[$candinate['user_id']]))
             {
@@ -445,9 +474,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             }
 
             $userResults = $db->query("
-                SELECT distinct user.user_id, user.username
+                SELECT DISTINCT user.user_id, user.username
                 FROM xf_user AS user
-                join xf_user_group_relation as relation on relation.user_id = user.user_id
+                JOIN xf_user_group_relation AS relation ON relation.user_id = user.user_id
                 WHERE relation.user_group_id = ?
             ", $group_id);
 
@@ -459,16 +488,16 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                 }
                 $alreadyTagged[$user['user_id']] = true;
 
-                $users[$user['user_id']] = array
-                (
-                    'user_id' => $user['user_id'],
-                    'username' => $user['username'],
-                    'lower' => utf8_strtolower($user['username']),
+                $users[$user['user_id']] = [
+                    'user_id'       => $user['user_id'],
+                    'username'      => $user['username'],
+                    'lower'         => utf8_strtolower($user['username']),
                     'taggedGroupId' => $group_id,
-                    'taggedGroup' => $candinate['username'],
-                );
+                    'taggedGroup'   => $candinate['username'],
+                ];
             }
         }
+
         return $users;
     }
 
