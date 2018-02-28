@@ -5,11 +5,12 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup extends XFCP_SV_Us
     protected function _getFields()
     {
         $fields = parent::_getFields();
-        $fields['xf_user_group']['sv_taggable']  = array('type' => self::TYPE_UINT,   'default' => 0);
-        $fields['xf_user_group']['sv_private']   = array('type' => self::TYPE_UINT,   'default' => 0);
-        $fields['xf_user_group']['sv_avatar_s']  = array('type' => self::TYPE_STRING, 'default' => '');
-        $fields['xf_user_group']['sv_avatar_l']  = array('type' => self::TYPE_STRING, 'default' => '');
-        $fields['xf_user_group']['last_edit_date']  = array('type' => self::TYPE_UINT, 'default' => 0);
+        $fields['xf_user_group']['sv_taggable'] = ['type' => self::TYPE_UINT, 'default' => 0];
+        $fields['xf_user_group']['sv_private'] = ['type' => self::TYPE_UINT, 'default' => 0];
+        $fields['xf_user_group']['sv_avatar_s'] = ['type' => self::TYPE_STRING, 'default' => ''];
+        $fields['xf_user_group']['sv_avatar_l'] = ['type' => self::TYPE_STRING, 'default' => ''];
+        $fields['xf_user_group']['last_edit_date'] = ['type' => self::TYPE_UINT, 'default' => 0];
+
         return $fields;
     }
 
@@ -23,14 +24,14 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup extends XFCP_SV_Us
         }
     }
 
-	protected function _postDelete()
-	{
+    protected function _postDelete()
+    {
         parent::_postDelete();
         $this->_cacheInvalidation();
     }
 
-	protected function _postSaveAfterTransaction()
-	{
+    protected function _postSaveAfterTransaction()
+    {
         parent::_postSaveAfterTransaction();
         if (($this->isChanged('last_edit_date')))
         {
@@ -40,6 +41,8 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_UserGroup extends XFCP_SV_Us
 
     protected function _cacheInvalidation()
     {
-        $this->getModelFromCache('XenForo_Model_Style')->updateAllStylesLastModifiedDate();
+        /** @var XenForo_Model_Style $model */
+        $model = $this->getModelFromCache('XenForo_Model_Style');
+        $model->updateAllStylesLastModifiedDate();
     }
 }

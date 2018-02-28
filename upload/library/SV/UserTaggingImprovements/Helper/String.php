@@ -12,7 +12,7 @@ class SV_UserTaggingImprovements_Helper_String
             $original[0] = 'XenForo_Template_Helper_Core';
         }
         self::$originalBodyText = $original;
-        XenForo_Template_Helper_Core::$helperCallbacks['bodytext'] = array(__CLASS__, 'helperBodyText');
+        XenForo_Template_Helper_Core::$helperCallbacks['bodytext'] = [__CLASS__, 'helperBodyText'];
     }
 
     public static function helperBodyText()
@@ -35,10 +35,10 @@ class SV_UserTaggingImprovements_Helper_String
 
     public static function linkTaggedUserGroup($string)
     {
-        $string = preg_replace_callback('#(?<=^|\s|[\](,]|--|@)@\[ug_(\d+):(\'|"|&quot;|)(.*)\\2\]#iU', array(
+        $string = preg_replace_callback('#(?<=^|\s|[\](,]|--|@)@\[ug_(\d+):(\'|"|&quot;|)(.*)\\2\]#iU', [
             'self',
             '_linkTaggedUserGroupCallback'
-        ), $string);
+        ], $string);
 
         return $string;
     }
@@ -49,29 +49,37 @@ class SV_UserTaggingImprovements_Helper_String
         $userGroupTitle = htmlspecialchars($matches[3], null, 'utf-8', false);
 
         $linkParts = SV_UserTaggingImprovements_Helper_String::getUserGroupLinkParts($userGroupId, $userGroupTitle);
+
         return $linkParts[0] . htmlspecialchars($userGroupTitle) . $linkParts[1];
     }
 
     static $groupAvatar = null;
     static $groupUsername = null;
+
     public static function getUserGroupLinkParts($userGroupId, $userGroupTitle)
     {
         $userGroupId = intval($userGroupId);
         if ($userGroupId <= 0)
         {
-            return array('', '');
+            return ['', ''];
         }
-        $link = XenForo_Link::buildPublicLink('full:members', array(), array('ug' => $userGroupId));
+        $link = XenForo_Link::buildPublicLink('full:members', [], ['ug' => $userGroupId]);
         if (self::$groupAvatar === null)
         {
             $options = XenForo_Application::getOptions();
-            self::$groupUsername = $options->sv_styleGroupUsername 
-                                   ? 'username' 
-                                   : '';
+            /** @noinspection PhpUndefinedFieldInspection */
+            self::$groupUsername = $options->sv_styleGroupUsername
+                ? 'username'
+                : '';
+            /** @noinspection PhpUndefinedFieldInspection */
             self::$groupAvatar = $options->sv_displayGroupAvatar
-                                 ? '<span class="groupImg"></span>'
-                                 : '';
+                ? '<span class="groupImg"></span>'
+                : '';
         }
-        return array('<a href="' . htmlspecialchars($link) . '" class="'.self::$groupUsername.' ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '"><span class="style'.$userGroupId.'">'.self::$groupAvatar,'</span></a>');
+
+        return [
+            '<a href="' . htmlspecialchars($link) . '" class="' . self::$groupUsername . ' ug" data-usergroup="' . $userGroupId . ', ' . htmlspecialchars($userGroupTitle) . '"><span class="style' . $userGroupId . '">' . self::$groupAvatar,
+            '</span></a>'
+        ];
     }
 }

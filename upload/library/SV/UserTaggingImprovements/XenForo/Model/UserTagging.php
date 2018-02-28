@@ -8,6 +8,15 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
     const UserTaggedCheckField = 'sv_email_on_tag';
     const UserQuotedCheckField = 'sv_email_on_quote';
 
+    /**
+     * @param string $contentType
+     * @param int    $contentId
+     * @param array  $content
+     * @param int[]  $userIds
+     * @param array  $taggingUser
+     * @param string $template
+     * @param string $userCheckField
+     */
     public function emailAlertedUsers($contentType, $contentId, $content, array $userIds, array $taggingUser, $template = 'sv_user_tagged', $userCheckField = 'sv_email_on_tag')
     {
         if (empty($userIds))
@@ -23,6 +32,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         // use the alert handler to provide a content link.
         // This add-on extends the relevant alert handlers to inject the required method
+        /** @var XenForo_Model_Alert|SV_UserTaggingImprovements_XenForo_Model_Alert $alertModel */
         $alertModel = $this->getModelFromCache('XenForo_Model_Alert');
         $alertHandler = $alertModel->getAlertHandler($contentType);
         if (empty($alertHandler) || !method_exists($alertHandler, 'getContentUrl'))
@@ -462,6 +472,9 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         return $users;
     }
 
+    /**
+     * @return XenForo_Model|XenForo_Model_User
+     */
     protected function _getUserModel()
     {
         return $this->getModelFromCache('XenForo_Model_User');

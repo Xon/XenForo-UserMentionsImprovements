@@ -5,8 +5,9 @@ class SV_UserTaggingImprovements_XenForo_DataWriter_User extends XFCP_SV_UserTag
     protected function _getFields()
     {
         $fields = parent::_getFields();
-        $fields['xf_user_option']['sv_email_on_tag'] = array('type' => self::TYPE_BOOLEAN, 'default' => 0);
-        $fields['xf_user_option']['sv_email_on_quote'] = array('type' => self::TYPE_BOOLEAN, 'default' => 0);
+        $fields['xf_user_option']['sv_email_on_tag'] = ['type' => self::TYPE_BOOLEAN, 'default' => 0];
+        $fields['xf_user_option']['sv_email_on_quote'] = ['type' => self::TYPE_BOOLEAN, 'default' => 0];
+
         return $fields;
     }
 

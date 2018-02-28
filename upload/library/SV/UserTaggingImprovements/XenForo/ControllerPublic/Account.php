@@ -19,9 +19,12 @@ class SV_UserTaggingImprovements_XenForo_ControllerPublic_Account extends XFCP_S
             $options = XenForo_Application::getOptions();
             $visitor = XenForo_Visitor::getInstance();
 
+            /** @noinspection PhpUndefinedFieldInspection */
             $response->subView->params['CanEnableEmailOnTag'] = $options->sv_send_email_on_tagging && $visitor->hasPermission('general', 'sv_ReceiveTagAlertEmails');
+            /** @noinspection PhpUndefinedFieldInspection */
             $response->subView->params['CanEnableEmailOnQuote'] = $options->sv_send_email_on_quote && $visitor->hasPermission('general', 'sv_ReceiveTagAlertEmails');
         }
+
         return $response;
     }
 }

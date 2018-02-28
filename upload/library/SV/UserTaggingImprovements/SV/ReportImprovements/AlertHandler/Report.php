@@ -4,11 +4,12 @@ class SV_UserTaggingImprovements_SV_ReportImprovements_AlertHandler_Report exten
 {
     public function getContentUrl(array $content, $canonical = false)
     {
-        $extraParams = array();
+        $extraParams = [];
         if (!empty($content['report_comment_id']))
         {
             $extraParams['report_comment_id'] = $content['report_comment_id'];
         }
+
         return XenForo_Link::buildPublicLink(($canonical ? 'canonical:' : '') . 'posts', $content, $extraParams);
     }
 }

@@ -2,6 +2,7 @@
 
 class SV_UserTaggingImprovements_Template
 {
+    /** @var null|XenForo_Model_UserGroup */
     protected static $userGroupModel = null;
 
     public static function template_hook($hookName, &$contents, array $hookParams, XenForo_Template_Abstract $template)
@@ -20,7 +21,7 @@ class SV_UserTaggingImprovements_Template
         {
             return;
         }
-        
+
         $options = XenForo_Application::getOptions();
         if (!$options->sv_displayGroupAvatar)
         {
@@ -39,7 +40,7 @@ class SV_UserTaggingImprovements_Template
         }
 
         $template->preloadTemplate($hookParams['template']);
-        $contents .= $template->create($hookParams['template'], array('groups' => $groups, 'xenOptions' => $options->getOptions()))->render();
+        $contents .= $template->create($hookParams['template'], ['groups' => $groups, 'xenOptions' => $options->getOptions()])->render();
 
         return;
     }

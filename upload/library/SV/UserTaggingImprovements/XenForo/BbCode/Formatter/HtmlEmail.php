@@ -6,12 +6,11 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP
     {
         $tags = parent::getTags();
 
-        $tags['usergroup'] = array
-        (
-            'hasOption' => true,
+        $tags['usergroup'] = [
+            'hasOption'   => true,
             'stopSmilies' => true,
-            'callback' => array($this, '_renderTagUserGroup')
-        );
+            'callback'    => [$this, '_renderTagUserGroup']
+        ];
 
         return $tags;
     }
@@ -32,6 +31,7 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP
 
         $userGroupTitle = $this->stringifyTree($tag['children']);
         $linkParts = SV_UserTaggingImprovements_Helper_String::getUserGroupLinkParts($userGroupId, $userGroupTitle);
+
         return $this->_wrapInHtml($linkParts[0], $linkParts[1], $content);
     }
 }

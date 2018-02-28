@@ -6,7 +6,9 @@ class SV_UserTaggingImprovements_Option_MiniAvatar
     {
         if ($option)
         {
-            XenForo_Model::create('XenForo_Model_Style')->updateAllStylesLastModifiedDate();
+            /** @var XenForo_Model_Style $model */
+            $model = $dw->getModelFromCache('XenForo_Model_Style');
+            $model->updateAllStylesLastModifiedDate();
         }
         return true;
     }

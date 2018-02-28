@@ -2,14 +2,21 @@
 
 class SV_UserTaggingImprovements_XenForo_Model_ForumWatch extends XFCP_SV_UserTaggingImprovements_XenForo_Model_ForumWatch
 {
-    public function sendNotificationToWatchUsersOnMessage(array $post, array $thread = null, array $noAlerts = array(), array $noEmail = array())
+    /**
+     * @param array      $post
+     * @param array|null $thread
+     * @param array      $noAlerts
+     * @param array      $noEmail
+     * @return array
+     */
+    public function sendNotificationToWatchUsersOnMessage(array $post, array $thread = null, array $noAlerts = [], array $noEmail = [])
     {
         if (!empty(SV_UserTaggingImprovements_Globals::$emailedUsers))
         {
             $emailedUsers = array_keys(SV_UserTaggingImprovements_Globals::$emailedUsers);
-            SV_UserTaggingImprovements_Globals::$emailedUsers = array();
+            SV_UserTaggingImprovements_Globals::$emailedUsers = [];
 
-            foreach($emailedUsers as $userId)
+            foreach ($emailedUsers as $userId)
             {
                 XenForo_Model_ForumWatch::$_preventDoubleNotify[$thread['thread_id']][$userId] = true;
             }

@@ -6,12 +6,11 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_Text extends XFCP_SV_U
     {
         $tags = parent::getTags();
 
-        $tags['usergroup'] = array
-        (
-            'hasOption' => true,
+        $tags['usergroup'] = [
+            'hasOption'   => true,
             'stopSmilies' => true,
-            'callback' => array($this, '_renderTagUserGroup')
-        );
+            'callback'    => [$this, '_renderTagUserGroup']
+        ];
 
         return $tags;
     }

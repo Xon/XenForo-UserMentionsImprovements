@@ -4,28 +4,27 @@ class SV_UserTaggingImprovements_ViewPublic_Member_Find extends XenForo_ViewPubl
 {
     public function renderJson()
     {
-        $results = array();
+        $results = [];
         foreach ($this->_params['users'] AS $user)
         {
             if (empty($user['avatar_s']))
             {
-                $results[$user['username']] = array
-                (
-                    'avatar' => XenForo_Template_Helper_Core::callHelper('avatar', array($user, 's')),
+                $results[$user['username']] = [
+                    'avatar'   => XenForo_Template_Helper_Core::callHelper('avatar', [$user, 's']),
                     'username' => htmlspecialchars($user['username'])
-                );
+                ];
             }
             else
             {
-                $results[$user['username']] = array
-                (
-                    'avatar' => $user['avatar_s'],
+                $results[$user['username']] = [
+                    'avatar'   => $user['avatar_s'],
                     'username' => htmlspecialchars($user['username'])
-                );
+                ];
             }
         }
-        return array(
+
+        return [
             'results' => $results
-        );
+        ];
     }
 }

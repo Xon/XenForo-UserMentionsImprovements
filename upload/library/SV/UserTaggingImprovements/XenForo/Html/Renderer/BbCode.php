@@ -9,6 +9,7 @@ class SV_UserTaggingImprovements_XenForo_Html_Renderer_BbCode extends XFCP_SV_Us
         {
             return "[USERGROUP={$group_id}]{$text}[/USERGROUP]";
         }
+
         return parent::handleTagA($text, $tag);
     }
 }
