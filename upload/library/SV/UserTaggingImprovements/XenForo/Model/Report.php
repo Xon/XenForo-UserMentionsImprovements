@@ -11,7 +11,7 @@ class SV_UserTaggingImprovements_XenForo_Model_Report extends XFCP_SV_UserTaggin
         /** @noinspection PhpUndefinedMethodInspection */
         $alertedUsers = parent::alertTaggedMembers($report, $reportComment, $tagged, $alreadyAlerted, $taggingUser);
         SV_UserTaggingImprovements_Globals::$AlertedUsersExtraInfo = null;
-        $userTaggingModel->emailAlertedUsers('report', $reportComment['report_id'], $reportComment, $alertedUsers, $taggingUser, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
+        $userTaggingModel->emailAlertedUsers('report_comment', $reportComment['report_comment_id'], $reportComment, $alertedUsers, $taggingUser, SV_UserTaggingImprovements_XenForo_Model_UserTagging::UserTaggedEmailTemplate);
 
         return $alertedUsers;
     }

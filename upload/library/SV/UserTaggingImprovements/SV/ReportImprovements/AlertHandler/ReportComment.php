@@ -10,7 +10,7 @@ class SV_UserTaggingImprovements_SV_ReportImprovements_AlertHandler_ReportCommen
             $extraParams['report_comment_id'] = $content['report_comment_id'];
         }
 
-        return XenForo_Link::buildPublicLink(($canonical ? 'canonical:' : '') . 'posts', $content, $extraParams);
+        return XenForo_Link::buildPublicLink(($canonical ? 'canonical:' : '') . 'reports/comment', $content, $extraParams);
     }
 
     public function getContentMessage(array $content)
