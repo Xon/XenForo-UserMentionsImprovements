@@ -12,4 +12,9 @@ class SV_UserTaggingImprovements_SV_ReportImprovements_AlertHandler_ReportCommen
 
         return XenForo_Link::buildPublicLink(($canonical ? 'canonical:' : '') . 'posts', $content, $extraParams);
     }
+
+    public function getContentMessage(array $content)
+    {
+        return isset($content['message']) ? $content['message'] : null;
+    }
 }

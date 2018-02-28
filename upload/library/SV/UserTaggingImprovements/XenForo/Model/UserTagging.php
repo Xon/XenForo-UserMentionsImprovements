@@ -41,6 +41,11 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             return;
         }
 
+        /** @noinspection PhpUndefinedFieldInspection */
+        $snippetLength = intval($options->sv_mention_snippet_length);
+        $canGetSnippet = (!$snippetLength) && method_exists($alertHandler, 'getContentMessage');
+
+
         // don't alert accounts which are too old, or bounced
         $lastActivity = 0;
         /** @noinspection PhpUndefinedFieldInspection */
@@ -90,23 +95,40 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             {
                 continue;
             }
+            $snippet = null;
+            if ($canGetSnippet)
+            {
+                /** @noinspection PhpUndefinedMethodInspection */
+                $snippet = $alertHandler->getContentMessage($content);
 
+                if ($snippet)
+                {
+                    $snippet = trim($snippet);
+                    if ($snippetLength)
+                    {
+                        // note: this doesn't actually strip the BB code - it will fix the BB code in the snippet though
+                        $parser = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('XenForo_BbCode_Formatter_BbCode_AutoLink', false));
+                        $snippet = $parser->render(XenForo_Helper_String::wholeWordTrim($snippet, $snippetLength));
+                    }
+                }
+            }
 
-            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $user, $taggingUser, $template);
+            $this->emailAlertedUser($viewLink, $contentType, $contentId, $content, $snippet, $user, $taggingUser, $template);
         }
     }
 
     /**
-     * @param string $viewLink
-     * @param string $contentType
-     * @param int    $contentId
-     * @param array  $content
-     * @param array  $user
-     * @param array  $taggingUser
-     * @param string $template
+     * @param string      $viewLink
+     * @param string      $contentType
+     * @param int         $contentId
+     * @param array       $content
+     * @param string|null $snippet
+     * @param array       $user
+     * @param array       $taggingUser
+     * @param string      $template
      */
     protected function emailAlertedUser(/** @noinspection PhpUnusedParameterInspection */
-        $viewLink, $contentType, $contentId, $content, array $user, array $taggingUser, $template)
+        $viewLink, $contentType, $contentId, $content, $snippet, array $user, array $taggingUser, $template)
     {
         $mail = XenForo_Mail::create($template, [
             'sender'      => $taggingUser,
@@ -114,6 +136,8 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             'contentType' => $contentType,
             'contentId'   => $contentId,
             'viewLink'    => $viewLink,
+            'content'     => $content,
+            'snippet'     => $snippet,
         ], $user['language_id']);
 
         $mail->enableAllLanguagePreCache();

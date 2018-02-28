@@ -6,4 +6,9 @@ class SV_UserTaggingImprovements_XenForo_AlertHandler_DiscussionMessage_Post ext
     {
         return XenForo_Link::buildPublicLink(($canonical ? 'canonical:' : '') . 'posts', $content);
     }
+
+    public function getContentMessage(array $content)
+    {
+        return isset($content['message']) ? $content['message'] : null;
+    }
 }
