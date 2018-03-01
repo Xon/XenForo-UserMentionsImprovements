@@ -141,7 +141,7 @@ $1$2]]></replace>
 	"board_title={$xenOptions.boardTitle}"
 }]]></subject>
       <body_text><![CDATA[{xen:phrase sv_quoted_email_text_message,
-	"snippet={$content.sv_snippet_text}",
+	"message={$content.sv_snippet_text}",
 	"receiver_username={$receiver.username}",
 	"username={$sender.username}",
 	"view_link={$viewLink}",
@@ -284,7 +284,7 @@ $1$2]]></replace>
 	"board_title={$xenOptions.boardTitle}"
 }]]></subject>
       <body_text><![CDATA[{xen:phrase sv_tagged_email_text_message,
-	"snippet={$content.sv_snippet_text}",
+	"message={$content.sv_snippet_text}",
 	"receiver_username={$receiver.username}",
 	"username={$sender.username}",
 	"view_link={$viewLink}",

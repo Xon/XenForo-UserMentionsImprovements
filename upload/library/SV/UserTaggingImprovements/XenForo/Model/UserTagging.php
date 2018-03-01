@@ -43,7 +43,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
         /** @noinspection PhpUndefinedFieldInspection */
         $snippetLength = intval($options->sv_mention_snippet_length);
-        $canGetSnippet = (!$snippetLength) && method_exists($alertHandler, 'getContentMessage');
+        $canGetSnippet = $snippetLength && method_exists($alertHandler, 'getContentMessage');
 
         /** @noinspection PhpUndefinedMethodInspection */
         $viewLink = $alertHandler->getContentUrl($content, true);
@@ -76,7 +76,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
                         $content['sv_snippet_text'] = $bbCodeParserText->render($snippet);
 
                         $bbCodeParserHtml = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('HtmlEmail'));
-                        $content['sv_snippet_html'] = $bbCodeParserText->render($bbCodeParserHtml);
+                        $content['sv_snippet_html'] = $bbCodeParserHtml->render($snippet);
                     }
                 }
             }
