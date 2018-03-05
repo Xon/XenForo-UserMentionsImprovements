@@ -9,6 +9,43 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
     const UserQuotedCheckField = 'sv_email_on_quote';
 
     /**
+     * @param array $taggingUser
+     * @return array
+     */
+    protected function getUserInfoForEmail(array $taggingUser)
+    {
+        if (empty($taggingUser['user_id']))
+        {
+            return $taggingUser;
+        }
+
+        // fields known to be used for avatar information
+        if (!isset($taggingUser['gravatar']) ||
+            !isset($taggingUser['gender']) ||
+            !isset($taggingUser['avatar_date']) ||
+            !isset($taggingUser['is_banned'])
+        )
+        {
+            $visitor = XenForo_Visitor::getInstance();
+            if ($taggingUser['user_id'] === $visitor['user_id'])
+            {
+                $taggingUser = $visitor->toArray();
+            }
+            else
+            {
+                $user = $this->_getUserModel()->getUserById($taggingUser['user_id']);
+                if ($user)
+                {
+                    $taggingUser = $user;
+                }
+            }
+        }
+
+
+        return $taggingUser;
+    }
+
+    /**
      * @param string $contentType
      * @param int    $contentId
      * @param array  $content
@@ -77,6 +114,8 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
                         $bbCodeParserHtml = XenForo_BbCode_Parser::create(XenForo_BbCode_Formatter_Base::create('HtmlEmail'));
                         $content['sv_snippet_html'] = $bbCodeParserHtml->render($snippet);
+
+                        $taggingUser = $this->getUserInfoForEmail($taggingUser);
                     }
                 }
             }
