@@ -23,7 +23,8 @@ class SV_UserTaggingImprovements_XenForo_ControllerPublic_Member extends XFCP_SV
 
         if (empty($userGroup))
         {
-            return $this->responseNoPermission();
+            // behave as if this add-on was not installed
+            return parent::actionIndex();
         }
 
         $userIds = $userTaggingModel->getTaggedGroupUserIds($userGroup['user_group_id']);

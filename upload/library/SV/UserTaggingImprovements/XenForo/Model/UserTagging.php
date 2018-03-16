@@ -392,7 +392,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
 
     /**
      * @param int $userGroupId
-     * @return array|null
+     * @return array
      */
     public function getTaggableGroup($userGroupId)
     {
@@ -402,7 +402,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $visitor = XenForo_Visitor::getInstance();
         if (!$visitor->hasPermission('general', 'sv_ViewPublicGroups'))
         {
-            return null;
+            return [];
         }
         $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
 
