@@ -309,28 +309,27 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             return $usersByMatch;
         }
 
+        $sql = '';
+        $visitor = XenForo_Visitor::getInstance();
+        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
+        // private groups are only view able by members and administrators.
+        if (!$viewAllGroups)
+        {
+            $groupMembership = array_keys($this->_getGroupMembership($visitor->toArray()));
+            $sql .= ' AND ( usergroup.sv_private = 0 or usergroup.user_group_id in ( ' . $db->quote($groupMembership) . ' ) )';
+        }
+
         $userResults = $db->query("
             SELECT usergroup.user_group_id, usergroup.title, usergroup.sv_private,
                 " . implode(', ', $matchParts) . "
             FROM xf_user_group AS usergroup
-            WHERE usergroup.sv_taggable = 1 and (" . implode(' OR ', $whereParts) . ")
+            WHERE usergroup.sv_taggable = 1 AND (" . implode(' OR ', $whereParts) . ") {$sql}
             ORDER BY LENGTH(usergroup.title) DESC
         ");
 
         $require_sort = [];
-
-        $visitor = XenForo_Visitor::getInstance();
-        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
-        $groupMembership = $this->_getGroupMembership($visitor->toArray());
-
         while ($group = $userResults->fetch())
         {
-            // private groups are only view able by members and administrators.
-            if (!$viewAllGroups && $group['sv_private'] && empty($groupMembership[$group['user_group_id']]))
-            {
-                continue;
-            }
-
             $userInfo = [
                 'user_id'  => 'ug_' . $group['user_group_id'],
                 'is_group' => 1,
