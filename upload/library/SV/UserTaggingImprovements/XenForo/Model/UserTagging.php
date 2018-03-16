@@ -399,11 +399,12 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         $sql = '';
 
         $visitor = XenForo_Visitor::getInstance();
-        if (!$visitor->hasPermission('general', 'sv_ViewPublicGroups'))
+        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
+        if (!$viewAllGroups && !$visitor->hasPermission('general', 'sv_ViewPublicGroups'))
         {
             return [];
         }
-        $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
+
 
         if (!$viewAllGroups)
         {
