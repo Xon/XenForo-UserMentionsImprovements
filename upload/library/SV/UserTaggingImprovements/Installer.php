@@ -66,6 +66,8 @@ class SV_UserTaggingImprovements_Installer
                 (?, 0, 'general', 'sv_ViewPublicGroups', 'allow', '0'),
                 (?, 0, 'general', 'sv_ViewPublicGroups', 'allow', '0')
             ", [XenForo_Model_User::$defaultRegisteredGroupId, XenForo_Model_User::$defaultGuestGroupId]);
+
+
         }
 
         if ($version < 10100000)

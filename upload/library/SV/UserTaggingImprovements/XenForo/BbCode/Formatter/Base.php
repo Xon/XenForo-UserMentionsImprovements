@@ -8,7 +8,8 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_Base extends XFCP_SV_U
     public function getTags()
     {
         $visitor = XenForo_Visitor::getInstance();
-        $this->canViewPublicGroups = $visitor->hasPermission('general', 'sv_ViewPublicGroups');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $this->canViewPublicGroups = XenForo_Application::getOptions()->svUMIPermDeniedOnViewGroup || $visitor->hasPermission('general', 'sv_ViewPublicGroups');
 
         $tags = parent::getTags();
 

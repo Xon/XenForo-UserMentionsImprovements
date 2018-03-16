@@ -373,6 +373,12 @@ $1$2]]></replace>
   <email_template_modifications/>
   <optiongroups>
     <group group_id="SV_UserTaggingImprovements" display_order="132" debug_only="0"/>
+    <option option_id="svUMIPermDeniedOnViewGroup" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="SV_UserTaggingImprovements" display_order="300"/>
+    </option>
     <option option_id="sv_default_group_avatar_l" edit_format="textbox" data_type="string" can_backup="1">
       <default_value></default_value>
       <edit_format_params></edit_format_params>
@@ -436,6 +442,8 @@ $1$2]]></replace>
   <phrases>
     <phrase title="option_group_SV_UserTaggingImprovements" version_id="1001101" version_string="1.0.11a"><![CDATA[User Mentions Improvements]]></phrase>
     <phrase title="option_group_SV_UserTaggingImprovements_description" version_id="1001101" version_string="1.0.11a"><![CDATA[User group mentions, emails on mentions]]></phrase>
+    <phrase title="option_svUMIPermDeniedOnViewGroup" version_id="1060000" version_string="1.6.0"><![CDATA[Return permission denied instead of not found if lacking permissions to view a user group]]></phrase>
+    <phrase title="option_svUMIPermDeniedOnViewGroup_explain" version_id="1060000" version_string="1.6.0"><![CDATA[If disabled, the @usergroup tag is also not rendered]]></phrase>
     <phrase title="option_sv_default_group_avatar_l" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (l)]]></phrase>
     <phrase title="option_sv_default_group_avatar_l_explain" version_id="10000" version_string="1.0.0"><![CDATA[The default user group avatar to use if no avatar when viewing the membership of a group]]></phrase>
     <phrase title="option_sv_default_group_avatar_s" version_id="10000" version_string="1.0.0"><![CDATA[Default User Group Avatar (s)]]></phrase>
