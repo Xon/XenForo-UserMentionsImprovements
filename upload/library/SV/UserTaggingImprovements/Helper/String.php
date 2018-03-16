@@ -70,7 +70,7 @@ class SV_UserTaggingImprovements_Helper_String
             /** @noinspection PhpUndefinedFieldInspection */
             self::$groupUsername = $options->sv_styleGroupUsername
                 ? 'username'
-                : '';
+                : 'OverlayTrigger';
             /** @noinspection PhpUndefinedFieldInspection */
             self::$groupAvatar = $options->sv_displayGroupAvatar
                 ? '<span class="groupImg"></span>'
