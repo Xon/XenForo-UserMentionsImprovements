@@ -2,8 +2,14 @@
 
 class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP_SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail
 {
+    /** @var bool  */
+    protected $canViewPublicGroups;
+
     public function getTags()
     {
+        $visitor = XenForo_Visitor::getInstance();
+        $this->canViewPublicGroups = $visitor->hasPermission('general', 'sv_ViewPublicGroups');
+
         $tags = parent::getTags();
 
         $tags['usergroup'] = [
@@ -21,6 +27,11 @@ class SV_UserTaggingImprovements_XenForo_BbCode_Formatter_HtmlEmail extends XFCP
         if ($content === '')
         {
             return '';
+        }
+
+        if (!$this->canViewPublicGroups)
+        {
+            return $content;
         }
 
         $userGroupId = intval($tag['option']);
