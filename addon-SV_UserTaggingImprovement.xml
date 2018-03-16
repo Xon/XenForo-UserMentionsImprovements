@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.5.1" version_id="1050100" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.6.0" version_id="1060000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -188,7 +188,7 @@ $1$2]]></replace>
 	</td>
 	<td width="100%" style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.4">
 		{xen:raw $content.sv_snippet_html}
-	</td>	
+	</td>
 </tr>
 </table>
 
@@ -331,7 +331,7 @@ $1$2]]></replace>
 	</td>
 	<td width="100%" style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.4">
 		{xen:raw $content.sv_snippet_html}
-	</td>	
+	</td>
 </tr>
 </table>
 
@@ -429,6 +429,7 @@ $1$2]]></replace>
       <permission permission_group_id="general" permission_id="sv_ReceiveTagAlertEmails" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11230"/>
       <permission permission_group_id="general" permission_id="sv_TagUserGroup" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11231"/>
       <permission permission_group_id="general" permission_id="sv_ViewPrivateGroups" permission_type="flag" default_value="unset" interface_group_id="generalModeratorPermissions" display_order="9"/>
+      <permission permission_group_id="general" permission_id="sv_ViewPublicGroups" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="11232"/>
     </permissions>
     <interface_groups/>
   </permissions>
@@ -454,10 +455,11 @@ $1$2]]></replace>
     <phrase title="option_sv_send_email_on_tagging_explain" version_id="1040000" version_string="1.4.0"><![CDATA[Allows users to receive user mention alert emails. Users still require opt-in under /account/contact-details.]]></phrase>
     <phrase title="option_sv_styleGroupUsername" version_id="1040300" version_string="1.4.3"><![CDATA[Username styling for a mentioned group]]></phrase>
     <phrase title="option_sv_styleGroupUsername_explain" version_id="1010000" version_string="1.1.0"><![CDATA[Allows mentioned group names to have the same username styling applied]]></phrase>
-    <phrase title="permission_forum_sv_EnableTagging" version_id="1000900" version_string="1.0.9"><![CDATA[Enable User Mentions]]></phrase>
-    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1040100" version_string="1.4.1"><![CDATA[Receive User Mention or Quote Alert Emails]]></phrase>
-    <phrase title="permission_general_sv_TagUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Tag User Group]]></phrase>
-    <phrase title="permission_general_sv_ViewPrivateGroups" version_id="10001" version_string="1.0.1"><![CDATA[View Private Groups]]></phrase>
+    <phrase title="permission_forum_sv_EnableTagging" version_id="1060000" version_string="1.6.0"><![CDATA[[UMI] Enable user mentions]]></phrase>
+    <phrase title="permission_general_sv_ReceiveTagAlertEmails" version_id="1060000" version_string="1.6.0"><![CDATA[[UMI] Receive quote or mention alert emails]]></phrase>
+    <phrase title="permission_general_sv_TagUserGroup" version_id="1060000" version_string="1.6.0"><![CDATA[[UMI] Mention user groups]]></phrase>
+    <phrase title="permission_general_sv_ViewPrivateGroups" version_id="1060000" version_string="1.6.0"><![CDATA[[UMI] View private user groups]]></phrase>
+    <phrase title="permission_general_sv_ViewPublicGroups" version_id="1060000" version_string="1.6.0"><![CDATA[[UMI] View mentionable user group members]]></phrase>
     <phrase title="style_property_SV_GroupMiniAvatar_description_master" version_id="1010000" version_string="1.1.0"><![CDATA[Handles the style of the mini avatar with tags.]]></phrase>
     <phrase title="style_property_SV_GroupMiniAvatar_master" version_id="1010000" version_string="1.1.0"><![CDATA[User Group Mini Avatar]]></phrase>
     <phrase title="sv_PrivateUserGroup" version_id="10000" version_string="1.0.0"><![CDATA[Private Group]]></phrase>

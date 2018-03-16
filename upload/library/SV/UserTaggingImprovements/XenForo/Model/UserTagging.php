@@ -390,12 +390,20 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
         return parent::_replaceTagUserMatch($user, $replaceStyle);
     }
 
-    public function getTaggableGroup($UserGroupId)
+    /**
+     * @param int $userGroupId
+     * @return array|null
+     */
+    public function getTaggableGroup($userGroupId)
     {
         $db = $this->_getDb();
         $sql = '';
 
         $visitor = XenForo_Visitor::getInstance();
+        if (!$visitor->hasPermission('general', 'sv_ViewPublicGroups'))
+        {
+            return null;
+        }
         $viewAllGroups = $visitor->hasPermission('general', 'sv_ViewPrivateGroups');
 
         if (!$viewAllGroups)
@@ -409,7 +417,7 @@ class SV_UserTaggingImprovements_XenForo_Model_UserTagging extends XFCP_SV_UserT
             SELECT usergroup.user_group_id, usergroup.title as username, usergroup.sv_avatar_s as avatar_s, usergroup.sv_avatar_l as avatar_l, usergroup.sv_private as private, usergroup.last_edit_date
             FROM xf_user_group AS usergroup
             WHERE usergroup.sv_taggable = 1 and usergroup.user_group_id = ? {$sql}
-        ", $UserGroupId);
+        ", $userGroupId);
 
         if (!empty($userGroup))
         {

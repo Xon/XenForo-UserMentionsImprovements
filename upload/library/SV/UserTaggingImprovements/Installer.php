@@ -56,6 +56,18 @@ class SV_UserTaggingImprovements_Installer
             ");
         }
 
+        if ($version < 1060000)
+        {
+            // make sure XenForo_Model_User is extended
+            XenForo_Model::create("XenForo_Model_User");
+
+            $db->query("insert ignore into xf_permission_entry (user_group_id, user_id, permission_group_id, permission_id, permission_value, permission_value_int)
+                values 
+                (?, 0, 'general', 'sv_ViewPublicGroups', 'allow', '0'),
+                (?, 0, 'general', 'sv_ViewPublicGroups', 'allow', '0')
+            ", [XenForo_Model_User::$defaultRegisteredGroupId, XenForo_Model_User::$defaultGuestGroupId]);
+        }
+
         if ($version < 10100000)
         {
             $db->query("
