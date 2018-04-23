@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.6.0" version_id="1060000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="SV_UserTaggingImprovement" title="User Mentions Improvements" version_string="1.7.0" version_id="1070000" url="https://xenforo.com/community/resources/user-mentions-improvements-by-xon.4416/" install_callback_class="SV_UserTaggingImprovements_Installer" install_callback_method="install" uninstall_callback_class="SV_UserTaggingImprovements_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -63,6 +63,7 @@ $1$2]]></replace>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_BbCode_Formatter_Text" description="XenForo_BbCode_Formatter_Text"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_Post" description="XenForo_AlertHandler_DiscussionMessage_Post"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_AlertHandler_DiscussionMessage_ProfilePost" description="XenForo_AlertHandler_DiscussionMessage_ProfilePost"/>
+    <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="NixFifty_Tickets_AlertHandler_TicketMessage" description="NixFifty_Tickets_AlertHandler_TicketMessage"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="SV_ReportImprovements_AlertHandler_Report" description="SV_ReportImprovements_AlertHandler_Report"/>
     <listener event_id="load_class" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Html_Renderer_BbCode" description="XenForo_Html_Renderer_BbCode"/>
     <listener event_id="load_class_controller" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_ControllerPublic_Account" description="XenForo_ControllerPublic_Account"/>
@@ -76,6 +77,7 @@ $1$2]]></replace>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserGroup" description="XenForo_Model_UserGroup"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_UserTagging" description="XenForo_Model_UserTagging"/>
     <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Report" description="XenForo_Model_Report"/>
+    <listener event_id="load_class_model" execute_order="4416" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="NixFifty_Tickets_Model_TicketMessage" description="NixFifty_Tickets_Model_TicketMessage"/>
     <listener event_id="load_class_model" execute_order="2147483641" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_Alert" description="XenForo_Model_Alert"/>
     <listener event_id="load_class_model" execute_order="2147483643" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ThreadWatch" description="XenForo_Model_ThreadWatch"/>
     <listener event_id="load_class_model" execute_order="2147483643" callback_class="SV_UserTaggingImprovements_Listener" callback_method="load_class" active="1" hint="XenForo_Model_ForumWatch" description="XenForo_Model_ForumWatch"/>
