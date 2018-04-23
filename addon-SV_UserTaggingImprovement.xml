@@ -653,6 +653,13 @@ $0]]></replace>
 </xen:if>
 $0]]></replace>
     </modification>
+    <modification template="alert_ticket_message_mention" modification_key="sv_alert_ticket_message_mention" description="Add group tagging bits" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#$#]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$extra.taggedGroupId}">
+{xen:phrase tagged_as_y_group, 'group=<a href="{xen:link members, '', 'ug={$extra.taggedGroupId}'}" class="PopupItemLink">{$extra.taggedGroup}</a>'}
+</xen:if>]]></replace>
+    </modification>
     <modification template="account_contact_details" modification_key="sv_ugi_account_contact_details" description="" execution_order="10000" enabled="1" action="preg_replace">
       <find><![CDATA[#(<xen:hook name="account_contact_details_messaging".*?)(\s*)(</xen:hook>)#si]]></find>
       <replace><![CDATA[$1$2<xen:include template="sv_ugi_account_contact_details_messaging"/>
